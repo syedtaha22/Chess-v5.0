@@ -1,5 +1,0 @@
-1rb3k1/p2q2bp/2p4r/2P1p1p1/3pPp2/1P1P1P2/PB1NN1KP/1R2QR2 b                        3D   32s   d7h3   37   97443
-2k3rr/ppp2p1p/2b5/4Nn2/3pPQ2/1P4Pq/P1PP1P1P/RN3RK1 b                              3D   39s   h3f1   39   85342
-4r1k1/1R3bpp/3b4/P3n3/3B2P1/2P2P2/5K2/7R b                                        3D   70s   e8b8   34   159365
-R2r2k1/4qppp/8/1Q6/1p1P4/1P4P1/K1P4P/5R2 b                                        3D   26s   e7a7   30   121119
-3q1rk1/5pb1/1p3nR1/3b3p/3B3P/1B1PP3/2P1QP2/1N2K3 b                                3D   22s   d5b3   28   107482

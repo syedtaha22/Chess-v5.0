@@ -1,7 +1,13 @@
 #!/bin/bash
 
+# Check if the correct number of arguments is provided
+if [ "$#" -ne 1 ]; then
+    echo "Usage: $0 <FEN database file>"
+    exit 1
+fi
+
 # Path to the text file containing FEN strings
-FEN_FILE="FENDataBase.txt"
+FEN_FILE="$1"
 
 # Path to your C++ program
 CPP_PROGRAM="./test_engine.exe"
