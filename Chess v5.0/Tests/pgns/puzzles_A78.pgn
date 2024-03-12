@@ -1,0 +1,49 @@
+[Site "https://lichess.org/bXq0rzr9#29"] 
+[Date "2021.06.06"]
+[ToMove "Black to move."]
+[ECO "A78 "]
+[Opening "Benoni Defense: Classical Variation, Czerniak Defense"]
+[Rating "1757"]
+[BeginMove "15"]
+[Themes "advantage middlegame short"]
+[Result "*"]
+[FEN "r2qr1k1/p1nb1pbp/1p1N2p1/2pP3n/P3P3/2N2P2/1P2B1PP/R1BQR1K1 b - - 0 15"] 
+15... Bd4+ 16. Qxd4 cxd4 *
+
+[Site "https://lichess.org/iOB7ihTc/black#56"] 
+[Date "2021.06.06"]
+[ToMove "White to move."]
+[ECO "A78 "]
+[Opening "Benoni Defense: Classical Variation, Czerniak Defense"]
+[Rating "1030"]
+[BeginMove "29"]
+[Themes "advantage middlegame short"]
+[Result "*"]
+[FEN "1r4k1/1pq2p1p/p1bN2p1/P1pnr1B1/3b4/6QP/1P4P1/R3RB1K w - - 0 29"] 
+29. Rxe5 Bxe5 30. Qxe5 *
+
+[Site "https://lichess.org/tFsVIEnk/black#50"] 
+[Date "2021.06.06"]
+[ToMove "White to move."]
+[ECO "A78 "]
+[Opening "Benoni Defense: Classical Variation, Czerniak Defense"]
+[Rating "2127"]
+[BeginMove "26"]
+[Themes "advantage middlegame short"]
+[Result "*"]
+[FEN "r3r1k1/1p3p1p/p2p2p1/3P4/P1p1Pn1q/R3Nn1P/1PR1NPP1/3Q2K1 w - - 5 26"] 
+26. gxf3 Nxh3+ 27. Kg2 *
+
+[Site "https://lichess.org/caOx0qIi/black#112"] 
+[Date "2021.06.06"]
+[ToMove "White to move."]
+[ECO "A78 "]
+[Opening "Benoni Defense: Classical Variation, Czerniak Defense"]
+[Rating "1250"]
+[BeginMove "57"]
+[Themes "endgame mate mateIn2 rookEndgame short"]
+[Result "*"]
+[FEN "6R1/8/p4r2/8/5p2/5K1k/8/8 w - - 20 57"] 
+57. Rh8+ Rh6 58. Rxh6# *
+
+

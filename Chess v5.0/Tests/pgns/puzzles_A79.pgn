@@ -1,0 +1,37 @@
+[Site "https://lichess.org/8vUW2tih#43"] 
+[Date "2021.06.06"]
+[ToMove "Black to move."]
+[ECO "A79 "]
+[Opening "Benoni Defense: Classical Variation, Czerniak Defense"]
+[Rating "1502"]
+[BeginMove "22"]
+[Themes "mate mateIn2 middlegame sacrifice short"]
+[Result "*"]
+[FEN "4r1k1/1b3p1p/3N2p1/2pP3n/2NbPq2/5P2/1P2B1PP/3Q1R1K b - - 4 22"] 
+22... Ng3+ 23. hxg3 Qh6# *
+
+[Site "https://lichess.org/GFd4zX6S#41"] 
+[Date "2021.06.06"]
+[ToMove "Black to move."]
+[ECO "A79 "]
+[Opening "Benoni Defense: Classical Variation, Czerniak Defense"]
+[Rating "1611"]
+[BeginMove "21"]
+[Themes "advantage master middlegame short"]
+[Result "*"]
+[FEN "r2qrbk1/pp5p/3N4/1bpP1p1n/8/3BBP2/1P1Q2PP/R4RK1 b - - 0 21"] 
+21... Bxd3 22. Nxe8 Bxf1 *
+
+[Site "https://lichess.org/wU8iRTkT#117"] 
+[Date "2021.06.06"]
+[ToMove "Black to move."]
+[ECO "A79 "]
+[Opening "Benoni Defense: Classical Variation, Czerniak Defense"]
+[Rating "2339"]
+[BeginMove "59"]
+[Themes "crushing endgame hangingPiece master masterVsMaster quietMove veryLong"]
+[Result "*"]
+[FEN "8/2K1k3/3p1n2/2pP3B/4Pp2/1P3P2/8/8 b - - 10 59"] 
+59... Nxh5 60. e5 dxe5 61. d6+ Kf7 62. d7 Ng7 63. Kd6 Ne6 64. Kxe5 Ke7 65. d8=Q+ Nxd8 *
+
+
