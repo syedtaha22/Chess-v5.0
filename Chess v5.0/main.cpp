@@ -68,17 +68,13 @@ Color darkSquare = { 118, 150, 86, 255 };
 Color Transparent = { 0, 0, 0, 0 };
 Color Background = { 49, 46, 43, 255 };
 Color Translucent = { 0, 0, 0, 64 };
-// Color Background = { 0,0,0,0 };
 
-// Color MoveHighlight = { 187, 204, 68, 255};
 Color MoveHighlight = Fade({ 255, 255, 0, 200 }, 0.5);
 Color MovesForPieceHighLight = Fade({ 255, 0, 0, 200 }, 0.5);
 Color PreMoveHighlight = Fade({ 0, 0, 255, 200 }, 0.5);
 Color NextMoveHighlight = Fade({ 0, 255, 0, 200 }, 0.5);
 
-//bool gameStarted = false;
-//bool isMultiplayerGame = false; // Multiplayer
-//bool isSinglePlayer = false;        // AI game mode
+
 
 int offsets;
 
@@ -102,8 +98,7 @@ enum class PromotionPiece
     BISHOP
 };
 
-class ReadWrite
-{
+class ReadWrite{
 
     virtual int readEloFromFile() = 0;
     virtual void saveEloToFile() const = 0;
@@ -561,12 +556,10 @@ public:
 
     void DisplayBoard() const{
         cout << "8 ";
-        for (int i = 0; i < Total_tiles; i++)
-        {
+        for (int i = 0; i < Total_tiles; i++){
             // cout << (i/8) + 1  << " ";
             cout << "[" << board[i].type << "]";
-            if ((i + 1) % 8 == 0 && (i + 1) < Total_tiles)
-            {
+            if ((i + 1) % 8 == 0 && (i + 1) < Total_tiles) {
                 cout << endl;
                 cout << 8 - (i + 1) / 8 << " ";
             }
@@ -675,11 +668,10 @@ public:
                     float tileX = round((piece.rectangle.x - BoardOffsetX) / tileSize) * tileSize;
                     float tileY = round((piece.rectangle.y - BoardOffsetY) / tileSize) * tileSize;
                     int FinalIndex = abs((isBoardReversed * (Total_tiles - 1)) - getTileIndex(tileX, tileY, tileSize));
-                    InitialIndex = abs((isBoardReversed * ReverseOffset) - InitialIndex); // adjust for Reversals
+                    //cout << isBoardReversed * ReverseOffset << " " << FinalIndex << endl;
                     string Move = ConvertToChessNotation(InitialIndex, FinalIndex);
 
-                    // cout << move << endl;
-                    // cout << InitialIndex << " " << FinalIndex << endl;
+                    //cout << Move << endl;
 
                     // cout << tileX << " " << tileY << endl;
                     if (isValidMove(FinalIndex)){
@@ -751,12 +743,12 @@ public:
         // Check if it's a castling move and if castling is allowed
         if (IsCastlingMove(move, board[fromTile])){
 
-            if (toTile == 62 || toTile == 7){ // Kingside castling
+            if (toTile == 62 || toTile == 6){ // Kingside castling
                 int rookFromTile = (fromTile == 60) ? 63 : 7;
                 int rookToTile = (fromTile == 60) ? 61 : 5;
                 board[rookFromTile].firstMove = false;
                 board[rookToTile] = board[rookFromTile];
-                board[rookFromTile] = ChessPiece();
+                board[rookFromTile] = ChessPiece(0,0);
                 
 
             }
@@ -764,8 +756,8 @@ public:
                 int rookFromTile = (fromTile == 60) ? 56 : 0;
                 int rookToTile = (fromTile == 60) ? 59 : 3;
                 board[rookFromTile].firstMove = false;
-                board[rookToTile] = board[rookFromTile]; // Move the rook
-                board[rookFromTile] = ChessPiece();      // Empty the original rook square
+                board[rookToTile] = board[rookFromTile]; 
+                board[rookFromTile] = ChessPiece();      
             }
         }
 
@@ -782,13 +774,12 @@ public:
 
     }
 
-    bool IsCastlingMove(string move, ChessPiece pieceMoved)
-    {
+    bool IsCastlingMove(string move, ChessPiece pieceMoved){
 
         return (pieceMoved.type == KING) && (move == "e1g1" || move == "e1c1" || move == "e8g8" || move == "e8c8");
     }
 
-     void MakeCompleteMove(int fromTile, int toTile, string move){
+    void MakeCompleteMove(int fromTile, int toTile, string move){
         // string move = ConvertToChessNotation(Move);
         PieceIsCaptured = isValidCaptureMove(fromTile, toTile);
         MakeMove(fromTile, toTile);
@@ -818,7 +809,7 @@ public:
         MoveIndices = make_pair(fromTile, toTile);
 
         SetPiecePositions();
-
+        DisplayScores();
         currentPlayerIsWhite = !currentPlayerIsWhite;
         ComputeOpponentMoves();
         PlayChessSound();
@@ -1251,6 +1242,7 @@ public:
     }
 
     void DestroyBoard(){
+        isBoardReversed = false;
         for (int i = 0; i < Total_tiles; i++){
             board[i].DestroyTextures();
         }
@@ -1397,7 +1389,7 @@ public:
 
 class ChessEngine : public ReadWrite{
     int color;
-    int MAX_DEPTH = 3; // Maximum depth for the Minimax algorithm
+    int MAX_DEPTH = 1; // Maximum depth for the Minimax algorithm
     const int infinity = numeric_limits<int>::max();
     TranspositionTables transpostionTable;
 
@@ -1554,6 +1546,12 @@ public:
 
     int Minimax(ChessBoard& board, int depth, int alpha, int beta, bool maximizingPlayer, int color, int& MovesLookedAhead){
         MovesLookedAhead++;
+        if (terminateSearch) {
+
+        
+            return 0;
+        }
+
 
 
         uint64_t hash = transpostionTable.computeHash(board);
@@ -1585,6 +1583,9 @@ public:
             //SortMoves(possibleMoves, board, color);
 
             for (const string& move : possibleMoves){
+                if (terminateSearch) {
+                    break;
+                }
                 ChessBoard tempBoard = board; // Make a copy of the board to simulate moves
                 pair<int, int> Indices = convertChessNotationToIndices(move);
                 tempBoard.MakeMove(Indices.first, Indices.second); // Make the move directly without isValidMove()
@@ -1616,6 +1617,9 @@ public:
             //SortMoves(possibleMoves, board, color == White ? Black : White);
 
             for (const string& move : possibleMoves){
+                if (terminateSearch) {
+                    break;
+                }
                 ChessBoard tempBoard = board; // Make a copy of the board to simulate moves
                 pair<int, int> Indices = convertChessNotationToIndices(move);
                 tempBoard.MakeMove(Indices.first, Indices.second); // Make the move directly without isValidMove()
@@ -2320,8 +2324,7 @@ void CalculateAIMove(ChessEngine& engine, ChessBoard& board) {
 
 class GameModes {
 
-    ChessBoard chessboard;
-    ChessEngine Horizon;
+
     BoardStats GameStats;
     Flags flags;
     User Player;
@@ -2329,6 +2332,9 @@ class GameModes {
     string FENString = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq";
 
 public:
+    ChessBoard chessboard;
+    ChessEngine Horizon;
+
     GameModes() {
         DoOnce = true;
     }
@@ -2348,6 +2354,7 @@ public:
             GameStats.ShowMoveHistory = !GameStats.ShowMoveHistory;
         }
         if (IsKeyPressed(KEY_R)) RestartGame();
+        if (IsKeyPressed(KEY_M)) BackToMenu();
     }
 
     void HandleMoves(int PlayerColor) {
@@ -2394,6 +2401,7 @@ public:
     }
 
     void RestartGame() {
+
         Horizon.TerminateSearch();
         DoOnce = true;
         GameStats.Reset();
@@ -2402,7 +2410,7 @@ public:
     }
 
     void BackToMenu() {
-        DoOnce = false;
+        DoOnce = true;
         GameStats.Reset();
         Horizon.Reset();
         chessboard.DestroyBoard();
@@ -2420,8 +2428,7 @@ public:
     void InitialiseSinglePlayerMode() {
         if (DoOnce) {
             Horizon.setEngineColor(Black);
-            thread aiThread(CalculateAIMove, ref(Horizon), ref(chessboard));
-            aiThread.detach(); // Detach the thread to let it run independentl
+
             Player.setUserName("Taha");
             PlaySound(GameStarts);
             chessboard.initializeBoardFromFEN(FENString);
@@ -2456,6 +2463,10 @@ public:
 
     void Destroy() {
         chessboard.DestroyBoard();
+    }
+
+    void setFENstring(string newFen) {
+        FENString = newFen;
     }
 };
 
@@ -2560,16 +2571,18 @@ int main() {
 
 
 
-    //string FENString = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq";
-    string FENString = "1rb3k1/p2q2bp/2p4r/2P1p1p1/3pPp2/1P1P1P2/PB1NN1KP/1R2QR2 b";
+    string FENString = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq";
+    //string FENString = "1rb3k1/p2q2bp/2p4r/2P1p1p1/3pPp2/1P1P1P2/PB1NN1KP/1R2QR2 b";
     //string FENString = "qqqqkqqq/qqqqqqqq/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq";
     // string FENString = "2k5/ppp5/8/8/8/8/2P1P1PP/4K3 w KQkq";
     // string FENString = "8/p5k1/8/8/8/8/7P/7K w KQkq";
     //  string FENString = "3rr3/3k4/8/8/3K4/8/8/8 w KQkq";
-    // string FENString = "4kbnr/8/8/8/8/8/8/5K1R w k";
+     //string FENString = "4kbnr/8/8/8/8/8/1p6/4K2R w Kk";
     // string FENString = "6Q1/8/8/8/8/8/K5R1/7k w KQkq";
     // chessboard.initializeBoard();
     //chessboard.initializeBoardFromFEN(FENString);
+
+    Game.setFENstring(FENString);
 
 
     ChessPiecePlaced = LoadSound(ChessPiecePlacedFile.c_str());
@@ -2596,6 +2609,8 @@ int main() {
     Rectangle MultiplayerButton = { (InfoBoxWidth / 2) - 40, (InfoBoxHeight / 2) - buttonCenterY, 200, 70 };
     Rectangle FENButton = { (InfoBoxWidth / 2) - 40, (InfoBoxHeight / 1.5f) - buttonCenterY, 200, 70 };
 
+    thread aiThread(CalculateAIMove, ref(Game.Horizon), ref(Game.chessboard));
+    aiThread.detach(); // Detach the thread to let it run independentl
 
     // Main menu loop
     while (!WindowShouldClose()) {

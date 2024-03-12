@@ -32,3 +32,8 @@ rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w
 1k2r3/pp3p2/2p3p1/2bK3p/2B1n3/8/PPP4P/R1B5 w 
 4Q1kr/ppp2ppp/8/8/8/2N5/PP3P1K/R1B5 b 
 4R1kr/ppp2ppp/8/8/8/8/PPbN1PPP/R1B3K1 b 
+3BQ1kr/1pp3pp/p7/8/8/2P5/P1P2PPK/RN6 b 
+3Q1k1r/pp3pp1/7p/8/8/5P2/RPP4P/1N1KR3 b 
+2k2R2/8/2K5/8/8/8/8/8 b 
+8/8/7R/8/8/8/5K1k/8 b 
+2Q5/kQ3p2/5P2/8/8/7p/7K/8 b 
