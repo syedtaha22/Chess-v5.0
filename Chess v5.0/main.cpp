@@ -258,7 +258,7 @@ private:
     const int knightScore = 3;
     const int bishopScore = 3;
     const int queenScore = 9;
-    const int kingScore = 100;
+    const int kingScore = 10;
     Flags flags;
 
 public:
@@ -277,8 +277,8 @@ public:
         PieceIsCaptured = false;
     }
 
-    int getPieceScore(const ChessPiece& piece) const{
-        switch (piece.type) {
+    int getPieceScore(const int& type) const{
+        switch (type) {
             case PAWN: return pawnScore;
             case ROOK: return rookScore;
             case KNIGHT: return knightScore;
@@ -342,22 +342,22 @@ public:
         vector<int> filteredMoves;
         for (int toTile : possibleMoves){
             // Simulate the move on a temporary board
-            ChessBoard tempBoard = *this;
-            tempBoard.MakeMove(fromIndex, toTile);
+            ChessBoard tempBoard345 = *this;
+            tempBoard345.MakeMove(fromIndex, toTile);
 
             // Check if the king is in check after the move
-            if (!tempBoard.isCheck(tempBoard, piece.color, "Board: Filter Valid Moves")){
+            if (!tempBoard345.isCheck(tempBoard345, piece.color, "Board: Filter Valid Moves")){
                 filteredMoves.push_back(toTile);
             }
         }
         return filteredMoves;
     }
 
-    int calculatePlayerScore(char playerColor) const{
+    int calculatePlayerScore(int playerColor) const{
         int totalScore = 0;
         for (int i = 0; i < Total_tiles; i++){
             if (board[i].color == playerColor){
-                totalScore += getPieceScore(board[i]);
+                totalScore += getPieceScore(board[i].type);
             }
         }
         return totalScore;
@@ -680,7 +680,7 @@ public:
                         piece.rectangle.y = tileY;
 
                         MakeCompleteMove(InitialIndex, FinalIndex, Move);
-                        DisplayBoard();
+                        //DisplayBoard();
                         // WaitTime(0.5);
                     }
                     else{
@@ -809,7 +809,7 @@ public:
         MoveIndices = make_pair(fromTile, toTile);
 
         SetPiecePositions();
-        DisplayScores();
+        //DisplayScores();
         currentPlayerIsWhite = !currentPlayerIsWhite;
         ComputeOpponentMoves();
         PlayChessSound();
@@ -1160,11 +1160,11 @@ public:
                 // Check if the move is legal (does not leave the king in check)
                 for (int toTile : moves){
                     // Simulate the move
-                    ChessBoard tempBoard = *this;
-                    tempBoard.MakeMove(i, toTile);
+                    ChessBoard tempBoard1163 = *this;
+                    tempBoard1163.MakeMove(i, toTile);
 
                     // Check if the king is in check after the move
-                    if (!tempBoard.isCheck(tempBoard, playerColor, "board: Get all possible moves in chess notation")){
+                    if (!tempBoard1163.isCheck(tempBoard1163, playerColor, "board: Get all possible moves in chess notation")){
                         // If not in check, add the move to possible moves
                         possibleMoves.push_back(ConvertToChessNotation(i, toTile));
                     }
@@ -1388,8 +1388,8 @@ public:
 
 
 class ChessEngine : public ReadWrite{
-    int color;
-    int MAX_DEPTH = 1; // Maximum depth for the Minimax algorithm
+    int EngineColor;
+    int MAX_DEPTH = 3; // Maximum depth for the Minimax algorithm
     const int infinity = numeric_limits<int>::max();
     TranspositionTables transpostionTable;
 
@@ -1474,18 +1474,21 @@ public:
     int NumberofMovesLookedAhead;
     long long TimeTakenForSearch;
     int NumberOfBranchesPruned;
+    int NumberOfTranspositionsFound;
 
-    ChessEngine(int Color = EMPTY) : color(Color){
+    ChessEngine(int Color = EMPTY) : EngineColor(Color){
         engineEloRating = readEloFromFile();
         NumberofMovesLookedAhead = 0;
         TimeTakenForSearch = 0;
         NumberOfBranchesPruned = 0;
+        NumberOfTranspositionsFound = 0;
         terminateSearch = false;
         startSearch = false;
+
     }
 
     void setEngineColor(int color) {
-        this->color = color;
+        EngineColor = color;
     }
 
     void shuffleMoves(vector<string>& possibleMoves){
@@ -1502,34 +1505,21 @@ public:
         string bestMove;
         auto start = high_resolution_clock::now();
         NumberofMovesLookedAhead = 0;
-        vector<string> possibleMoves = board.GetAllPossibleMovesInChessNotation(color);
-        //DisplayMoves(possibleMoves);
-        
-        //SortMoves(possibleMoves, board, color);
-        //DisplayMoves(possibleMoves);
-
-        shuffleMoves(possibleMoves);
-
+        NumberOfTranspositionsFound = 0;
+        vector<string> possibleMoves = board.GetAllPossibleMovesInChessNotation(EngineColor);
+        SortMoves(possibleMoves, board, EngineColor);
         for (const string& move : possibleMoves){
             if (terminateSearch) {
                 cout << "xxxxxxxxxx Search Terminated xxxxxxxxxx" << endl;
                 terminateSearch = false;
                 break;
             }
-
-
-            ChessBoard tempBoard = board; // Make a copy of the board to simulate moves
-            //int fromTile, toTile;
-            // tempBoard.isValidMove(move, fromTile, toTile);
+            ChessBoard tempBoard = board; 
             pair<int, int> Indices = convertChessNotationToIndices(move);
-
-            // Simulate the move
             tempBoard.MakeMove(Indices.first, Indices.second);
-
-            // Calculate the score using Minimax with alpha-beta pruning
-            int score = Minimax(tempBoard, MAX_DEPTH, -infinity, infinity, false, color, NumberofMovesLookedAhead);
-
-            // Update the best move if needed
+            
+            int score = Minimax(tempBoard, MAX_DEPTH, -infinity, infinity, false, EngineColor == White ? Black : White);
+    
             if (score >= bestScore){
                 bestScore = score;
                 bestMove = move;
@@ -1538,66 +1528,94 @@ public:
             auto duration = duration_cast<seconds>(end - start);
             TimeTakenForSearch = duration.count();
         }
+    
+        possibleMoves.clear();
+    
+        return bestMove;
+    }
+
+    //string GenerateMove(const ChessBoard& board) {
+    //    string bestMove;
+    //    auto start = high_resolution_clock::now();
+    //    NumberofMovesLookedAhead = 0;
+    //    NumberOfTranspositionsFound = 0;
+    //    for (int depth = 1; depth <= MAX_DEPTH; ++depth) {
+    //        bestMove = IterativeDeepening(board, depth);
+    //        auto end = high_resolution_clock::now();
+    //        auto duration = duration_cast<seconds>(end - start);
+    //        TimeTakenForSearch = duration.count();
+    //    }
+    //    return bestMove;
+    //}
+
+    string IterativeDeepening(const ChessBoard& board, int maxDepth) {
+        int bestScore = -infinity;
+        string bestMove;
+
+        vector<string> possibleMoves = board.GetAllPossibleMovesInChessNotation(EngineColor);
+        //SortMoves(possibleMoves, board, EngineColor);
+        shuffleMoves(possibleMoves);
+
+        for (const string& move : possibleMoves) {
+            if (terminateSearch) {
+                cout << "xxxxxxxxxx Search Terminated xxxxxxxxxx" << endl;
+                terminateSearch = false;
+                break;
+            }
+
+            ChessBoard tempBoard1566 = board;
+            pair<int, int> Indices = convertChessNotationToIndices(move);
+            tempBoard1566.MakeMove(Indices.first, Indices.second);
+
+            int score = Minimax(tempBoard1566, maxDepth, -infinity, infinity, false, EngineColor == White ? Black : White);
+
+            if (score >= bestScore) {
+                bestScore = score;
+                bestMove = move;
+            }
+        }
 
         possibleMoves.clear();
 
         return bestMove;
     }
 
-    int Minimax(ChessBoard& board, int depth, int alpha, int beta, bool maximizingPlayer, int color, int& MovesLookedAhead){
-        MovesLookedAhead++;
-        if (terminateSearch) {
-
-        
-            return 0;
-        }
-
-
-
+    int Minimax(ChessBoard& board, int depth, int alpha, int beta, bool maximizingPlayer, int color){
+        NumberofMovesLookedAhead++;
+        if (terminateSearch) return 0;
+        //cout << color << endl;
+       
         uint64_t hash = transpostionTable.computeHash(board);
-        
-    
         if (transpostionTable.isValuePresent(hash)) {
-
             auto stored = transpostionTable.lookupTranspositionTable(hash);
             if (stored.second >= depth) {
-                //cout << hash << endl;
-                return stored.first; // Return the stored evaluation if it's at least as deep as the current search depth
+                NumberOfTranspositionsFound++;
+                return stored.first;
             }
         }
 
+        if (board.isCheckmate(board, color)) return (maximizingPlayer ? -infinity : infinity);
+        if (depth == 0) return Evaluate(board, color); 
+        
 
-        // Base case: reached maximum depth or terminal state (checkmate)
-        if (depth == 0 || board.isCheckmate(board, color)){
-            if (board.isCheckmate(board, color)){
-                return (maximizingPlayer ? -infinity : infinity); // Checkmate score
-            }
-            return Evaluate(board, color);
-        }
-
-        // Maximizing player's turn
+       
         if (maximizingPlayer){
             int maxScore = -infinity;
             vector<string> possibleMoves = board.GetAllPossibleMovesInChessNotation(color);
             shuffleMoves(possibleMoves);
-            //SortMoves(possibleMoves, board, color);
-
+            
             for (const string& move : possibleMoves){
-                if (terminateSearch) {
-                    break;
-                }
-                ChessBoard tempBoard = board; // Make a copy of the board to simulate moves
+                if (terminateSearch) break;
+                
+                ChessBoard tempBoard1609 = board; 
                 pair<int, int> Indices = convertChessNotationToIndices(move);
-                tempBoard.MakeMove(Indices.first, Indices.second); // Make the move directly without isValidMove()
+                tempBoard1609.MakeMove(Indices.first, Indices.second);
 
-                // Recursive call for the opponent with a reduced depth
-                int score = Minimax(tempBoard, depth - 1, alpha, beta, false, color, MovesLookedAhead);
+                int score = Minimax(tempBoard1609, depth - 1, alpha, beta, false, color == White ? Black : White);
 
-                // Update alpha and maxScore
                 maxScore = max(maxScore, score);
                 alpha = max(alpha, score);
 
-                //Store Table
                 transpostionTable.storeTranspositionTable(hash, maxScore, depth);
 
                 //Alpha-beta pruning
@@ -1609,29 +1627,25 @@ public:
             possibleMoves.clear();
             return maxScore;
         }
-        // Minimizing player's turn
+
         else{
             int minScore = infinity;
-            vector<string> possibleMoves = board.GetAllPossibleMovesInChessNotation((color == White ? Black : White));
+            vector<string> possibleMoves = board.GetAllPossibleMovesInChessNotation(color);
             shuffleMoves(possibleMoves);
-            //SortMoves(possibleMoves, board, color == White ? Black : White);
+            
 
             for (const string& move : possibleMoves){
-                if (terminateSearch) {
-                    break;
-                }
-                ChessBoard tempBoard = board; // Make a copy of the board to simulate moves
+                if (terminateSearch) break;
+
+                ChessBoard tempBoard1639 = board; 
                 pair<int, int> Indices = convertChessNotationToIndices(move);
-                tempBoard.MakeMove(Indices.first, Indices.second); // Make the move directly without isValidMove()
+                tempBoard1639.MakeMove(Indices.first, Indices.second);
 
-                // Recursive call for the opponent with a reduced depth
-                int score = Minimax(tempBoard, depth - 1, alpha, beta, true, color, MovesLookedAhead);
+                int score = Minimax(tempBoard1639, depth - 1, alpha, beta, true, color == White ? Black : White);
 
-                // Update beta and minScore
                 minScore = min(minScore, score);
                 beta = min(beta, score);
 
-                //Store Table
                 transpostionTable.storeTranspositionTable(hash, minScore, depth);
 
                 //Alpha-beta pruning
@@ -1646,9 +1660,10 @@ public:
     }
 
     int Evaluate(const ChessBoard& chessboard, char currentPlayerColor) const{
+        if (terminateSearch) return 0; 
         unordered_map<char, int> pieceValues;
         // Piece values for evaluation
-        if (color == White){
+        if (EngineColor == White){
             pieceValues = {
                 {White | PAWN,  100}, {White | KNIGHT,  320}, {White | BISHOP,  330}, {White | ROOK,  500}, {White | QUEEN,  900}, {White | KING,  infinity},
                 {Black | PAWN, -100}, {Black | KNIGHT, -320}, {Black | BISHOP, -330}, {Black | ROOK, -500}, {Black | QUEEN, -900}, {Black | KING, -infinity} };
@@ -1661,17 +1676,13 @@ public:
 
         // Evaluate material advantage
         int SelfMaterial = 0, OpponentMeterial = 0;
-        for (int i = 0; i < Total_tiles; ++i)
-        {
+        for (int i = 0; i < Total_tiles; ++i) {
             ChessPiece piece = chessboard.board[i];
-            if (piece.type != EMPTY)
-            {
-                if (piece.color == color)
-                {
+            if (piece.type != EMPTY){
+                if (piece.color == EngineColor) {
                     SelfMaterial += pieceValues[piece.PieceCode];
                 }
-                else
-                {
+                else{
                     OpponentMeterial += pieceValues[piece.PieceCode];
                 }
             }
@@ -1680,26 +1691,53 @@ public:
 
         // Evaluate positional advantage using PSTs
         int positionalAdvantage = 0;
-        for (int i = 0; i < Total_tiles; ++i)
-        {
+        for (int i = 0; i < Total_tiles; ++i){
             ChessPiece piece = chessboard.board[i];
-            if (piece.type != EMPTY)
-            {
+            if (piece.type != EMPTY){
                 int pieceValue = getPSTValue(piece, i, currentPlayerColor);
                 positionalAdvantage += pieceValue;
             }
         }
 
+
         // Total evaluation is a combination of material, positional, and safety advantages
-        return materialAdvantage + positionalAdvantage;
+        return materialAdvantage + positionalAdvantage ;
     }
 
-    int getPSTValue(ChessPiece piece, int squareIndex, char currentPlayerColor) const
-    {
+
+
+
+
+
+
+
+    void adjustEndgamePositionalAdvantage(const ChessBoard& chessboard, int currentPlayerColor, int& positionalAdvantage) const {
+
+
+        int kingSquareIndex = chessboard.GetKingIndex(currentPlayerColor);
+        int opponentKingSquareIndex = chessboard.GetKingIndex((currentPlayerColor == White) ? Black : White);
+
+
+        int kingRow = kingSquareIndex / 8;
+        int kingCol = kingSquareIndex % 8;
+        int opponentKingRow = opponentKingSquareIndex / 8;
+        int opponentKingCol = opponentKingSquareIndex % 8;
+
+        // Encourage forcing opponent's king to the corner
+        int cornerDist = min(min(opponentKingRow, 7 - opponentKingRow), min(opponentKingCol, 7 - opponentKingCol));
+        positionalAdvantage += (currentPlayerColor == EngineColor ? 10 : -10) * cornerDist;
+
+        // Encourage bringing own king closer to the opponent's king
+        int kingDist = abs(kingRow - opponentKingRow) + abs(kingCol - opponentKingCol);
+        positionalAdvantage += (currentPlayerColor == EngineColor ? -5 : 5) * kingDist;
+    }
+
+
+    int getPSTValue(ChessPiece piece, int squareIndex, char currentPlayerColor) const{
+        if (terminateSearch) return 0;
         const int* piecePST = nullptr;
 
-        switch (piece.type)
-        {
+        switch (piece.type) {
         case PAWN:
             piecePST = (currentPlayerColor == Black) ? InvertTable(PawnPST) : PawnPST;
             break;
@@ -1721,19 +1759,16 @@ public:
         }
 
         // Ensure that the piece type index is within bounds
-        if (piecePST != nullptr)
-        {
+        if (piecePST != nullptr){
             return piecePST[squareIndex];
         }
-        else
-        {
+        else{
             // Handle unknown piece types or other errors
             return 0; // Or handle the error in an appropriate way
         }
     }
 
-    pair<int, int> convertChessNotationToIndices(const string& move) const
-    {
+    pair<int, int> convertChessNotationToIndices(const string& move) const{
         int fromCol = move[0] - 'a';
         int fromRow = 7 - (move[1] - '1');
         int toCol = move[2] - 'a';
@@ -1749,12 +1784,10 @@ public:
         board.MakeCompleteMove(Indices.first, Indices.second, move);
     }
 
-    int* InvertTable(const int* originalArray) const
-    {
+    int* InvertTable(const int* originalArray) const {
         int* invertedArray = new int[Total_tiles]; // Create an array of size 64
 
-        for (int i = 0; i < Total_tiles; i++)
-        {
+        for (int i = 0; i < Total_tiles; i++) {
             invertedArray[i] = originalArray[63 - i];
         }
 
@@ -1814,21 +1847,20 @@ public:
         //terminateSearch = false;
         startSearch = false;
         NumberOfBranchesPruned = 0;
+        NumberOfTranspositionsFound = 0;
     }
 
     // Function to check if a move results in a check
-    bool CheckAfterMove(const string& move, const ChessBoard& board, char color) const
-    {
-        ChessBoard tempBoard = board; // Make a copy of the board to simulate the move
+    bool CheckAfterMove(const string& move, const ChessBoard& board, int color) const {
+        ChessBoard tempBoard1854 = board; // Make a copy of the board to simulate the move
         pair<int, int> indices = convertChessNotationToIndices(move);
-        tempBoard.MakeMove(indices.first, indices.second); // Make the move directly without isValidMove()
+        tempBoard1854.MakeMove(indices.first, indices.second); // Make the move directly without isValidMove()
 
         // Check if the move puts the opponent's king in check
-        return tempBoard.isCheck(tempBoard, (color == White ? Black : White), "Engine: Check after move");
+        return tempBoard1854.isCheck(tempBoard1854, (color == White ? White : Black), "Engine: Check after move");
     }
 
-    bool IsCaptureMove(const string& move, const ChessBoard board) const
-    {
+    bool IsCaptureMove(const string& move, const ChessBoard board) const{
         pair<int, int> indices = convertChessNotationToIndices(move);
         ChessPiece targetPiece = board.GetPieceAtPosition(indices.second);
 
@@ -1836,12 +1868,10 @@ public:
         return targetPiece.color != board.GetPieceAtPosition(indices.first).color && targetPiece.color != EMPTY;
     }
 
-    // Function to sort moves considering checks and captures first
-    void SortMoves(vector<string>& moves, const ChessBoard& board, int color) const
-    {
+
+    void SortMoves(vector<string>& moves, const ChessBoard& board, int color) const{
         // Define custom comparator to sort moves
-        auto customComparator = [&](const string& move1, const string& move2)
-            {
+        auto customComparator = [&](const string& move1, const string& move2){
                 // Check if move1 gives check
                 bool check1 = CheckAfterMove(move1, board, color);
 
@@ -1891,6 +1921,9 @@ public:
         }
         cout << endl;
     }
+
+
+ 
 
 };
 
@@ -2022,7 +2055,7 @@ public:
                 cout << "Check Complete" << endl;
                 return true;
             }
-            if (board.calculatePlayerScore(White) <= 100 && board.calculatePlayerScore(Black) <= 100) {
+            if (board.calculatePlayerScore(White) <= board.getPieceScore(KING) && board.calculatePlayerScore(Black) <= board.getPieceScore(KING)) {
                 EndMessage = "---Draw---";
                 winner = -1; //No Winner
                 flags.GameStateChecked();
@@ -2071,17 +2104,21 @@ public:
         DrawTextWithCustomFont(White_, textX - (TextCenter(White_, fontSize).x / 2), screenHeight - 146 - fontSize + 30, fontSize, CheckAlertB);
         // (isSinglePlayer) {
         int LookAheads = engine.NumberofMovesLookedAhead;
-        long long TimeTaken = engine.TimeTakenForSearch;
         int BranchesPruned = engine.NumberOfBranchesPruned;
+        int FoundTranspostions = engine.NumberOfTranspositionsFound;
+        long long TimeTaken = engine.TimeTakenForSearch;
         double SizeOfTable = engine.getSizeOfTranspositionTable();
+
         string WhiteELO = CloseInBrackets(ELO + to_string(player.ELO));
         string BLackELO = CloseInBrackets(ELO + to_string(engine.engineEloRating));
         string BlackMessage = "Saw " + to_string(LookAheads) + " futures in " + to_string(TimeTaken) + "s";
         string PruningMessage = "Pruned " + to_string(BranchesPruned) + " Branches";
         string TableSizeMessage = "Size: " + to_string(SizeOfTable);
+        string TranspostionsFound = "Total Transpostions Found: " + to_string(FoundTranspostions);
         DrawTextWithCustomFont(BlackMessage.c_str(), textX - (TextCenter(BlackMessage.c_str(), fontSize - 30).x / 2), textY + 70, fontSize - 30, messageColor);
         DrawTextWithCustomFont(TableSizeMessage.c_str(), textX - (TextCenter(TableSizeMessage.c_str(), fontSize - 30).x / 2), textY + 90, fontSize - 30, messageColor);
         DrawTextWithCustomFont(PruningMessage.c_str(), textX - (TextCenter(PruningMessage.c_str(), fontSize - 30).x / 2), textY + 110, fontSize - 30, messageColor);
+        DrawTextWithCustomFont(TranspostionsFound.c_str(), textX - (TextCenter(TranspostionsFound.c_str(), fontSize - 30).x / 2), textY + 130, fontSize - 30, messageColor);
 
         DrawTextWithCustomFont(WhiteELO.c_str(), textX - (TextCenter(WhiteELO.c_str(), fontSize - 30).x / 2), screenHeight - 146 + 30, fontSize - 30, messageColor);
         DrawTextWithCustomFont(BLackELO.c_str(), textX - (TextCenter(BLackELO.c_str(), fontSize - 30).x / 2), textY + 50, fontSize - 30, messageColor);
@@ -2169,29 +2206,24 @@ public:
     //     }
     // }
 
-    void DisplayMoveHistory(ChessBoard chessboard)
-    {
+    void DisplayMoveHistory(ChessBoard chessboard) {
 
         string Moves = "";
-        for (int index = 0; index < chessboard.moveHistory.size(); index++)
-        {
+        for (int index = 0; index < chessboard.moveHistory.size(); index++) {
             Moves += chessboard.moveHistory[index];
             Moves += ", ";
-            if ((index + 1) % 6 == 0)
-            {
+            if ((index + 1) % 6 == 0) {
                 Moves += "\n\n";
             }
         }
         DrawTextWithCustomFont(Moves.c_str(), 150, textY + 90, fontSize - 20, RED);
     }
 
-    double calculateExpectedScore(double engineRating, double opponentRating)
-    {
+    double calculateExpectedScore(double engineRating, double opponentRating) {
         return 1.0 / (1 + pow(10, (opponentRating - engineRating) / 400));
     }
 
-    int updateEloRating(int engineRating, int opponentRating, bool engineWon)
-    {
+    int updateEloRating(int engineRating, int opponentRating, bool engineWon){
         double expectedScore = calculateExpectedScore(engineRating, opponentRating);
         double actualScore = engineWon ? 1.0 : 0.0;
         double kFactor = 42; // Adjust the K-factor as needed
@@ -2206,8 +2238,7 @@ public:
         SaveData = true;
     }
 
-    void DrawTextWithCustomFont(const char* text, float posX, float posY, float fontSize, Color color)
-    {
+    void DrawTextWithCustomFont(const char* text, float posX, float posY, float fontSize, Color color) const{
         Vector2 Position = { posX, posY };
         DrawTextEx(myFont, text, Position, fontSize, 1.0, color);
     }
@@ -2216,7 +2247,7 @@ public:
         return MeasureTextEx(myFont, text, fontSize, 1.0);
     }
 
-    void DrawEvaluationColumn(ChessBoard& chessboard, ChessEngine& engine){
+    void DrawEvaluationColumn(ChessBoard& chessboard, ChessEngine& engine) const{
         // Calculate evaluation scores for both players
         float whiteScore = Evaluate(chessboard, White, engine);
         float blackScore = Evaluate(chessboard, Black, engine);
@@ -2225,13 +2256,14 @@ public:
         float totalScore = whiteScore + blackScore;
         float whiteProportion = (totalScore != 0) ? (whiteScore / totalScore) : 0;
         float blackProportion = (totalScore != 0) ? (blackScore / totalScore) : 0;
-        ostringstream White;
-        ostringstream Black;
-        White << fixed << setprecision(1) << whiteProportion;
-        Black << fixed << setprecision(1) << blackProportion;
-        string WhiteProp = White.str(); // White Proportions
-        string BlackProp = Black.str(); // Black Proportions
-
+        //cout << whiteScore << " " << blackScore << endl;
+        ostringstream White_;
+        ostringstream Black_;
+        White_ << fixed << setprecision(1) << whiteProportion;
+        Black_ << fixed << setprecision(1) << blackProportion;
+        string WhiteProp = White_.str(); // White Proportions
+        string BlackProp = Black_.str(); // Black Proportions
+       
         Rectangle columnRect = { 763, 80, 25, 640 }; // { x, y, width, height };
 
         // Draw the evaluation column with appropriate colors
@@ -2244,58 +2276,44 @@ public:
         DrawTextWithCustomFont(BlackProp.c_str(), 765, 85, 15, WHITE);
     }
 
-    float Evaluate(const ChessBoard& chessboard, int currentPlayerColor, ChessEngine& engine) const{
+    float Evaluate(const ChessBoard& chessboard, int Player, ChessEngine& engine) const {
         // Piece values
         unordered_map<int, float> pieceValues = {
-            {PAWN, 100}, {KNIGHT, 320}, {BISHOP, 330}, {ROOK, 500}, {QUEEN, 900}, {KING, 1000} };
-
+            {PAWN, 1}, {KNIGHT, 3}, {BISHOP, 3}, {ROOK, 5}, {QUEEN, 9}, {KING, 10} 
+        };
+    
         // Evaluate material advantage
-        float selfMaterial = 0, opponentMaterial = 0;
-        for (int i = 0; i < Total_tiles; ++i)
-        {
-            ChessPiece piece = chessboard.board[i];
-            if (piece.type != EMPTY)
-            {
-                if (piece.color == currentPlayerColor)
-                {
-                    selfMaterial += pieceValues[piece.type];
-                }
-                else
-                {
-                    opponentMaterial += pieceValues[piece.type];
-                }
-            }
-        }
+        float selfMaterial = chessboard.calculatePlayerScore(Player) * 100,
+              opponentMaterial = chessboard.calculatePlayerScore(Player == White ? Black : White) * 100;
+
         float materialAdvantage = selfMaterial - opponentMaterial;
 
         // Evaluate positional advantage using PSTs
         float positionalAdvantage = 0;
-        for (int i = 0; i < Total_tiles; ++i)
-        {
-            ChessPiece piece = chessboard.board[i];
-            if (piece.type != EMPTY)
-            {
-                int pieceValue = engine.getPSTValue(piece, i, currentPlayerColor);
+        for (int i = 0; i < Total_tiles; ++i){
+            
+            if (chessboard.board[i].type != EMPTY){
+                int pieceValue = engine.getPSTValue(chessboard.board[i], i, Player);
                 positionalAdvantage += pieceValue;
             }
         }
 
         // Evaluate move options and capture moves
-        vector<string> moves = chessboard.GetAllCaptureMovesInChessNotation(currentPlayerColor);
+        vector<string> moves = chessboard.GetAllPossibleMovesInChessNotation(Player);
         int moveOptions = static_cast<int>(moves.size());
         int captureMoves = 0;
-        for (const auto& move : moves)
-        {
-            if (engine.IsCaptureMove(move, chessboard))
-            {
+        for (const auto& move : moves){
+            if (engine.IsCaptureMove(move, chessboard)){
                 captureMoves++;
             }
         }
 
         // Total evaluation is a combination of material, positional, move options, and capture moves
         float evaluation = abs(materialAdvantage + positionalAdvantage);
+        //cout << moveOptions << " ";
         evaluation += moveOptions * 10;  // Adjust weight as needed
         evaluation += captureMoves * 20; // Adjust weight as needed
+        //cout << captureMoves << endl;
 
         return evaluation;
     }
@@ -2452,6 +2470,7 @@ public:
             if (GameStats.ShowMoveHistory) GameStats.DisplayMoveHistory(chessboard);
             else GameStats.DisplayStats(chessboard, Horizon, Player);
             DisplayBoard();
+            GameStats.DrawEvaluationColumn(chessboard, Horizon);
         }
         else ResetBoard(true);
     }
@@ -2459,6 +2478,7 @@ public:
     void DisplayBoard() const {
         chessboard.DrawBoard();
         chessboard.DrawChessPiece();
+        
     }
 
     void Destroy() {
@@ -2484,6 +2504,7 @@ int main() {
 
 
     string FENString = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq";
+    //string FENString = "rnbqkbnr/qqqqqqqq/qqqqqqqq/8/8/8/PPPPPPPP/RNBQKBNR w KQkq";
     //string FENString = "1rb3k1/p2q2bp/2p4r/2P1p1p1/3pPp2/1P1P1P2/PB1NN1KP/1R2QR2 b";
     //string FENString = "qqqqkqqq/qqqqqqqq/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq";
     // string FENString = "2k5/ppp5/8/8/8/8/2P1P1PP/4K3 w KQkq";
