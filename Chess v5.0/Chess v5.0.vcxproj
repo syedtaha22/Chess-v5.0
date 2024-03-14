@@ -138,6 +138,16 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PieceCodes.h" />
     <ClCompile Include="ReadWrite.cpp" />
+    <ClCompile Include="src\Board\ChessBoard.cpp" />
+    <ClCompile Include="src\Engine\ChessEngine.cpp" />
+    <ClCompile Include="src\Engine\TranspositionTables.cpp" />
+    <ClCompile Include="src\Other\BoardStats.cpp" />
+    <ClCompile Include="src\Other\Flags.cpp" />
+    <ClCompile Include="src\Other\GameModes.cpp" />
+    <ClCompile Include="src\Other\GlobalVariables.cpp" />
+    <ClCompile Include="src\Other\ReadWrite.cpp" />
+    <ClCompile Include="src\Other\User.cpp" />
+    <ClCompile Include="src\Pieces\ChessPiece.cpp" />
     <ClCompile Include="TranspositionTables.cpp" />
     <ClCompile Include="User.cpp" />
   </ItemGroup>
@@ -149,6 +159,18 @@
     <ClInclude Include="Flags.h" />
     <ClInclude Include="GameModes.h" />
     <ClInclude Include="GlobalVariables.h" />
+    <ClInclude Include="headers\Board\ChessBoard.h" />
+    <ClInclude Include="headers\Engine\ChessEngine.h" />
+    <ClInclude Include="headers\Engine\TranspositionTables.h" />
+    <ClInclude Include="headers\Other\BoardStats.h" />
+    <ClInclude Include="headers\Other\Flags.h" />
+    <ClInclude Include="headers\Other\GameModes.h" />
+    <ClInclude Include="headers\Other\GlobalVariables.h" />
+    <ClInclude Include="headers\Other\ReadWrite.h" />
+    <ClInclude Include="headers\Other\Resources.h" />
+    <ClInclude Include="headers\Other\User.h" />
+    <ClInclude Include="headers\Pieces\ChessPiece.h" />
+    <ClInclude Include="headers\Pieces\PieceCodes.h" />
     <ClInclude Include="ReadWrite.h" />
     <ClInclude Include="Resources.h" />
     <ClInclude Include="TranspositionTables.h" />
