@@ -1,4 +1,4 @@
-#include "GlobalVariables.h"
+#include "../../headers/Other/GlobalVariables.h"
 
 Sound ChessPiecePlaced;
 Sound ChessPieceCaptured;

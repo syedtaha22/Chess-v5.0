@@ -1,7 +1,7 @@
 #ifndef USER_H
 #define USER_H
 
-#include "ChessEngine.cpp"
+#include "../Engine/ChessEngine.h"
 
 class User : public ReadWrite {
 public:

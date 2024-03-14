@@ -1,4 +1,4 @@
-#include "GameModes.h"
+#include "../../headers/Other/GameModes.h"
 
 GameModes::GameModes() {
     DoOnce = true;

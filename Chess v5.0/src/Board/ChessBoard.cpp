@@ -1,4 +1,4 @@
-#include "ChessBoard.h"
+#include "../../headers/Board/ChessBoard.h"
 
 
 

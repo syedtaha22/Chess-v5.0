@@ -1,7 +1,7 @@
 #ifndef CHESSPIECE_H
 #define CHESSPIECE_H
 
-#include "GlobalVariables.h"
+#include "../Other/GlobalVariables.h"
 #include "PieceCodes.h"
 
 

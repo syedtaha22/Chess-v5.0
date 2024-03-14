@@ -1,4 +1,4 @@
-#include "TranspositionTables.h"
+#include "../../headers/Engine/TranspositionTables.h"
 
 
 TranspositionTables::TranspositionTables() {

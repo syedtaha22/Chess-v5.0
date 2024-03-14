@@ -1,4 +1,4 @@
-#include "User.h"
+#include "../../headers/Other/User.h"
 
 User::User(string name) : Username(name) {
     ELO = readEloFromFile();

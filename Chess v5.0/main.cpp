@@ -1,5 +1,8 @@
-#include "GameModes.h"
-#include "Resources.h"
+#include "headers/Other/GameModes.h"
+#include "headers/Other/Resources.h"
+//#define RAYGUI_IMPLEMENTATION
+//#include "raygui.h"
+
 
 void CalculateAIMove(ChessEngine& engine, ChessBoard& board) {
     while (true) {

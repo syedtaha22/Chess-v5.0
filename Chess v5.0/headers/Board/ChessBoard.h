@@ -1,8 +1,8 @@
 #ifndef CHESSBOARD_H
 #define CHESSBOARD_H
 
-#include "ChessPiece.h"
-#include "Flags.h"
+#include "../Pieces/ChessPiece.h"
+#include "../Other/Flags.h"
 
 
 class ChessBoard {

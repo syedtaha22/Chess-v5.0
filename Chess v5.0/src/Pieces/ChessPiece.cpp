@@ -1,4 +1,4 @@
-#include "ChessPiece.h"
+#include "../../headers/Pieces/ChessPiece.h"
 
 ChessPiece::ChessPiece(int pieceType, int pieceColor, bool isFirstMove) : type(pieceType), color(pieceColor), firstMove(true) {
 

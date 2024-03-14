@@ -1,8 +1,9 @@
 #ifndef CHESSENGINE_H
 #define CHESSENGINE_H
 
-#include "ReadWrite.h"
-#include "TranspositionTables.h"
+#include "../Other/ReadWrite.h"
+#include "../Engine/TranspositionTables.h"
+
 
 class ChessEngine : public ReadWrite {
     int EngineColor;

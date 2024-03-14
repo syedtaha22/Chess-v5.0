@@ -128,16 +128,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="BoardStats.cpp" />
-    <ClCompile Include="ChessBoard.cpp" />
-    <ClCompile Include="ChessEngine.cpp" />
-    <ClCompile Include="ChessPiece.cpp" />
-    <ClCompile Include="Flags.cpp" />
-    <ClCompile Include="GameModes.cpp" />
-    <ClCompile Include="GlobalVariables.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="PieceCodes.h" />
-    <ClCompile Include="ReadWrite.cpp" />
     <ClCompile Include="src\Board\ChessBoard.cpp" />
     <ClCompile Include="src\Engine\ChessEngine.cpp" />
     <ClCompile Include="src\Engine\TranspositionTables.cpp" />
@@ -148,17 +139,8 @@
     <ClCompile Include="src\Other\ReadWrite.cpp" />
     <ClCompile Include="src\Other\User.cpp" />
     <ClCompile Include="src\Pieces\ChessPiece.cpp" />
-    <ClCompile Include="TranspositionTables.cpp" />
-    <ClCompile Include="User.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BoardStats.h" />
-    <ClInclude Include="ChessBoard.h" />
-    <ClInclude Include="ChessEngine.h" />
-    <ClInclude Include="ChessPiece.h" />
-    <ClInclude Include="Flags.h" />
-    <ClInclude Include="GameModes.h" />
-    <ClInclude Include="GlobalVariables.h" />
     <ClInclude Include="headers\Board\ChessBoard.h" />
     <ClInclude Include="headers\Engine\ChessEngine.h" />
     <ClInclude Include="headers\Engine\TranspositionTables.h" />
@@ -171,10 +153,6 @@
     <ClInclude Include="headers\Other\User.h" />
     <ClInclude Include="headers\Pieces\ChessPiece.h" />
     <ClInclude Include="headers\Pieces\PieceCodes.h" />
-    <ClInclude Include="ReadWrite.h" />
-    <ClInclude Include="Resources.h" />
-    <ClInclude Include="TranspositionTables.h" />
-    <ClInclude Include="User.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

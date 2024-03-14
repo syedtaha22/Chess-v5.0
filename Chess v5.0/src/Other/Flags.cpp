@@ -1,4 +1,4 @@
-#include "Flags.h"
+#include "../../headers/Other/Flags.h"
 
 
 void Flags::CheckGameState() {isMoveMade = true;}
