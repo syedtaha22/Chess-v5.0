@@ -7,7 +7,7 @@
 
 class ChessEngine : public ReadWrite {
     int EngineColor;
-    int MAX_DEPTH = 2; // Maximum depth for the Minimax algorithm
+    int MAX_DEPTH = 1; // Maximum depth for the Minimax algorithm
     const int infinity = numeric_limits<int>::max();
     TranspositionTables transpostionTable;
 

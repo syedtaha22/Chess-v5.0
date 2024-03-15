@@ -47,7 +47,15 @@ bool TranspositionTables::isValuePresent(uint64_t hash) {
     return false;
 }
 
-void TranspositionTables::saveTranspositionTableToFile(const string& filename) {
+void TranspositionTables::saveTranspositionTableToFile(string filename) {
+    string folder = "Data";
+
+    if (!filesystem::is_directory(folder)) {
+        filesystem::create_directory(folder);
+    }
+
+    filename = "Data/" + filename;
+
     ofstream outputFile(filename);
     int MaxLenght = 20;
     if (outputFile.is_open()) {
@@ -55,7 +63,7 @@ void TranspositionTables::saveTranspositionTableToFile(const string& filename) {
             outputFile << left << setw(MaxLenght) << entry.first << right << setw(5) << entry.second.second << "D   " << entry.second.first << endl;
         }
         outputFile.close();
-        cout << "Saved Transposition Tables" << endl;
+        cout << "Saved Transposition Tables to: " << filename << endl;
     }
     else {
         cerr << "Error: Unable to open file for writing." << endl;

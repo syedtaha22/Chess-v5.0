@@ -65,51 +65,6 @@ string ChessEngine::GenerateMove(const ChessBoard& board) {
     return bestMove;
 }
 
-//string GenerateMove(const ChessBoard& board) {
-//    string bestMove;
-//    auto start = high_resolution_clock::now();
-//    NumberofMovesLookedAhead = 0;
-//    NumberOfTranspositionsFound = 0;
-//    for (int depth = 1; depth <= MAX_DEPTH; ++depth) {
-//        bestMove = IterativeDeepening(board, depth);
-//        auto end = high_resolution_clock::now();
-//        auto duration = duration_cast<seconds>(end - start);
-//        TimeTakenForSearch = duration.count();
-//    }
-//    return bestMove;
-//}
-
-//string IterativeDeepening(const ChessBoard& board, int maxDepth) {
-//    int bestScore = -infinity;
-//    string bestMove;
-//
-//    vector<string> possibleMoves = board.GetAllPossibleMovesInChessNotation(EngineColor);
-//    //SortMoves(possibleMoves, board, EngineColor);
-//    shuffleMoves(possibleMoves);
-//
-//    for (const string& move : possibleMoves) {
-//        if (terminateSearch) {
-//            cout << "xxxxxxxxxx Search Terminated xxxxxxxxxx" << endl;
-//            terminateSearch = false;
-//            break;
-//        }
-//
-//        ChessBoard tempBoard1566 = board;
-//        pair<int, int> Indices = convertChessNotationToIndices(move);
-//        tempBoard1566.MakeMove(Indices.first, Indices.second);
-//
-//        int score = Minimax(tempBoard1566, maxDepth, -infinity, infinity, false, EngineColor == White ? Black : White);
-//
-//        if (score >= bestScore) {
-//            bestScore = score;
-//            bestMove = move;
-//        }
-//    }
-//
-//    possibleMoves.clear();
-//
-//    return bestMove;
-//}
 
 int ChessEngine::Minimax(ChessBoard& board, int depth, int alpha, int beta, bool maximizingPlayer, int color) {
     NumberofMovesLookedAhead++;
@@ -321,11 +276,17 @@ int* ChessEngine::InvertTable(const int* originalArray) const {
 }
 
 int ChessEngine::readEloFromFile() {
+    string folder = "Data";
+    if (!filesystem::exists(folder)) {
+        cerr << "Folder " << folder << " does not exist. Using default Elo rating." << endl;
+        return engineEloRating;
+    }
+
     ifstream inputFile;
-    string filename = "Engine'sELO.txt";
+    string filename = "Data/Engine'sELO.txt";
     inputFile.open(filename);
 
-    int elo = engineEloRating; // Default value in case the file cannot be opened
+    int elo = engineEloRating; 
 
     if (inputFile.is_open()) {
         inputFile >> elo;
@@ -341,8 +302,14 @@ int ChessEngine::readEloFromFile() {
 }
 
 void ChessEngine::saveEloToFile() const {
+    string folder = "Data";
+
+    if (!filesystem::is_directory(folder)) {
+        filesystem::create_directory(folder);
+    }
+
     ofstream outputFile;
-    string filename = "Engine'sELO.txt";
+    string filename = "Data/Engine'sELO.txt";
     outputFile.open(filename);
 
     int defaultElo = 500;

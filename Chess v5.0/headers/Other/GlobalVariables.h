@@ -14,6 +14,7 @@
 #include <sstream>
 #include <iomanip>
 #include <limits>
+#include <filesystem>
 //#include<atomic>
 #define RAYGUI_IMPLEMENTATION
 #include "raygui.h"
@@ -29,14 +30,6 @@ extern Sound ChessPieceCaptured;
 extern Sound KingChecked;
 extern Sound GameStarts;
 extern Sound GameEnds;
-
-//extern string ChessPiecePlacedFile;
-//extern string ChessPieceCapturedFile;
-//extern string KingCheckedFile;
-//extern string GameStartsFile;
-//extern string GameEndsFile;
-//extern string fontFile;
-//extern string programIcon;
 
 extern Font myFont;
 

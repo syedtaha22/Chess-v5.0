@@ -179,8 +179,17 @@ int ChessBoard::GetKingIndex(const int& playercolor) const {
 
 // Function to generate and save FEN string to file
 void ChessBoard::saveMatchHistoryToFile() const {
+
+    string folder = "Data";
+
+    if (!filesystem::is_directory(folder)) {
+        filesystem::create_directory(folder);
+    }
+
+    string filename = "Data/MatchHistory.txt";
+
     // Open file for writing (in append mode)
-    ofstream file("MatchHistory.txt", ios::app);
+    ofstream file(filename, ios::app);
     if (!file.is_open()) {
         cerr << "Error: Unable to open file for writing." << endl;
         return;
@@ -241,7 +250,7 @@ void ChessBoard::saveMatchHistoryToFile() const {
     // Close file
     file.close();
 
-    cout << "Saved FEN string" << endl;
+    cout << "Saved FEN string to: " << filename << endl;
 }
 
 void ChessBoard::InitializeDefaultBoard() {

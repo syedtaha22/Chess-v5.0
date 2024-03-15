@@ -31,7 +31,7 @@ public:
     bool isValuePresent(uint64_t hash);
 
 
-    void saveTranspositionTableToFile(const string& filename);
+    void saveTranspositionTableToFile(string filename);
 
 
 };
