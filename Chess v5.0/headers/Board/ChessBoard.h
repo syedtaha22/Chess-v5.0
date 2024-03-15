@@ -27,6 +27,9 @@ private:
     const int bishopScore = 3;
     const int queenScore = 9;
     const int kingScore = 10;
+
+    int enPassantTarget;
+
     Flags flags;
 
 public:
@@ -54,6 +57,8 @@ public:
     void DisplayMoves();
     void DisplayScores() const;
     void DrawBoard() const;
+    void DrawSquareIndices() const;
+    void DrawCoordinates(int index, pair<int, int> PieceCoords, int LocX, int LocY) const;
     void DrawChessPiece() const;
     void initializeBoard();
     void initializeBoardFromFEN(const string& fen);
@@ -76,6 +81,7 @@ public:
     bool IsTileUnderAttack(int squareIndex) const;
     bool isValidCaptureMove(int fromTile, int toTile) const;
     bool isValidMove(int index);
+    bool IsEnPassantCapture(int fromTile, int toTile) const;
 
     pair<int, int> convertChessNotationToIndices(const string& move) const;
     pair<int, int> PieceCoordinates(int pieceIndex) const;
@@ -88,6 +94,8 @@ public:
     vector<string> GetAllPossibleMovesInChessNotation(int playerColor) const;
 
     string ConvertToChessNotation(int fromTile, int toTile) const;
+
+    bool IsEnPassantLegal(int pawnIndex, int targetIndex) const;
 };
 
 

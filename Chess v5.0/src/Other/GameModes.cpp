@@ -125,6 +125,7 @@ void GameModes::SinglePlayerMode() {
 void GameModes::DisplayBoard() const {
     chessboard.DrawBoard();
     chessboard.DrawChessPiece();
+    //chessboard.DrawSquareIndices();
 
 }
 

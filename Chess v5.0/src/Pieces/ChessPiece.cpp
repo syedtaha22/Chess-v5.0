@@ -10,6 +10,7 @@ ChessPiece::ChessPiece(int pieceType, int pieceColor, bool isFirstMove) : type(p
     isDragged = false;
     canCastleQueenSide = false;
     canCastleKingSide = false;
+    EnpassantTarget = false;
 
 
 }

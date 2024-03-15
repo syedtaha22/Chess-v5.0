@@ -68,7 +68,7 @@ extern Color Translucent;
 
 extern Color MoveHighlight;
 extern Color MovesForPieceHighLight;
-extern Color PreMoveHighlight;
+extern Color MoveHighlightRed;
 extern Color NextMoveHighlight;
 
 extern int offsets;

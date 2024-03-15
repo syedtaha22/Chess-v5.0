@@ -19,6 +19,7 @@ public:
     bool canCastleQueenSide;
     bool canCastleKingSide;
     int PieceCode;
+    int EnpassantTarget;
 
     /*
     *Piece Type Codes:

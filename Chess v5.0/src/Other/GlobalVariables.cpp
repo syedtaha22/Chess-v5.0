@@ -45,7 +45,7 @@ Color Translucent = { 0, 0, 0, 64 };
 
 Color MoveHighlight = Fade({ 255, 255, 0, 200 }, 0.5);
 Color MovesForPieceHighLight = Fade({ 255, 0, 0, 200 }, 0.5);
-Color PreMoveHighlight = Fade({ 0, 0, 255, 200 }, 0.5);
+Color MoveHighlightBlue = Fade({ 0, 0, 255, 200 }, 0.5);
 Color NextMoveHighlight = Fade({ 0, 255, 0, 200 }, 0.5);
 
 int offsets;

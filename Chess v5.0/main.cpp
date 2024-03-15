@@ -24,8 +24,6 @@ void CalculateAIMove(ChessEngine& engine, ChessBoard& board) {
     }
 }
 
-
-
 int main(){
     InitWindow(screenWidth, screenHeight, "Chess");
     InitAudioDevice();
@@ -33,6 +31,7 @@ int main(){
     Flags flags;
 
     GameModes Game;
+    Game.Horizon.SetDepth(1);
 
 
 
