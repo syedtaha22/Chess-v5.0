@@ -4,6 +4,7 @@
 //#include "raygui.h"
 
 
+
 void CalculateAIMove(ChessEngine& engine, ChessBoard& board) {
     while (true) {
         if (engine.isSearchStarted() && !board.isCurrentPlayerWhite()) {
@@ -22,7 +23,6 @@ void CalculateAIMove(ChessEngine& engine, ChessBoard& board) {
 
     }
 }
-
 
 
 

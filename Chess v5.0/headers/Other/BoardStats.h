@@ -12,6 +12,10 @@ private:
     const int BoardDimensions = tileSize * boardSize;
     const Color messageColor = WHITE;
     const Color AlertColor = RED;
+
+    Color CheckAlertB;
+    Color CheckAlertW;
+
     const char* BlackInCheck = "Black's King is in Check";
     const char* WhiteInCheck = "White's King is in Check";
     const char* ELO = "ELO: ";

@@ -144,6 +144,7 @@
   <ItemGroup>
     <ClInclude Include="headers\Board\ChessBoard.h" />
     <ClInclude Include="headers\Engine\ChessEngine.h" />
+    <ClInclude Include="headers\Engine\PieceSquareTables.h" />
     <ClInclude Include="headers\Engine\TranspositionTables.h" />
     <ClInclude Include="headers\Other\BoardStats.h" />
     <ClInclude Include="headers\Other\Flags.h" />

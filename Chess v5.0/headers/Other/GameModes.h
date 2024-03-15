@@ -48,6 +48,8 @@ public:
     void SaveTranspositions();
 
     void BoardSetUp();
+
+
 };
 
 

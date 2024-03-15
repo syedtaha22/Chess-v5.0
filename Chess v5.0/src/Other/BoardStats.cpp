@@ -3,6 +3,8 @@
 
 
 BoardStats::BoardStats() {
+    CheckAlertB = messageColor;
+    CheckAlertW = messageColor;
     ShowMoveHistory = false;
     winner = NULL;
     SaveData = true;
@@ -66,16 +68,19 @@ string BoardStats::CloseInBrackets(string stringClose) {
 }
 
 void BoardStats::DisplayStats(ChessBoard& chessboard, ChessEngine& engine, User& player) {
+   
 
-    Color CheckAlertB = messageColor;
-    Color CheckAlertW = messageColor;
+
     string LastMovePlayed = "";
     string currentPlayer = (chessboard.isCurrentPlayerWhite()) ? "White" : "Black";
 
     if (flags.MoveIsMade()) {
+        cout << "Entered Here" << endl;
         //cout << flags.MoveIsMade << endl;
-        CheckAlertB = chessboard.isCheck(chessboard, Black, "Game stats: Display Stats") ? messageColor : AlertColor;
-        CheckAlertW = chessboard.isCheck(chessboard, White, "Game stats: Display Stats") ? messageColor : AlertColor;
+        
+        Color CheckAlertB = chessboard.isCheck(chessboard, Black, "Game stats: Display Stats") ? AlertColor : messageColor;
+        Color CheckAlertW = chessboard.isCheck(chessboard, White, "Game stats: Display Stats") ? AlertColor : messageColor;
+
     }
 
     if (chessboard.moveHistory.size() != 0) {
@@ -87,7 +92,7 @@ void BoardStats::DisplayStats(ChessBoard& chessboard, ChessEngine& engine, User&
 
     MovesAndHistory(LastMovePlayed, chessboard);
     DrawTextWithCustomFont(Black_, textX - (TextCenter(Black_, fontSize).x / 2), textY - (TextCenter(Black_, fontSize).y / 2) + 20, fontSize, CheckAlertB);
-    DrawTextWithCustomFont(White_, textX - (TextCenter(White_, fontSize).x / 2), screenHeight - 146 - fontSize + 30, fontSize, CheckAlertB);
+    DrawTextWithCustomFont(White_, textX - (TextCenter(White_, fontSize).x / 2), screenHeight - 146 - fontSize + 30, fontSize, CheckAlertW);
     // (isSinglePlayer) {
     int LookAheads = engine.NumberofMovesLookedAhead;
     int BranchesPruned = engine.NumberOfBranchesPruned;
