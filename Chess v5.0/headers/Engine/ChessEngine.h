@@ -20,9 +20,10 @@ class ChessEngine : public ReadWrite {
 public:
     int engineEloRating = 500;
     int NumberofMovesLookedAhead;
-    long long TimeTakenForSearch;
+    long double TimeTakenForSearch;
     int NumberOfBranchesPruned;
     int NumberOfTranspositionsFound;
+    float EngineSpeed;
 
     ChessEngine(int Color = EMPTY);
 

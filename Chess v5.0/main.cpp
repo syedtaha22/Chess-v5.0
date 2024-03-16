@@ -1,5 +1,6 @@
 #include "headers/Other/GameModes.h"
 #include "headers/Other/Resources.h"
+
 //#define RAYGUI_IMPLEMENTATION
 //#include "raygui.h"
 
@@ -27,11 +28,14 @@ void CalculateAIMove(ChessEngine& engine, ChessBoard& board) {
 int main(){
     InitWindow(screenWidth, screenHeight, "Chess");
     InitAudioDevice();
+    //GuiLoadStyle("Resources/Styles/grey.rgs");
+    //GuiLoadStyle();
+    cout << "\n\n\n\n\n";
 
     Flags flags;
 
     GameModes Game;
-    Game.Horizon.SetDepth(1);
+    Game.Horizon.SetDepth(3);
 
 
 
@@ -84,6 +88,7 @@ int main(){
         BeginDrawing();
         ClearBackground(Background);
         DrawRectangleRounded(InfoBox, Roundedness, Segments, Translucent);
+        
         // Check if the game has started
         if (flags.isGameStarted()) {
 
@@ -119,6 +124,7 @@ int main(){
     }
     Game.SaveTranspositions();
     Game.Destroy();
+
     UnloadSound(ChessPiecePlaced);
     UnloadSound(ChessPieceCaptured);
     UnloadSound(KingChecked);

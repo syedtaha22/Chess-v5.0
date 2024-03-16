@@ -97,19 +97,23 @@ void BoardStats::DisplayStats(ChessBoard& chessboard, ChessEngine& engine, User&
     int LookAheads = engine.NumberofMovesLookedAhead;
     int BranchesPruned = engine.NumberOfBranchesPruned;
     int FoundTranspostions = engine.NumberOfTranspositionsFound;
-    long long TimeTaken = engine.TimeTakenForSearch;
+    float TimeTaken = engine.TimeTakenForSearch;
     double SizeOfTable = engine.getSizeOfTranspositionTable();
+    float Speed = engine.EngineSpeed / 1000; // n/s ---> kn/s
+    
 
     string WhiteELO = CloseInBrackets(ELO + to_string(player.ELO));
     string BLackELO = CloseInBrackets(ELO + to_string(engine.engineEloRating));
-    string BlackMessage = "Saw " + to_string(LookAheads) + " futures in " + to_string(TimeTaken) + "s";
+    string SpeedMessage = "Evaluation Speed: " + SetPrecision(Speed, 1) + "kn/s";
+    string BlackMessage = "Saw " + to_string(LookAheads) + " futures in " + SetPrecision(TimeTaken, 2) + "s";
     string PruningMessage = "Pruned " + to_string(BranchesPruned) + " Branches";
-    string TableSizeMessage = "Size: " + to_string(SizeOfTable);
+    string TableSizeMessage = "Size: " + SetPrecision(SizeOfTable, 2) + "Mbs";
     string TranspostionsFound = "Total Transpostions Found: " + to_string(FoundTranspostions);
     DrawTextWithCustomFont(BlackMessage.c_str(), textX - (TextCenter(BlackMessage.c_str(), fontSize - 30).x / 2), textY + 70, fontSize - 30, messageColor);
-    DrawTextWithCustomFont(TableSizeMessage.c_str(), textX - (TextCenter(TableSizeMessage.c_str(), fontSize - 30).x / 2), textY + 90, fontSize - 30, messageColor);
-    DrawTextWithCustomFont(PruningMessage.c_str(), textX - (TextCenter(PruningMessage.c_str(), fontSize - 30).x / 2), textY + 110, fontSize - 30, messageColor);
-    DrawTextWithCustomFont(TranspostionsFound.c_str(), textX - (TextCenter(TranspostionsFound.c_str(), fontSize - 30).x / 2), textY + 130, fontSize - 30, messageColor);
+    DrawTextWithCustomFont(SpeedMessage.c_str(), textX - (TextCenter(SpeedMessage.c_str(), fontSize - 30).x / 2), textY + 90, fontSize - 30, messageColor);
+    DrawTextWithCustomFont(TableSizeMessage.c_str(), textX - (TextCenter(TableSizeMessage.c_str(), fontSize - 30).x / 2), textY + 110, fontSize - 30, messageColor);
+    DrawTextWithCustomFont(PruningMessage.c_str(), textX - (TextCenter(PruningMessage.c_str(), fontSize - 30).x / 2), textY + 130, fontSize - 30, messageColor);
+    DrawTextWithCustomFont(TranspostionsFound.c_str(), textX - (TextCenter(TranspostionsFound.c_str(), fontSize - 30).x / 2), textY + 150, fontSize - 30, messageColor);
 
     DrawTextWithCustomFont(WhiteELO.c_str(), textX - (TextCenter(WhiteELO.c_str(), fontSize - 30).x / 2), screenHeight - 146 + 30, fontSize - 30, messageColor);
     DrawTextWithCustomFont(BLackELO.c_str(), textX - (TextCenter(BLackELO.c_str(), fontSize - 30).x / 2), textY + 50, fontSize - 30, messageColor);
@@ -248,12 +252,9 @@ void BoardStats::DrawEvaluationColumn(ChessBoard& chessboard, ChessEngine& engin
     float whiteProportion = (totalScore != 0) ? (whiteScore / totalScore) : 0;
     float blackProportion = (totalScore != 0) ? (blackScore / totalScore) : 0;
     //cout << whiteScore << " " << blackScore << endl;
-    ostringstream White_;
-    ostringstream Black_;
-    White_ << fixed << setprecision(1) << whiteProportion;
-    Black_ << fixed << setprecision(1) << blackProportion;
-    string WhiteProp = White_.str(); // White Proportions
-    string BlackProp = Black_.str(); // Black Proportions
+
+    string WhiteProp = SetPrecision(whiteProportion, 1); // White Proportions
+    string BlackProp = SetPrecision(blackProportion, 1); // Black Proportions
 
     Rectangle columnRect = { 763, 80, 25, 640 }; // { x, y, width, height };
 
@@ -307,4 +308,13 @@ float BoardStats::Evaluate(const ChessBoard& chessboard, int Player, ChessEngine
     //cout << captureMoves << endl;
 
     return evaluation;
+}
+
+string BoardStats::SetPrecision(const float& number, const int& precision) const {
+    ostringstream temp;
+    temp << fixed << setprecision(precision) << number;
+    return temp.str();
+    
+
+
 }

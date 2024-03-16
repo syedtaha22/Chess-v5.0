@@ -105,6 +105,8 @@ public:
     void DrawEvaluationColumn(ChessBoard& chessboard, ChessEngine& engine) const;
 
     float Evaluate(const ChessBoard& chessboard, int Player, ChessEngine& engine) const;
+
+    string SetPrecision(const float& number, const int& precision) const;
 };
 
 

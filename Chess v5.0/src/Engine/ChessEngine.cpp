@@ -10,6 +10,7 @@ ChessEngine::ChessEngine(int Color) : EngineColor(Color) {
     NumberOfTranspositionsFound = 0;
     terminateSearch = false;
     startSearch = false;
+    EngineSpeed = 0;
 
 }
 
@@ -56,9 +57,11 @@ string ChessEngine::GenerateMove(const ChessBoard& board) {
             bestMove = move;
         }
         auto end = high_resolution_clock::now();
-        auto duration = duration_cast<seconds>(end - start);
-        TimeTakenForSearch = duration.count();
+        auto duration = duration_cast<milliseconds>(end - start);
+        TimeTakenForSearch = static_cast<float>(duration.count())/1000; //Converted To seconds
+        EngineSpeed = NumberofMovesLookedAhead / TimeTakenForSearch;
     }
+    
 
     possibleMoves.clear();
 
