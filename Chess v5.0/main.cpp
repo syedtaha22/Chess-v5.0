@@ -1,8 +1,6 @@
 #include "headers/Other/GameModes.h"
 #include "headers/Other/Resources.h"
 
-//#define RAYGUI_IMPLEMENTATION
-//#include "raygui.h"
 
 
 
@@ -35,7 +33,7 @@ int main(){
     Flags flags;
 
     GameModes Game;
-    Game.Horizon.SetDepth(3);
+    Game.Horizon.SetDepth(1);
 
 
 
@@ -73,11 +71,12 @@ int main(){
     //bool gameStarted = false;
     bool StartGame = false;
     bool StartMultiplayer = false;
+    bool LoadFromFen;
 
     Rectangle InfoBox = { InfoBoxX, InfoBoxY, InfoBoxWidth, InfoBoxHeight };
-    Rectangle StartButton = { (InfoBoxWidth / 2) - 40, (InfoBoxHeight / 3) - buttonCenterY, 200, 70 };
-    Rectangle MultiplayerButton = { (InfoBoxWidth / 2) - 40, (InfoBoxHeight / 2) - buttonCenterY, 200, 70 };
-    Rectangle FENButton = { (InfoBoxWidth / 2) - 40, (InfoBoxHeight / 1.5f) - buttonCenterY, 200, 70 };
+    Rectangle StartButton = { (InfoBoxWidth / 2) - 40, (InfoBoxHeight / 3.0f) + 45, 200, 70 };
+    Rectangle MultiplayerButton = { (InfoBoxWidth / 2) - 40, (InfoBoxHeight / 2.0f) + 45, 200, 70 };
+    Rectangle FENButton = { (InfoBoxWidth / 2) - 40, (InfoBoxHeight / 1.5f) + 45, 200, 70 };
 
     thread aiThread(CalculateAIMove, ref(Game.Horizon), ref(Game.chessboard));
     aiThread.detach(); // Detach the thread to let it run independentl
@@ -115,14 +114,20 @@ int main(){
 
             Game.DisplayBoard();
 
-
             StartGame = GuiButton(StartButton, "Start");
             StartMultiplayer = GuiButton(MultiplayerButton, "Multiplayer");
+
+            LoadFromFen = GuiButton(FENButton, "Load From FEN\n(Work in progress...)");
+            
+        
+
+
+            
 
         }
         EndDrawing();
     }
-    Game.SaveTranspositions();
+    //Game.SaveTranspositions();
     Game.Destroy();
 
     UnloadSound(ChessPiecePlaced);

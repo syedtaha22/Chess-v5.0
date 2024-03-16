@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Fonts">
+      <UniqueIdentifier>{a09d2a75-001a-4d62-a737-25b5723c8de6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -89,5 +92,106 @@
     <ClInclude Include="headers\Engine\PieceSquareTables.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Resources\Audio\ChessPieceCaptured.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Resources\Audio\ChessPiecePlaced.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Resources\Audio\GameEnd.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Resources\Audio\GameStart.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Resources\Audio\KingChecked.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Resources\Audio\OponentPiecePlaced.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resources\BlackPieces\17.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\BlackPieces\18.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\BlackPieces\19.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\BlackPieces\20.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\BlackPieces\21.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\BlackPieces\22.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\WhitePieces\9.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\WhitePieces\10.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\WhitePieces\11.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\WhitePieces\12.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\WhitePieces\13.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\WhitePieces\14.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="Resources\Fonts\Roboto\Roboto-ThinItalic.ttf">
+      <Filter>Fonts</Filter>
+    </Font>
+    <Font Include="Resources\Fonts\Roboto\Roboto-Black.ttf">
+      <Filter>Fonts</Filter>
+    </Font>
+    <Font Include="Resources\Fonts\Roboto\Roboto-BlackItalic.ttf">
+      <Filter>Fonts</Filter>
+    </Font>
+    <Font Include="Resources\Fonts\Roboto\Roboto-Bold.ttf">
+      <Filter>Fonts</Filter>
+    </Font>
+    <Font Include="Resources\Fonts\Roboto\Roboto-BoldItalic.ttf">
+      <Filter>Fonts</Filter>
+    </Font>
+    <Font Include="Resources\Fonts\Roboto\Roboto-Italic.ttf">
+      <Filter>Fonts</Filter>
+    </Font>
+    <Font Include="Resources\Fonts\Roboto\Roboto-Light.ttf">
+      <Filter>Fonts</Filter>
+    </Font>
+    <Font Include="Resources\Fonts\Roboto\Roboto-LightItalic.ttf">
+      <Filter>Fonts</Filter>
+    </Font>
+    <Font Include="Resources\Fonts\Roboto\Roboto-Medium.ttf">
+      <Filter>Fonts</Filter>
+    </Font>
+    <Font Include="Resources\Fonts\Roboto\Roboto-MediumItalic.ttf">
+      <Filter>Fonts</Filter>
+    </Font>
+    <Font Include="Resources\Fonts\Roboto\Roboto-Regular.ttf">
+      <Filter>Fonts</Filter>
+    </Font>
+    <Font Include="Resources\Fonts\Roboto\Roboto-Thin.ttf">
+      <Filter>Fonts</Filter>
+    </Font>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Resources\Fonts\Roboto\LICENSE.txt">
+      <Filter>Fonts</Filter>
+    </Text>
   </ItemGroup>
 </Project>
