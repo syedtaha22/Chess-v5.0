@@ -31,7 +31,6 @@ class Menu{
     */
 
 
-
 public:
     bool StartSingleplayer;
     bool StartMultiplayer;
