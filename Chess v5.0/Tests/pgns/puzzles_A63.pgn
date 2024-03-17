@@ -1,0 +1,73 @@
+[Site "https://lichess.org/4vlepJhP/black#108"] 
+[Date "2021.06.06"]
+[ToMove "White to move."]
+[ECO "A63 "]
+[Opening "Benoni Defense: Fianchetto Variation, Hastings Defense"]
+[Rating "2591"]
+[BeginMove "55"]
+[Themes "crushing endgame master veryLong"]
+[Result "*"]
+[FEN "8/8/3p4/P1kP4/4P3/3p4/3N1Kp1/5b2 w - - 1 55"] 
+55. Nxf1 gxf1=Q+ 56. Kxf1 Kb4 57. Ke1 Kxa5 58. Kd2 Kb6 59. Kxd3 *
+
+[Site "https://lichess.org/t5wmDP56#33"] 
+[Date "2021.06.06"]
+[ToMove "Black to move."]
+[ECO "A63 "]
+[Opening "Benoni Defense: Fianchetto Variation, Hastings Defense"]
+[Rating "1415"]
+[BeginMove "17"]
+[Themes "crushing middlegame short"]
+[Result "*"]
+[FEN "r3r1k1/3b1pb1/pn1p1qpp/1ppP4/4P3/PPN3P1/2QN1PBP/R3R1K1 b - - 0 17"] 
+17... Qxc3 18. Qxc3 Bxc3 *
+
+[Site "https://lichess.org/JsNNBaju/black#48"] 
+[Date "2021.06.06"]
+[ToMove "White to move."]
+[ECO "A63 "]
+[Opening "Benoni Defense: Fianchetto Variation, Hastings Defense"]
+[Rating "1993"]
+[BeginMove "25"]
+[Themes "attraction crushing kingsideAttack middlegame sacrifice short"]
+[Result "*"]
+[FEN "1rbq1rk1/6b1/pp3n1p/2pPp1R1/P3N3/R6P/1P4B1/2BQ2K1 w - - 0 25"] 
+25. Rxg7+ Kxg7 26. Rg3+ *
+
+[Site "https://lichess.org/7xmGv150/black#42"] 
+[Date "2021.06.06"]
+[ToMove "White to move."]
+[ECO "A63 "]
+[Opening "Benoni Defense: Fianchetto Variation, Hastings Defense"]
+[Rating "1876"]
+[BeginMove "22"]
+[Themes "advantage master middlegame short"]
+[Result "*"]
+[FEN "r1b2rk1/1p5p/p2p2p1/3P3n/P1R1P3/2N3b1/3B1qBP/3QR2K w - - 0 22"] 
+22. Rf1 Qxf1+ 23. Bxf1 *
+
+[Site "https://lichess.org/A7DMzX06/black#76"] 
+[Date "2021.06.06"]
+[ToMove "White to move."]
+[ECO "A63 "]
+[Opening "Benoni Defense: Fianchetto Variation, Hastings Defense"]
+[Rating "1302"]
+[BeginMove "39"]
+[Themes "advancedPawn advantage discoveredAttack endgame master short"]
+[Result "*"]
+[FEN "8/3b1pk1/p2P2p1/1p1qP3/2p2P2/2Q5/PP2KN1r/6R1 w - - 4 39"] 
+39. e6+ Kg8 40. exd7 *
+
+[Site "https://lichess.org/q5nZxKtC#73"] 
+[Date "2021.06.06"]
+[ToMove "Black to move."]
+[ECO "A63 "]
+[Opening "Benoni Defense: Fianchetto Variation, Hastings Defense"]
+[Rating "1320"]
+[BeginMove "37"]
+[Themes "mate mateIn1 middlegame oneMove"]
+[Result "*"]
+[FEN "6rk/6bp/3P2p1/1QBq4/5R2/1R4Pb/1P3P2/6K1 b - - 0 37"] 
+37... Qg2# *
+
+

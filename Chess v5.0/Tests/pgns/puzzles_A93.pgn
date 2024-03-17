@@ -1,0 +1,73 @@
+[Site "https://lichess.org/uYVIv90Q#71"] 
+[Date "2021.06.06"]
+[ToMove "Black to move."]
+[ECO "A93 "]
+[Opening "Dutch Defense: Classical Variation, Stonewall Variation, Botvinnik Variation"]
+[Rating "1695"]
+[BeginMove "36"]
+[Themes "advantage endgame fork long"]
+[Result "*"]
+[FEN "1r4k1/6pp/4p3/P1Qp1p2/qP3P2/5PP1/5KB1/1R6 b - - 3 36"] 
+36... Qa2+ 37. Kg1 Qxb1+ 38. Kh2 Qxb4 *
+
+[Site "https://lichess.org/pkcfoTOP#45"] 
+[Date "2021.06.06"]
+[ToMove "Black to move."]
+[ECO "A93 "]
+[Opening "Dutch Defense: Classical Variation, Stonewall Variation, Botvinnik Variation"]
+[Rating "1955"]
+[BeginMove "23"]
+[Themes "advantage fork long middlegame"]
+[Result "*"]
+[FEN "r4r1k/pp4pp/6q1/3P4/8/1P2b1P1/PB4KP/RQ3R2 b - - 2 23"] 
+23... Rxf1 24. Qxf1 Qc2+ 25. Kh3 Qxb2 *
+
+[Site "https://lichess.org/xTQBBUyU/black#58"] 
+[Date "2021.06.06"]
+[ToMove "White to move."]
+[ECO "A93 "]
+[Opening "Dutch Defense: Classical Variation, Stonewall Variation, Botvinnik Variation"]
+[Rating "2074"]
+[BeginMove "30"]
+[Themes "crushing endgame fork short"]
+[Result "*"]
+[FEN "6k1/1p5p/pn4p1/3pN3/1P6/P3Q1P1/1n4KP/3q4 w - - 0 30"] 
+30. Qf2 Qc2 31. Qxc2 *
+
+[Site "https://lichess.org/qZUf6gM9#51"] 
+[Date "2021.06.06"]
+[ToMove "Black to move."]
+[ECO "A93 "]
+[Opening "Dutch Defense: Classical Variation, Stonewall Variation, Botvinnik Variation"]
+[Rating "1266"]
+[BeginMove "26"]
+[Themes "mate mateIn2 middlegame short"]
+[Result "*"]
+[FEN "r5k1/pb5p/1p2p3/2p1P3/1PQ2Pp1/P4r2/1B3P1K/1B3R2 b - - 0 26"] 
+26... Rh3+ 27. Kg1 Rh1# *
+
+[Site "https://lichess.org/Eu6lUzkd/black#84"] 
+[Date "2021.06.06"]
+[ToMove "White to move."]
+[ECO "A93 "]
+[Opening "Dutch Defense: Classical Variation, Stonewall Variation, Botvinnik Variation"]
+[Rating "924"]
+[BeginMove "43"]
+[Themes "crushing endgame fork short"]
+[Result "*"]
+[FEN "8/7k/1p5p/3N3q/P2P2p1/1P1nPpP1/7P/5RK1 w - - 0 43"] 
+43. Nf6+ Kg6 44. Nxh5 *
+
+[Site "https://lichess.org/GUuxUWuG#71"] 
+[Date "2021.06.06"]
+[ToMove "Black to move."]
+[ECO "A93 "]
+[Opening "Dutch Defense: Classical Variation, Stonewall Variation, Botvinnik Variation"]
+[Rating "1715"]
+[BeginMove "36"]
+[Themes "advantage master masterVsMaster middlegame short trappedPiece"]
+[Result "*"]
+[FEN "5Q2/1p2r1r1/4q3/3p1pk1/3Pn1p1/P2BP1Pp/2R2P1P/2R3K1 b - - 16 36"] 
+36... Rg8 37. Qxg8+ Qxg8 *
+
+
