@@ -6,7 +6,7 @@ This is a chess engine developed in C++. The engine implements various chess alg
 
 
 ## Features
-The Current Release v5.1.0 Includes The Following Features
+The Current Release v5.1.1 Includes The Following Features
 
 - Singleplayer Mode(Against AI)
 - Multiplayer Mode
