@@ -18,6 +18,7 @@
 #define RAYGUI_IMPLEMENTATION
 #include "raygui.h"
 #include "raylib.h"
+#include "Flags.h"
 
 using namespace std;
 using namespace chrono;

@@ -2,7 +2,7 @@
 #define CHESSBOARD_H
 
 #include "../Pieces/ChessPiece.h"
-#include "../Other/Flags.h"
+//#include "../Other/Flags.h"
 
 
 class ChessBoard {
