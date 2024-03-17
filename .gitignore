@@ -363,4 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 
 # Ignore Tests Folder
-Chess v5.0/Tests/
+Chess v5.0/Tests
