@@ -121,7 +121,6 @@ int main(){
     Game.chessboard.saveCurrentFENtofile("UnexpectedExits.txt");
     Game.Destroy();
     
-
     UnloadSound(ChessPiecePlaced);
     UnloadSound(ChessPieceCaptured);
     UnloadSound(KingChecked);
