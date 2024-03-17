@@ -7,6 +7,8 @@ class Flags {
     static bool SinglePlayer;
     static bool MultiplayerGame;
     static bool gameStarted;
+    static bool showSettings;
+    static bool SetFEN;
 public:
 
     Flags() {}
@@ -33,13 +35,26 @@ public:
 
     static void DisableSinglePlayer();
 
+    static void OpenSettings();
+
+    static bool SettingsOpened();
+
+    static void closeSettings();
+
+    static void OpenFENSettings();
+
+    static bool isFENSettingsOpened();
+
+    static void closeFENSettings();
+
 };
 
 bool Flags::isMoveMade = false;
 bool Flags::SinglePlayer = false;
 bool Flags::MultiplayerGame = false;
 bool Flags::gameStarted = false;
-
+bool Flags::showSettings = false;
+bool Flags::SetFEN = false;
 
 #endif // !FLAGS_H
 

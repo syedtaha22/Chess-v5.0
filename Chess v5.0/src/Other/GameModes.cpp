@@ -2,6 +2,9 @@
 
 GameModes::GameModes() {
     DoOnce = true;
+
+    //Default FEN
+    FENString = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq";
 }
 
 void GameModes::InitialiseMultiplayerMode() {
@@ -58,7 +61,7 @@ void GameModes::ResetBoard(bool calculateELO) {
 
     if (GameStats.SaveData) {
         if (calculateELO) CalculateELO();
-        chessboard.saveMatchHistoryToFile();
+        chessboard.saveCurrentFENtofile("MatchHistory.txt");
         GameStats.SaveData = false;
     }
     if (IsKeyPressed(KEY_R)) RestartGame();
@@ -79,6 +82,7 @@ void GameModes::BackToMenu() {
     GameStats.Reset();
     Horizon.Reset();
     chessboard.DestroyBoard();
+    chessboard.initializeBoardFromFEN(FENString);
     flags.EndGame();
 }
 
@@ -94,9 +98,9 @@ void GameModes::InitialiseSinglePlayerMode() {
     if (DoOnce) {
         Horizon.setEngineColor(Black);
 
-        Player.setUserName("Taha");
+        Player.setUserName("user");
         PlaySound(GameStarts);
-        chessboard.initializeBoardFromFEN(FENString);
+        chessboard.InitializeDefaultBoard();
         chessboard.ComputeOpponentMoves();
 
         DoOnce = false;
@@ -126,6 +130,7 @@ void GameModes::DisplayBoard() const {
     chessboard.DrawBoard();
     chessboard.DrawChessPiece();
     //chessboard.DrawSquareIndices();
+    chessboard.DrawCoordinates();
 
 }
 
@@ -145,5 +150,33 @@ void GameModes::BoardSetUp() {
     chessboard.InitializeDefaultBoard();
 }
 
+void GameModes::Settings() {
+    Rectangle SetDepthBox = { (InfoBoxWidth / 2) - 40, screenHeight / 2 - 20, 200, 40 };
+    GuiTextBox(SetDepthBox, inputDepth, 3, true);
+    enteredDepth = atoi(inputDepth);
 
+    GameStats.DisplayNewDepthMessage(enteredDepth);
+    if (IsKeyPressed(KEY_ENTER)) {
+        Horizon.SetDepth(enteredDepth);
+        flags.closeSettings();
+    }
+}
 
+void GameModes::FENSettings() {
+    Rectangle SetFENBox = { (InfoBoxWidth / 2) - 40, screenHeight / 2 - 20, 200, 40 };
+    GuiTextBox(SetFENBox, feninput, 76, true);
+   
+    string fen = feninput;
+    GameStats.DisplayNewFENMessage(fen);
+    if (IsKeyPressed(KEY_ENTER)) {
+        if(fen != "") setFENstring(fen);
+        flags.closeFENSettings();
+    }
+
+}
+
+void GameModes::SetFENStrings(const string& fen) {
+    FENString = fen;
+    chessboard.DestroyBoard();
+    chessboard.initializeBoardFromFEN(FENString);
+}

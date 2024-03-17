@@ -3,6 +3,7 @@
 
 #include "../Engine/ChessEngine.h"
 
+
 class User : public ReadWrite {
 public:
     string Username;
@@ -10,11 +11,11 @@ public:
 
     User(string name = "");
 
+    //From ReadWrite.h
+    int readEloFromFile() override;
+    void saveEloToFile() const override;
+
     void setUserName(string name);
-
-    int readEloFromFile();
-
-    void saveEloToFile() const;
 };
 
 

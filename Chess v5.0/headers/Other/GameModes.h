@@ -6,16 +6,25 @@
 
 class GameModes {
 
-
-    BoardStats GameStats;
     Flags flags;
     User Player;
     bool DoOnce;
-    string FENString = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq";
+    string FENString;
+
+
+
+    float engine_depth;
 
 public:
+    BoardStats GameStats;
     ChessBoard chessboard;
     ChessEngine Horizon;
+    //For settings
+   
+    char inputDepth[2] = { 0 }; 
+    char feninput[75] = { 0 };
+    int enteredDepth;
+    string enteredFEN;
 
     GameModes();
 
@@ -48,6 +57,13 @@ public:
     void SaveTranspositions();
 
     void BoardSetUp();
+
+    void Settings();
+
+    void FENSettings();
+
+    void SetFENStrings(const string& fen);
+
 
 
 };

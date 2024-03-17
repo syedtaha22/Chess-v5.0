@@ -58,7 +58,7 @@ public:
     void DisplayScores() const;
     void DrawBoard() const;
     void DrawSquareIndices() const;
-    void DrawCoordinates(int index, pair<int, int> PieceCoords, int LocX, int LocY) const;
+    void DrawCoordinates() const;
     void DrawChessPiece() const;
     void initializeBoard();
     void initializeBoardFromFEN(const string& fen);
@@ -68,7 +68,7 @@ public:
     void PlayChessSound() const;
     void promotePawn(int toTile);
     void ReverseBoard();
-    void saveMatchHistoryToFile() const; // Function to generate and save FEN string to file
+    void saveCurrentFENtofile(string file) const;
     void SetPiecePositions();
     void UpdateChessPiece(ChessPiece& piece, int InitialIndex);
 
@@ -94,6 +94,7 @@ public:
     vector<string> GetAllPossibleMovesInChessNotation(int playerColor) const;
 
     string ConvertToChessNotation(int fromTile, int toTile) const;
+    string GetCurrentFEN() const;
 
     bool IsEnPassantLegal(int pawnIndex, int targetIndex) const;
 };

@@ -5,9 +5,14 @@
 
 class TranspositionTables {
 
-    uint64_t zobristKeys[64][12]; // 64 squares, 12 piece types
-    unordered_map<uint64_t, pair<float, int>> transpositionTable; // <hash, <score, depth>>
+    /*
+        ZobristKeys         ---->[NumberOFSquares][Number of PieceTypes]
+        Transpostion Tables ----> <hash, <score, depth>>
 
+    */
+
+    uint64_t zobristKeys[64][12]; 
+    unordered_map<uint64_t, pair<float, int>> transpositionTable;
 
 public:
     double SizeOfTranspostionTable;
@@ -15,24 +20,15 @@ public:
     TranspositionTables();
 
     void initZobristKeys();
-
-    // Compute hash value for the current board position
-    uint64_t computeHash(const ChessBoard& board) const;
-
-
-    // Search in transposition table
-    pair<float, int> lookupTranspositionTable(uint64_t hash) const;
-
-    // Store in transposition table
     void storeTranspositionTable(uint64_t hash, float score, int depth);
-
     void ComputeSizeOfTranspositionTable();
-
-    bool isValuePresent(uint64_t hash);
-
-
     void saveTranspositionTableToFile(string filename);
 
+    uint64_t computeHash(const ChessBoard& board) const;
+
+    pair<float, int> lookupTranspositionTable(uint64_t hash) const;
+
+    bool isValuePresent(uint64_t hash);
 
 };
 

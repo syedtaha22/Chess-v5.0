@@ -78,5 +78,4 @@ const int KingEndgamePST[64] = {
     -50,-30,-30,-30,-30,-30,-30,-50
 };
 
-
 #endif // !PIECESQUARETABLES_H

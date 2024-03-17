@@ -29,14 +29,17 @@ void ChessEngine::SetDepth(int NewDepth) {
 
 string ChessEngine::GenerateMove(const ChessBoard& board) {
     int bestScore = -infinity;
-    //string bestMove;
+    
     string bestMove;
     auto start = high_resolution_clock::now();
     NumberofMovesLookedAhead = 0;
     NumberOfTranspositionsFound = 0;
-    //vector<string> possibleMoves = board.GetAllPossibleMovesInChessNotation(EngineColor);
+   
 
     vector<string> possibleMoves = board.GetAllPossibleMovesInChessNotation(EngineColor);
+
+    //Shuffle Moves to add randomness
+    shuffleMoves(possibleMoves);
     //SortMoves(possibleMoves, board, EngineColor);
 
     for (const string& move : possibleMoves) {
@@ -68,7 +71,6 @@ string ChessEngine::GenerateMove(const ChessBoard& board) {
     return bestMove;
 }
 
-
 int ChessEngine::Minimax(ChessBoard& board, int depth, int alpha, int beta, bool maximizingPlayer, int color) {
     NumberofMovesLookedAhead++;
     if (terminateSearch) return 0;
@@ -90,18 +92,19 @@ int ChessEngine::Minimax(ChessBoard& board, int depth, int alpha, int beta, bool
 
     if (maximizingPlayer) {
         int maxScore = -infinity;
-        //vector<string> possibleMoves = board.GetAllPossibleMovesInChessNotation(color);
+       
         vector<string> possibleMoves = board.GetAllPossibleMovesInChessNotation(color);
-        //shuffleMoves(possibleMoves);
+        //Shuffle Moves to add randomness
+        shuffleMoves(possibleMoves);
 
         for (const string& move : possibleMoves) {
             if (terminateSearch) break;
 
-            ChessBoard tempBoard1609 = board;
+            ChessBoard tempBoard = board;
             pair<int, int> Indices = convertChessNotationToIndices(move);
-            tempBoard1609.MakeMove(Indices.first, Indices.second);
+            tempBoard.MakeMove(Indices.first, Indices.second);
 
-            int score = Minimax(tempBoard1609, depth - 1, alpha, beta, false, color == White ? Black : White);
+            int score = Minimax(tempBoard, depth - 1, alpha, beta, false, color == White ? Black : White);
 
             maxScore = max(maxScore, score);
             alpha = max(alpha, score);
@@ -120,19 +123,21 @@ int ChessEngine::Minimax(ChessBoard& board, int depth, int alpha, int beta, bool
 
     else {
         int minScore = infinity;
-        //vector<string> possibleMoves = board.GetAllPossibleMovesInChessNotation(color);
+        
         vector<string> possibleMoves = board.GetAllPossibleMovesInChessNotation(color);
+
+        //Shuffle Moves to add randomness
         shuffleMoves(possibleMoves);
 
 
         for (const string& move : possibleMoves) {
             if (terminateSearch) break;
 
-            ChessBoard tempBoard1639 = board;
+            ChessBoard tempBoard = board;
             pair<int, int> Indices = convertChessNotationToIndices(move);
-            tempBoard1639.MakeMove(Indices.first, Indices.second);
+            tempBoard.MakeMove(Indices.first, Indices.second);
 
-            int score = Minimax(tempBoard1639, depth - 1, alpha, beta, true, color == White ? Black : White);
+            int score = Minimax(tempBoard, depth - 1, alpha, beta, true, color == White ? Black : White);
 
             minScore = min(minScore, score);
             beta = min(beta, score);
@@ -151,6 +156,7 @@ int ChessEngine::Minimax(ChessBoard& board, int depth, int alpha, int beta, bool
 }
 
 int ChessEngine::Evaluate(const ChessBoard& chessboard, char currentPlayerColor) const {
+
     if (terminateSearch) return 0;
     unordered_map<char, int> pieceValues;
     // Piece values for evaluation
@@ -348,12 +354,12 @@ void ChessEngine::Reset() {
 
 // Function to check if a move results in a check
 bool ChessEngine::CheckAfterMove(const string& move, const ChessBoard& board, int color) const {
-    ChessBoard tempBoard1854 = board; // Make a copy of the board to simulate the move
+    ChessBoard tempBoard = board; 
     pair<int, int> indices = convertChessNotationToIndices(move);
-    tempBoard1854.MakeMove(indices.first, indices.second); // Make the move directly without isValidMove()
+    tempBoard.MakeMove(indices.first, indices.second);
 
     // Check if the move puts the opponent's king in check
-    return tempBoard1854.isCheck(tempBoard1854, (color == White ? White : Black), "Engine: Check after move");
+    return tempBoard.isCheck(tempBoard, (color == White ? White : Black), "Engine: Check after move");
 }
 
 bool ChessEngine::IsCaptureMove(const string& move, const ChessBoard board) const {
@@ -364,36 +370,11 @@ bool ChessEngine::IsCaptureMove(const string& move, const ChessBoard board) cons
     return targetPiece.color != board.GetPieceAtPosition(indices.first).color && targetPiece.color != EMPTY;
 }
 
-void ChessEngine::SortMoves(vector<string>& moves, const ChessBoard& board, int color) const {
-    // Define custom comparator to sort moves
-    auto customComparator = [&](const string& move1, const string& move2) {
-        // Check if move1 gives check
-        bool check1 = CheckAfterMove(move1, board, color);
-
-        // Check if move2 gives check
-        bool check2 = CheckAfterMove(move2, board, color);
-
-        // If one move gives check and the other doesn't, prioritize the move that gives check
-        if (check1 != check2)
-            return check1;
-
-        // If engineh moves give check or engineh moves don't give check, prioritize captures
-        bool capture1 = IsCaptureMove(move1, board);
-        bool capture2 = IsCaptureMove(move2, board);
-
-        return capture1 > capture2; // Sorting captures before non-captures
-        };
-
-    // Sort moves using the custom comparator
-    sort(moves.begin(), moves.end(), customComparator);
-}
-
 double ChessEngine::getSizeOfTranspositionTable() const {
     return transpostionTable.SizeOfTranspostionTable;
 }
 
 void ChessEngine::StartSearch() {
-
     startSearch = true;
 }
 

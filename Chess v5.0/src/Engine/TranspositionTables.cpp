@@ -3,7 +3,6 @@
 
 TranspositionTables::TranspositionTables() {
     SizeOfTranspostionTable = 0.0;
-
     initZobristKeys();
 }
 
@@ -22,7 +21,7 @@ void TranspositionTables::initZobristKeys() {
 
 void TranspositionTables::storeTranspositionTable(uint64_t hash, float score, int depth) {
     transpositionTable[hash] = { score, depth };
-    //SaveTranspositionTable(hash, transpositionTable[hash]);
+    
     ComputeSizeOfTranspositionTable();
 }
 

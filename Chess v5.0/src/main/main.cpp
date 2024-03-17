@@ -1,8 +1,6 @@
-#include "headers/Other/GameModes.h"
-#include "headers/Other/Resources.h"
-
-
-
+#include "../../headers/Other/GameModes.h"
+#include "../../headers/Other/Resources.h"
+#include "../../headers/Other/Menu.h"
 
 void CalculateAIMove(ChessEngine& engine, ChessBoard& board) {
     while (true) {
@@ -31,13 +29,15 @@ int main(){
     cout << "\n\n\n\n\n";
 
     Flags flags;
-
     GameModes Game;
+    Menu GameMenu;
+
     Game.Horizon.SetDepth(1);
 
 
 
     string FENString = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq";
+
     //string FENString = "rnbqkbnr/qqqqqqqq/qqqqqqqq/8/8/8/PPPPPPPP/RNBQKBNR w KQkq";
     //string FENString = "1rb3k1/p2q2bp/2p4r/2P1p1p1/3pPp2/1P1P1P2/PB1NN1KP/1R2QR2 b";
     //string FENString = "qqqqkqqq/qqqqqqqq/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq";
@@ -64,29 +64,19 @@ int main(){
     SetWindowIcon(icon);
 
     myFont = LoadFont(fontFile.c_str());
-    string move;
 
-    //bool DoneOnce = false;
     SetTargetFPS(60);
-    //bool gameStarted = false;
-    bool StartGame = false;
-    bool StartMultiplayer = false;
-    bool LoadFromFen;
 
-    Rectangle InfoBox = { InfoBoxX, InfoBoxY, InfoBoxWidth, InfoBoxHeight };
-    Rectangle StartButton = { (InfoBoxWidth / 2) - 40, (InfoBoxHeight / 3.0f) + 45, 200, 70 };
-    Rectangle MultiplayerButton = { (InfoBoxWidth / 2) - 40, (InfoBoxHeight / 2.0f) + 45, 200, 70 };
-    Rectangle FENButton = { (InfoBoxWidth / 2) - 40, (InfoBoxHeight / 1.5f) + 45, 200, 70 };
 
     thread aiThread(CalculateAIMove, ref(Game.Horizon), ref(Game.chessboard));
-    aiThread.detach(); // Detach the thread to let it run independentl
+    aiThread.detach();
 
     // Main menu loop
     while (!WindowShouldClose()) {
         // Draw
         BeginDrawing();
         ClearBackground(Background);
-        DrawRectangleRounded(InfoBox, Roundedness, Segments, Translucent);
+        GameMenu.DrawMenuBox();
         
         // Check if the game has started
         if (flags.isGameStarted()) {
@@ -100,35 +90,37 @@ int main(){
             }
         }
 
+        else if (flags.isFENSettingsOpened()) Game.FENSettings();
+        else if (flags.SettingsOpened()) Game.Settings();
+
         else {
 
-            if (StartGame || StartMultiplayer) {
+            if (GameMenu.StartSingleplayer || GameMenu.StartMultiplayer) {
                 flags.StartGame();
-                if (StartGame) {
+                if (GameMenu.StartSingleplayer) {
                     flags.SinglePlayerMode();
                 }
-                else if (StartMultiplayer) {
+                else if (GameMenu.StartMultiplayer) {
                     flags.MultiplayerMode();
                 }
             }
+            if (GameMenu.OpenSettings) {
+                flags.OpenSettings();
+            }
+            if (GameMenu.LoadFromFen) {
+                flags.OpenFENSettings();
+            }
 
             Game.DisplayBoard();
-
-            StartGame = GuiButton(StartButton, "Start");
-            StartMultiplayer = GuiButton(MultiplayerButton, "Multiplayer");
-
-            LoadFromFen = GuiButton(FENButton, "Load From FEN\n(Work in progress...)");
-            
-        
-
-
-            
+            GameMenu.ShowMenu();
 
         }
         EndDrawing();
     }
     //Game.SaveTranspositions();
+    Game.chessboard.saveCurrentFENtofile("UnexpectedExits.txt");
     Game.Destroy();
+    
 
     UnloadSound(ChessPiecePlaced);
     UnloadSound(ChessPieceCaptured);

@@ -27,4 +27,14 @@ void Flags::MultiplayerMode() {MultiplayerGame = true;}
 
 void Flags::DisableSinglePlayer() { SinglePlayer = false; }
 
+void Flags::OpenSettings() { showSettings = true; }
 
+bool Flags::SettingsOpened() { return showSettings; }
+
+void Flags::closeSettings() { showSettings = false; }
+
+void Flags::OpenFENSettings() { SetFEN = true; }
+
+bool Flags::isFENSettingsOpened() { return SetFEN; }
+
+void Flags::closeFENSettings() { SetFEN = false; }

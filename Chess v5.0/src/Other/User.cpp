@@ -36,7 +36,6 @@ int User::readEloFromFile() {
     return elo;
 }
 
-
 void User::saveEloToFile() const {
     string folder = "Data";
     

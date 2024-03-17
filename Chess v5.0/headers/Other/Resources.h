@@ -13,7 +13,6 @@ const string fontFile = "Resources\\Fonts\\Roboto\\Roboto-Regular.ttf";
 const string program_icon = "Resources\\WhitePieces\\14.png";
 
 
-
 #endif // !RESOURCES_H
 
 
