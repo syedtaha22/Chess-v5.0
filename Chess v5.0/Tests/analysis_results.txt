@@ -1,94 +1,31 @@
-1rb3k1/p2q2bp/2p4r/2P1p1p1/3pPp2/1P1P1P2/PB1NN1KP/1R2QR2 b                        2D   0.85s   d7h3   37   7622
-2k3rr/ppp2p1p/2b5/4Nn2/3pPQ2/1P4Pq/P1PP1P1P/RN3RK1 b                              2D   0.89s   g8g7   39   7037
-4r1k1/1R3bpp/3b4/P3n3/3B2P1/2P2P2/5K2/7R b                                        2D   0.84s   e5d3   34   7142
-R2r2k1/4qppp/8/1Q6/1p1P4/1P4P1/K1P4P/5R2 b                                        2D   0.84s   g8h8   30   5853
-3q1rk1/5pb1/1p3nR1/3b3p/3B3P/1B1PP3/2P1QP2/1N2K3 b                                2D   0.57s   g8h8   28   5330
-4rk1r/1p2q1pp/2p2p2/p2p1b2/P2P4/1QPN2P1/4PPB1/R3K2R b                             2D   1.15s   e7e2   35   9868
-r4rk1/ppp2pbp/3q1np1/8/8/1P2PQ2/PBPP2PP/RN3RK1 b                                  2D   1.51s   d6c5   44   11198
-r1b4k/2qn1pbp/pp3np1/3N2B1/B1pP4/2P5/PP1N1PPP/R3Q1K1 b                            2D   1.16s   c7b8   31   7721
-2k3r1/p1p1n2p/1pPp1p2/4p3/Q1P4P/3P4/P2BPPr1/R3K2R b Q                             2D   0.61s   g2g7   31   6089
-2r2r1k/5pp1/4p2p/8/P2q4/6QP/2R2PP1/2R3K1 b                                        2D   1.04s   g7g6   45   9129
-r3k2r/ppp2ppp/8/3pnNq1/5N2/3P2P1/PPPQ3P/R3K2R b KQkq                              2D   1.30s   e5f3   39   8170
-5k2/2rR1pp1/5b1p/1P5P/PKB5/4r3/8/3R4 b                                            2D   0.59s   f6c3   34   5453
-6k1/p4p2/bp5p/3R2p1/6P1/4P1BP/P4PK1/2r5 b                                         2D   0.35s   a6f1   29   3997
-2r1r1k1/5pp1/2p2n1p/2Q5/2PPp3/2P1B2q/4BP2/1R3RK1 b                                2D   0.98s   c8c7   32   5686
-8/1k6/ppP5/1P1p4/3P4/4K3/8/8 b                                                    2D   0.00s   b7b8   5   146
-2r2kr1/5p1p/p1N2p2/1p6/1Pn5/P1q1PQ1P/5PB1/3R1KR1 b                                2D   1.13s   c3b3   40   9177
-3r2k1/3B1pp1/p7/Pp3Q1p/5n2/q6P/3K4/3RR3 b                                         2D   0.75s   a3d6   38   5508
-8/6k1/1RP5/RP1p1r1p/3P1r2/6K1/7P/8 b                                              2D   0.11s   f4g4   21   2037
-3rr1k1/ppp2p2/4p2p/3q2p1/3b1P2/P1B3P1/1P3N1P/R2Q1RK1 b                            2D   0.95s   d8d7   47   10062
-4R3/p5pk/1p3p2/8/P4n2/3P1PN1/2r1P2P/7K b                                          2D   0.31s   c2c1   27   4344
-r2qkb1r/2p2p2/1pnpbNpp/p3p3/4P2P/3PPN2/PPP1B1P1/R2QK2R b KQkq                     2D   0.05s   e8e7   2   417
-3brrk1/1p3p2/2p2Bq1/2P1Pn1p/1P3P2/3QPRPP/4N1K1/R7 b                               2D   0.76s   d8e7   27   5588
-3R4/2q3pp/1k1b1p2/pp6/1n1p4/1P1N2PP/2PP1PQ1/1K2R2B b                              2D   0.91s   c7c2   33   6282
-5rk1/p4ppp/1p1bpq2/8/3P2nN/P3P1P1/1B3PKP/3Q1R2 b                                  2D   0.77s   g4h6   40   9536
-r2qk2r/pp2nppp/2nbb3/1Bp1p1N1/3pP3/3P2N1/PPP2PPP/R1BQK2R b KQkq                   2D   0.95s   d8a5   38   8315
-2b2rk1/2p2p1p/7r/2pp1qp1/P3p3/2B1P1PN/2P2PKb/RN1Q3R b                             2D   0.88s   f5h3   33   6975
-4k2r/p1p2pp1/7p/4n3/8/3P2P1/Pr5P/R2BK1NR b KQk                                    2D   0.49s   e5d3   38   6117
-r4rk1/pp4p1/1bnq3B/3np3/3pN3/5PP1/PPPQ2BP/4RR1K b                                 2D   1.97s   d6c7   50   14354
-6k1/5pp1/7p/6n1/2Q1P3/3P2BP/5qPK/8 b                                              2D   0.38s   g5f3   29   3517
-5r1k/4Q1p1/7p/8/1P2p3/4P1P1/3q1P1P/R5K1 b                                         2D   0.66s   d2f2   34   5257
-1r1r2k1/p5pp/Q2Rp3/4p3/1P6/P3PK1P/2q2PP1/6NR b                                    2D   0.89s   c2f5   39   6483
-2r2rk1/Q4ppp/8/8/1b2P3/1PB2qP1/P2P1P1P/R3R1K1 b                                   2D   1.15s   b4d6   39   8432
-7k/6pp/2N5/5BP1/7n/q6Q/5R1K/4r3 b                                                 2D   1.03s   a3d6   43   9748
-1rb1kbnr/p2qpppp/3p4/1ppQ4/6P1/2N1P2P/PP1P1PB1/R1B1K1NR b KQk                     2D   0.81s   g8f6   27   6319
-8/k1pN3p/1bp2p2/3n4/P7/5NP1/4rPKP/5R2 b                                           2D   0.38s   d5e3   29   3884
-r6k/1pp3pp/1pnp2n1/5r2/1PB2P1q/P3PQ1P/1BP5/R4RK1 b                                2D   2.71s   d6d5   50   12833
-7r/k1pb1pr1/P7/2pp1p2/4pP2/1P2P1NP/2PP2K1/R4R2 b                                  2D   0.63s   d7e6   31   5477
-2kr4/pppn1p1p/5Bb1/1P2p3/2P5/q1NB2N1/3K1PPP/1Q5R b                                2D   2.07s   d8e8   36   8371
-6rk/1p3p2/2b1pN1p/3p1p2/3P1Pq1/2P1PQ2/R5PP/7K b                                   2D   0.73s   g4h4   28   4956
-2kr1b1r/ppp3pp/8/8/3n4/P1NP4/1P2PP1P/R1B1K2R b KQ                                 2D   0.71s   d4c2   30   5917
-2r1r1k1/R4pp1/7p/1Q6/8/4PqP1/7P/5RK1 b                                            2D   1.92s   f3e3   43   9706
-5r2/2k4p/pp3p2/2p1pNp1/4Pn2/2B5/P4PPP/R5K1 b                                      2D   0.41s   f4e2   28   3983
-8/3k4/6R1/5NK1/Pp2P3/1PpP4/2r5/8 b                                                2D   0.09s   c2g2   12   1104
-r2qr1k1/pp1nppb1/7p/3B2p1/3P4/P3P1BP/1P3PP1/R2QK2R b KQ                           2D   0.92s   d8a5   30   6330
-4rr2/6pk/1R6/p1PQ4/P5p1/8/5qPP/6RK b                                              2D   1.63s   f2g1   41   8319
-2r3k1/2r2pp1/R1p1q3/1pQp4/3P1PPp/4P2P/2RP2K1/8 b                                  2D   0.53s   e6e4   28   5046
-8/5rk1/2R5/2p5/5p2/KPP2R2/4r3/8 b                                                 2D   0.21s   f7a7   27   3106
-8/5k2/5p2/7p/1PR1Ppp1/2P2P1P/6PK/3r4 b                                            2D   0.11s   g4g3   26   2017
-3r1rk1/ppp1qpbp/5np1/nP2Nb2/P7/B1N1P3/2P1BPPP/R3QRK1 b                            2D   1.88s   c7c5   47   15557
-8/4qkpp/1p2rp2/1Pn5/1QPB4/5PP1/P2PN2P/RN3K1n b                                    2D   0.74s   h1f2   32   7514
-r6k/5p1P/2n1pb2/3pN3/1p1PnP2/1P6/2P3Q1/qNKR3R b                                   2D   1.24s   f6g5   42   6101
-5b2/8/6RP/4k3/8/5pP1/P1P1pP2/4K3 b                                                2D   0.06s   f8b4   11   752
-8/pp5k/1b1q3p/3P1ppP/7r/P2R4/4QPP1/3R2K1 b                                        2D   1.19s   d6h2   43   9785
-r1b1k2r/1p2bppp/pN1ppn2/6q1/2PP4/1P6/PB3PPP/R2QKB1R b KQkq                        2D   1.07s   g5a5   39   8457
-8/N5p1/4pk1p/3p4/2p5/6PP/5P2/6K1 b                                                2D   0.03s   f6g6   12   639
-6qk/p1b4n/8/1p2p3/4Pn2/5Q1B/PP3P1P/6RK b                                          2D   0.93s   h7g5   38   8411
-4rrk1/ppp3pp/3q1n2/3b4/3B1P2/1P1P2Q1/P4PBP/2R1R1K1 b                              2D   2.03s   f6g4   48   10957
-3R4/p4pkp/1p3q2/2n1r3/3Q4/4PB2/P4PP1/6K1 b                                        2D   0.99s   g7g6   36   7980
-4rrk1/p2n2B1/Pp2q1pp/1Ppn1p2/Q1B1p3/4PN2/3P1PPP/R3R1K1 b                          2D   0.79s   f8f7   30   7646
-1k1r3r/ppp1Qp1p/2b5/6PP/3n4/7B/PP2PP2/R1B1K1R1 b Q                                2D   0.81s   d4c2   34   6271
-1nb3k1/5ppp/pqN5/1p2r3/1P2P3/P1Q2B1P/5PP1/3R2K1 b                                 2D   1.05s   c8f5   36   9741
-1r3rk1/2p2ppp/p2b1q2/4n3/3P4/2P1P1P1/PP3PBP/RNQ2K1R b                             2D   1.15s   e5d3   43   9568
-B3nrk1/p4ppp/2p1bq2/4n3/1P6/1P2P1P1/PB2NP1P/RN1QK2R b KQ                          2D   1.00s   e5f3   34   8688
-3rk2r/pQpq1ppp/4b3/1P1p4/2P5/B3P3/n4PPP/1K1R1B1R b k                              2D   0.72s   a2c3   29   6272
-2kr4/1pp2p2/p2q1n2/3ppn1P/6B1/PP1PP1rP/1BPQ4/R3K2R b KQ                           2D   0.96s   f6e4   36   8840
-2Q4Q/kp6/p3N3/5p2/4pP2/1P1n1qPK/P6P/R7 b                                          2D   0.49s   d3f2   24   3020
-rn1qkb1r/ppp2ppp/5n2/3b4/8/1BN1P3/PPP2PPP/R1BQK1NR b KQkq                         2D   1.21s   b8c6   37   8664
-8/5p2/1pk1p1p1/3P2P1/2K1PP1p/7P/8/8 b                                             2D   0.02s   c6c7   5   196
-r3k2r/p1p2ppp/Q1Nqb3/3p4/3P3P/2n1P3/P4PP1/R1B1K2R b KQkq                          2D   1.17s   e8g8   38   9852
-4rb1r/1bk2p2/1p1p3p/pPp3pP/P1Ppq1P1/5N2/Q2RBP1N/4K1R1 b                           2D   0.70s   e8e6   40   7108
-r4r2/ppq2p2/4bQpk/2p3p1/3P2P1/2P1p1P1/PP2B1P1/R3KR2 b                             2D   0.44s   c7g3   37   3698
-8/8/1K1k2B1/3p1p2/3P2p1/4P1P1/2b5/8 b                                             2D   0.02s   d6e6   10   467
-2r1q3/1kp2R2/ppnp3B/3N1Q2/3PP3/1P3PP1/P1K5/8 b                                    2D   0.65s   c6d4   26   4266
-r2k2br/1p1n4/p6p/3p2NQ/3Np3/BPq5/P5B1/R4RK1 b                                     2D   1.90s   c3e3   40   10446
-3rr1k1/1pp4p/p3R1p1/3P4/5p2/PP3P2/2P3P1/2KR4 b                                    2D   0.28s   e8f8   21   2742
-r3kb1r/pp3ppp/2pqpn2/6Q1/1PB5/P3P3/1B1P1PPP/R3K2R b KQkq                          2D   1.77s   f8e7   39   10371
-1r1q1rk1/5ppp/4pb2/p4n2/4Q3/3BP2P/PP3PP1/1RB2RK1 b                                2D   0.91s   d8e8   40   9039
-b5rk/p5bp/7q/2B1pQnP/RPN5/2P3P1/5P2/3R1K2 b                                       2D   1.07s   a8g2   30   6833
-6k1/5RP1/8/r3BK2/5P2/8/8/4b3 b                                                    2D   0.10s   e1c3   19   1411
-1rb3k1/p2q2bp/2p4r/2P1p1p1/3pPp2/1P1P1P2/PB1NN1KP/1R2QR2 b                       2D   0.64s   d7h3   37   7908 12394.98kn/s
-2k3rr/ppp2p1p/2b5/4Nn2/3pPQ2/1P4Pq/P1PP1P1P/RN3RK1 b                             2D   0.74s   g8g7   39   7233 9800.81kn/s
-4r1k1/1R3bpp/3b4/P3n3/3B2P1/2P2P2/5K2/7R b                                       2D   0.56s   e5d3   34   7386 13212.88kn/s
-R2r2k1/4qppp/8/1Q6/1p1P4/1P4P1/K1P4P/5R2 b                                       2D   0.50s   g8h8   30   5743 11394.84kn/s
-3q1rk1/5pb1/1p3nR1/3b3p/3B3P/1B1PP3/2P1QP2/1N2K3 b                               2D   0.40s   d8c7   28   5354 13452.26kn/s
-4rk1r/1p2q1pp/2p2p2/p2p1b2/P2P4/1QPN2P1/4PPB1/R3K2R b                            2D   0.82s   e7e2   35   9876 12058.61kn/s
-r4rk1/ppp2pbp/3q1np1/8/8/1P2PQ2/PBPP2PP/RN3RK1 b                                 2D   1.02s   g7h6   44   10655 10395.12kn/s
-r1b4k/2qn1pbp/pp3np1/3N2B1/B1pP4/2P5/PP1N1PPP/R3Q1K1 b                           2D   0.72s   c7b8   31   6961 9627.94kn/s
-2k3r1/p1p1n2p/1pPp1p2/4p3/Q1P4P/3P4/P2BPPr1/R3K2R b Q                            2D   0.43s   g8g7   31   6127 14150.12kn/s
-2r2r1k/5pp1/4p2p/8/P2q4/6QP/2R2PP1/2R3K1 b                                       2D   0.72s   g7g6   45   8130 11354.75kn/s
-r3k2r/ppp2ppp/8/3pnNq1/5N2/3P2P1/PPPQ3P/R3K2R b KQkq                             2D   0.99s   e5f3   39   8614 8666.00kn/s
-5k2/2rR1pp1/5b1p/1P5P/PKB5/4r3/8/3R4 b                                           2D   0.39s   f6c3   34   5227 13471.65kn/s
-6k1/p4p2/bp5p/3R2p1/6P1/4P1BP/P4PK1/2r5 b                                        2D   0.24s   a6f1   29   3607 14782.79kn/s
-2r1r1k1/5pp1/2p2n1p/2Q5/2PPp3/2P1B2q/4BP2/1R3RK1 b                               2D   0.67s   h3e6   32   6076 9068.66kn/s
-8/1k6/ppP5/1P1p4/3P4/4K3/8/8 b                                                   2D   0.00s   b7a7   5   137 68500.00kn/s
+1rb3k1/p2q2bp/2p4r/2P1p1p1/3pPp2/1P1P1P2/PB1NN1KP/1R2QR2 b                       2D   0.62s   d7h3   37   7603
+2k3rr/ppp2p1p/2b5/4Nn2/3pPQ2/1P4Pq/P1PP1P1P/RN3RK1 b                             2D   0.71s   g8g7   39   6890
+4r1k1/1R3bpp/3b4/P3n3/3B2P1/2P2P2/5K2/7R b                                       2D   0.53s   e5d3   34   6771
+R2r2k1/4qppp/8/1Q6/1p1P4/1P4P1/K1P4P/5R2 b                                       2D   0.49s   g8h8   30   6005
+3q1rk1/5pb1/1p3nR1/3b3p/3B3P/1B1PP3/2P1QP2/1N2K3 b                               2D   0.39s   g8h8   28   5263
+1rb3k1/p2q2bp/2p4r/2P1p1p1/3pPp2/1P1P1P2/PB1NN1KP/1R2QR2 b                       2D   0.60s   d7h3   37   7321
+2k3rr/ppp2p1p/2b5/4Nn2/3pPQ2/1P4Pq/P1PP1P1P/RN3RK1 b                             2D   0.75s   g8g7   39   7222
+4r1k1/1R3bpp/3b4/P3n3/3B2P1/2P2P2/5K2/7R b                                       2D   0.57s   e5d3   34   6670
+R2r2k1/4qppp/8/1Q6/1p1P4/1P4P1/K1P4P/5R2 b                                       2D   0.52s   g8h8   30   5840
+3q1rk1/5pb1/1p3nR1/3b3p/3B3P/1B1PP3/2P1QP2/1N2K3 b                               2D   0.43s   d8e8   28   5358
+1rb3k1/p2q2bp/2p4r/2P1p1p1/3pPp2/1P1P1P2/PB1NN1KP/1R2QR2 b                       2D   0.60s   d7h3   37   7373
+2k3rr/ppp2p1p/2b5/4Nn2/3pPQ2/1P4Pq/P1PP1P1P/RN3RK1 b                             2D   0.70s   g8g7   39   6693
+4r1k1/1R3bpp/3b4/P3n3/3B2P1/2P2P2/5K2/7R b                                       2D   0.56s   e5d3   34   6922
+R2r2k1/4qppp/8/1Q6/1p1P4/1P4P1/K1P4P/5R2 b                                       2D   0.48s   g8h8   30   5377
+3q1rk1/5pb1/1p3nR1/3b3p/3B3P/1B1PP3/2P1QP2/1N2K3 b                               2D   0.39s   g8h7   28   5011
+4rk1r/1p2q1pp/2p2p2/p2p1b2/P2P4/1QPN2P1/4PPB1/R3K2R b                            2D   0.80s   e7e2   35   9586
+r4rk1/ppp2pbp/3q1np1/8/8/1P2PQ2/PBPP2PP/RN3RK1 b                                 2D   1.15s   d6a6   44   10522
+r1b4k/2qn1pbp/pp3np1/3N2B1/B1pP4/2P5/PP1N1PPP/R3Q1K1 b                           2D   0.86s   c7d6   31   7146
+2k3r1/p1p1n2p/1pPp1p2/4p3/Q1P4P/3P4/P2BPPr1/R3K2R b Q                            2D   0.51s   g2g4   31   6361
+2r2r1k/5pp1/4p2p/8/P2q4/6QP/2R2PP1/2R3K1 b                                       2D   0.91s   g7g6   45   9769
+r3k2r/ppp2ppp/8/3pnNq1/5N2/3P2P1/PPPQ3P/R3K2R b KQkq                             2D   1.14s   e5f3   39   8777
+5k2/2rR1pp1/5b1p/1P5P/PKB5/4r3/8/3R4 b                                           2D   0.39s   f6c3   34   5106
+6k1/p4p2/bp5p/3R2p1/6P1/4P1BP/P4PK1/2r5 b                                        2D   0.23s   a6f1   29   3796
+2r1r1k1/5pp1/2p2n1p/2Q5/2PPp3/2P1B2q/4BP2/1R3RK1 b                               2D   0.73s   h3e6   32   6165
+8/1k6/ppP5/1P1p4/3P4/4K3/8/8 b                                                   2D   0.00s   b7a7   5   133
+1rb3k1/p2q2bp/2p4r/2P1p1p1/3pPp2/1P1P1P2/PB1NN1KP/1R2QR2 b                       2D   0.63s   d7h3   37   7678
+2k3rr/ppp2p1p/2b5/4Nn2/3pPQ2/1P4Pq/P1PP1P1P/RN3RK1 b                             2D   0.73s   g8g7   39   7359
+4r1k1/1R3bpp/3b4/P3n3/3B2P1/2P2P2/5K2/7R b                                       2D   0.58s   e5d3   34   7555
+R2r2k1/4qppp/8/1Q6/1p1P4/1P4P1/K1P4P/5R2 b                                       2D   0.50s   g8h8   30   5789
+3q1rk1/5pb1/1p3nR1/3b3p/3B3P/1B1PP3/2P1QP2/1N2K3 b                               2D   0.39s   d8d7   28   5705
+4rk1r/1p2q1pp/2p2p2/p2p1b2/P2P4/1QPN2P1/4PPB1/R3K2R b                            2D   0.82s   e7e2   35   9441

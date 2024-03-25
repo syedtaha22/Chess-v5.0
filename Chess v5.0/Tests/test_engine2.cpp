@@ -22,6 +22,7 @@ int main(int argc, char* argv[]) {
     // Extract the FEN string from command-line arguments
     string fen = argv[1];
 
+
     // Initialize ChessBoard and ChessEngine
     ChessBoard board;
     ChessEngine engine(Black);
@@ -35,10 +36,10 @@ int main(int argc, char* argv[]) {
     string timeTaken = SetPrecision(engine.TimeTakenForSearch, 2);
     int numOfMovesSeen = engine.NumberofMovesLookedAhead;
     int TotalMoves = board.GetAllPossibleMoves(Black).size();
-    string Speed = SetPrecision(engine.EngineSpeed, 2);
+    //string Speed = SetPrecision(engine.EngineSpeed/1000, 2);
 
     // Display the information on the terminal
-    cout << left << setw(MaxLenght) << fen << right << setw(5) << depth << "D   " << timeTaken << "s   " << bestMove << "   " << TotalMoves << "   " << numOfMovesSeen << " " << Speed << "kn/s" << endl;
+    cout << right << setw(MaxLenght) << fen << right << setw(5) << depth << "D   " << timeTaken << "s   " << bestMove << "   " << TotalMoves << "   " << numOfMovesSeen << endl;
 
     // Save the information to a file
     ofstream outFile("analysis_results.txt", ios::app);
@@ -47,7 +48,7 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    outFile << left << setw(MaxLenght) << fen << right << setw(5) << depth << "D   " << timeTaken << "s   " << bestMove << "   " << TotalMoves << "   " << numOfMovesSeen << " " << Speed << "kn/s" << endl;
+    outFile << left << setw(MaxLenght) << fen << right << setw(5) << depth << "D   " << timeTaken << "s   " << bestMove << "   " << TotalMoves << "   " << numOfMovesSeen << endl;
     outFile.close();
 
     return 0;

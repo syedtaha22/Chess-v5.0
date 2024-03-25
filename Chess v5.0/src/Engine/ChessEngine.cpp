@@ -3,7 +3,7 @@
 
 
 ChessEngine::ChessEngine(int Color) : EngineColor(Color) {
-    engineEloRating = readEloFromFile();
+    //ngineEloRating = readEloFromFile();
     NumberofMovesLookedAhead = 0;
     TimeTakenForSearch = 0;
     NumberOfBranchesPruned = 0;
