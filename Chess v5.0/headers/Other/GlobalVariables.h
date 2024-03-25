@@ -15,20 +15,12 @@
 #include <iomanip>
 #include <limits>
 #include <filesystem>
-#include "raylib.h"
-#include "Flags.h"
 
 
 using namespace std;
 using namespace chrono;
  
-extern Sound ChessPiecePlaced;
-extern Sound ChessPieceCaptured;
-extern Sound KingChecked;
-extern Sound GameStarts;
-extern Sound GameEnds;
 
-extern Font myFont;
 
 //Window
 extern int screenWidth;
@@ -55,16 +47,7 @@ extern float InfoBoxHeight;
 
 extern float fontSize;
 
-extern Color lightSquare;
-extern Color darkSquare;
-extern Color Transparent;
-extern Color Background;
-extern Color Translucent;
 
-extern Color MoveHighlight;
-extern Color MovesForPieceHighLight;
-extern Color MoveHighlightRed;
-extern Color NextMoveHighlight;
 
 //enum class PromotionPiece;
 //extern Rectangle PawnPromotionDialogue;

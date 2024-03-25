@@ -54,8 +54,8 @@ void ChessBoard::promotePawn(int toTile) {
     //Promote Pawn to Queen
     delete board[toTile];
     board[toTile] = new Queen(currentPlayerIsWhite ? White : Black);
-    board[toTile]->AssignTextures();
-    SetPiecePositions();
+    //board[toTile]->AssignTextures();
+    //SetPiecePositions();
 }
 
 vector<int> ChessBoard::FilterValidMoves(int fromIndex, vector<int> possibleMoves) const {
@@ -150,7 +150,7 @@ void ChessBoard::initializeBoardFromFEN(const string& fen) {
 
     LoadTextures();
     // Set piece positions
-    SetPiecePositions();
+    //SetPiecePositions();
 }
 
 int ChessBoard::GetKingIndex(const int& playercolor) const {
@@ -271,7 +271,7 @@ void ChessBoard::initializeBoard() {
     board[61] = new Bishop(BISHOP, White);
     board[62] = new Knight(KNIGHT, White);
     board[63] = new Rook(ROOK, White);
-    SetPiecePositions();
+    //SetPiecePositions();
 }
 
 void ChessBoard::DisplayBoard() const {
@@ -301,14 +301,14 @@ pair<int, int> ChessBoard::PieceCoordinates(int pieceIndex) const {
     return make_pair(rank, file);
 }
 
-void ChessBoard::SetPiecePositions() {
-    //Set Piece Positions, on graphical Board everytime Board is changed
-    for (int index = 0; index < Total_tiles; index++) {
-        pair<int, int> PieceCoords = PieceCoordinates(index);
-        board[index]->rectangle.x = BoardOffsetX + static_cast<float>((abs((isBoardReversed * ReverseOffset) - PieceCoords.second)) * tileSize);
-        board[index]->rectangle.y = BoardOffsetY + static_cast<float>((abs((isBoardReversed * ReverseOffset) - PieceCoords.first)) * tileSize);
-    }
-}
+//void ChessBoard::SetPiecePositions() {
+//    //Set Piece Positions, on graphical Board everytime Board is changed
+//    for (int index = 0; index < Total_tiles; index++) {
+//        pair<int, int> PieceCoords = PieceCoordinates(index);
+//        board[index]->rectangle.x = BoardOffsetX + static_cast<float>((abs((isBoardReversed * ReverseOffset) - PieceCoords.second)) * tileSize);
+//        board[index]->rectangle.y = BoardOffsetY + static_cast<float>((abs((isBoardReversed * ReverseOffset) - PieceCoords.first)) * tileSize);
+//    }
+//}
 
 //void ChessBoard::DrawBoard() const {
 //    cout << "I'm Here\n";
@@ -415,49 +415,49 @@ int ChessBoard::getTileIndex(float x, float y, int tileSize) {
     return index;
 }
 
-void ChessBoard::UpdateChessPiece(ChessPiece* piece, int InitialIndex) {
-    if (piece->type != EMPTY) {
-
-        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && CheckCollisionPointRec(GetMousePosition(), piece->rectangle)) {
-            piece->isDragged = true;
-            MovesForSelectedPiece = GetAllPossibleMovesForPiece(piece->type, InitialIndex);
-
-        }
-        if (piece->isDragged) {
-            piece->rectangle.x = GetMouseX() - piece->rectangle.width / 2;
-            piece->rectangle.y = GetMouseY() - piece->rectangle.height / 2;
-
-            //Prevent Pieces from being Dragged out of the Screen
-            if (piece->rectangle.x < 0) piece->rectangle.x = 0;
-            if (piece->rectangle.y < 0) piece->rectangle.y = 0;
-            if (piece->rectangle.x + piece->rectangle.width > GetScreenWidth()) piece->rectangle.x = GetScreenWidth() - piece->rectangle.width;
-            if (piece->rectangle.y + piece->rectangle.height > GetScreenHeight()) piece->rectangle.y = GetScreenHeight() - piece->rectangle.height;
-
-            if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
-                float tileX = round((piece->rectangle.x - BoardOffsetX) / tileSize) * tileSize;
-                float tileY = round((piece->rectangle.y - BoardOffsetY) / tileSize) * tileSize;
-                int FinalIndex = abs((isBoardReversed * (Total_tiles - 1)) - getTileIndex(tileX, tileY, tileSize));
-                
-                string Move = ConvertToChessNotation(InitialIndex, FinalIndex);
-
-                if (isValidMove(FinalIndex)) {
-                    piece->isDragged = false;
-                    piece->rectangle.x = tileX;
-                    piece->rectangle.y = tileY;
-
-                    MakeCompleteMove(InitialIndex, FinalIndex, Move);
-                }
-                else {
-                    piece->isDragged = false;
-                    int file = abs((isBoardReversed * ReverseOffset) - (InitialIndex % 8));
-                    int rank = abs((isBoardReversed * ReverseOffset) - (InitialIndex / 8));
-                    piece->rectangle.x = BoardOffsetX + static_cast<float>(file * tileSize);
-                    piece->rectangle.y = BoardOffsetY + static_cast<float>(rank * tileSize);
-                }
-            }
-        }
-    }
-}
+//void ChessBoard::UpdateChessPiece(ChessPiece* piece, int InitialIndex) {
+//    if (piece->type != EMPTY) {
+//
+//        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && CheckCollisionPointRec(GetMousePosition(), piece->rectangle)) {
+//            piece->isDragged = true;
+//            MovesForSelectedPiece = GetAllPossibleMovesForPiece(piece->type, InitialIndex);
+//
+//        }
+//        if (piece->isDragged) {
+//            piece->rectangle.x = GetMouseX() - piece->rectangle.width / 2;
+//            piece->rectangle.y = GetMouseY() - piece->rectangle.height / 2;
+//
+//            //Prevent Pieces from being Dragged out of the Screen
+//            if (piece->rectangle.x < 0) piece->rectangle.x = 0;
+//            if (piece->rectangle.y < 0) piece->rectangle.y = 0;
+//            if (piece->rectangle.x + piece->rectangle.width > GetScreenWidth()) piece->rectangle.x = GetScreenWidth() - piece->rectangle.width;
+//            if (piece->rectangle.y + piece->rectangle.height > GetScreenHeight()) piece->rectangle.y = GetScreenHeight() - piece->rectangle.height;
+//
+//            if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
+//                float tileX = round((piece->rectangle.x - BoardOffsetX) / tileSize) * tileSize;
+//                float tileY = round((piece->rectangle.y - BoardOffsetY) / tileSize) * tileSize;
+//                int FinalIndex = abs((isBoardReversed * (Total_tiles - 1)) - getTileIndex(tileX, tileY, tileSize));
+//                
+//                string Move = ConvertToChessNotation(InitialIndex, FinalIndex);
+//
+//                if (isValidMove(FinalIndex)) {
+//                    piece->isDragged = false;
+//                    piece->rectangle.x = tileX;
+//                    piece->rectangle.y = tileY;
+//
+//                    MakeCompleteMove(InitialIndex, FinalIndex, Move);
+//                }
+//                else {
+//                    piece->isDragged = false;
+//                    int file = abs((isBoardReversed * ReverseOffset) - (InitialIndex % 8));
+//                    int rank = abs((isBoardReversed * ReverseOffset) - (InitialIndex / 8));
+//                    piece->rectangle.x = BoardOffsetX + static_cast<float>(file * tileSize);
+//                    piece->rectangle.y = BoardOffsetY + static_cast<float>(rank * tileSize);
+//                }
+//            }
+//        }
+//    }
+//}
 
 bool ChessBoard::isValidMove(int index){
     //Check if the Played Move is Valid
@@ -508,8 +508,8 @@ void ChessBoard::MakeMove(int fromTile, int toTile) {
 
     //Reverse board, if Multiplayer
     MoveIndices = make_pair(fromTile, toTile);
-    if (flags.isMultiplayerGame()) ReverseBoard();
-    SetPiecePositions();
+    //if (flags.isMultiplayerGame()) ReverseBoard();
+    //SetPiecePositions();
 }
 
 void ChessBoard::ReverseBoard() {
@@ -578,7 +578,7 @@ void ChessBoard::MakeCompleteMove(int fromTile, int toTile, string move) {
     //flags.CheckGameState();
     AddMoveToHistory(move);
     MoveIndices = make_pair(fromTile, toTile);
-    SetPiecePositions();
+    //SetPiecePositions();
 
     //Uncomment for Debugging or to Show Board on terminal
     //DisplayBoard();
@@ -586,23 +586,23 @@ void ChessBoard::MakeCompleteMove(int fromTile, int toTile, string move) {
 
     currentPlayerIsWhite = !currentPlayerIsWhite;
     ComputeOpponentMoves();
-    PlayChessSound();
+    //PlayChessSound();
     MovesForSelectedPiece.clear();
 }
 
-void ChessBoard::PlayChessSound() const {
-    ChessBoard temp(*this);
-    int PlayerColor = (temp.isCurrentPlayerWhite()) ? White : Black;
-    if (isCheck(temp, PlayerColor, "board: Play Chess Sound")) {
-        PlaySound(KingChecked);
-    }
-    else if (PieceIsCaptured) {
-        PlaySound(ChessPieceCaptured);
-    }
-    else {
-        PlaySound(ChessPiecePlaced);
-    }
-}
+//void ChessBoard::PlayChessSound() const {
+//    ChessBoard temp(*this);
+//    int PlayerColor = (temp.isCurrentPlayerWhite()) ? White : Black;
+//    if (isCheck(temp, PlayerColor, "board: Play Chess Sound")) {
+//        PlaySound(KingChecked);
+//    }
+//    else if (PieceIsCaptured) {
+//        PlaySound(ChessPieceCaptured);
+//    }
+//    else {
+//        PlaySound(ChessPiecePlaced);
+//    }
+//}
 
 bool ChessBoard::isCurrentPlayerWhite() const{
     return currentPlayerIsWhite;
@@ -1016,7 +1016,7 @@ void ChessBoard::DestroyBoard() {
     MovesForSelectedPiece.clear();
     OpponentMoves.clear();
     for (int i = 0; i < Total_tiles; i++) {
-        board[i]->DestroyTextures();
+        //board[i]->DestroyTextures();
     }
 }
 
@@ -1069,6 +1069,6 @@ void ChessBoard::ComputeOpponentMoves() {
 
 void ChessBoard::LoadTextures(){
     for (int index = 0; index < Total_tiles; index++) {
-        board[index]->AssignTextures();
+        //board[index]->AssignTextures();
     }
 }

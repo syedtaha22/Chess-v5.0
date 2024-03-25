@@ -77,3 +77,18 @@ r3kb1r/pp3ppp/2pqpn2/6Q1/1PB5/P3P3/1B1P1PPP/R3K2R b KQkq                        
 1r1q1rk1/5ppp/4pb2/p4n2/4Q3/3BP2P/PP3PP1/1RB2RK1 b                                2D   0.91s   d8e8   40   9039
 b5rk/p5bp/7q/2B1pQnP/RPN5/2P3P1/5P2/3R1K2 b                                       2D   1.07s   a8g2   30   6833
 6k1/5RP1/8/r3BK2/5P2/8/8/4b3 b                                                    2D   0.10s   e1c3   19   1411
+1rb3k1/p2q2bp/2p4r/2P1p1p1/3pPp2/1P1P1P2/PB1NN1KP/1R2QR2 b                       2D   0.64s   d7h3   37   7908 12394.98kn/s
+2k3rr/ppp2p1p/2b5/4Nn2/3pPQ2/1P4Pq/P1PP1P1P/RN3RK1 b                             2D   0.74s   g8g7   39   7233 9800.81kn/s
+4r1k1/1R3bpp/3b4/P3n3/3B2P1/2P2P2/5K2/7R b                                       2D   0.56s   e5d3   34   7386 13212.88kn/s
+R2r2k1/4qppp/8/1Q6/1p1P4/1P4P1/K1P4P/5R2 b                                       2D   0.50s   g8h8   30   5743 11394.84kn/s
+3q1rk1/5pb1/1p3nR1/3b3p/3B3P/1B1PP3/2P1QP2/1N2K3 b                               2D   0.40s   d8c7   28   5354 13452.26kn/s
+4rk1r/1p2q1pp/2p2p2/p2p1b2/P2P4/1QPN2P1/4PPB1/R3K2R b                            2D   0.82s   e7e2   35   9876 12058.61kn/s
+r4rk1/ppp2pbp/3q1np1/8/8/1P2PQ2/PBPP2PP/RN3RK1 b                                 2D   1.02s   g7h6   44   10655 10395.12kn/s
+r1b4k/2qn1pbp/pp3np1/3N2B1/B1pP4/2P5/PP1N1PPP/R3Q1K1 b                           2D   0.72s   c7b8   31   6961 9627.94kn/s
+2k3r1/p1p1n2p/1pPp1p2/4p3/Q1P4P/3P4/P2BPPr1/R3K2R b Q                            2D   0.43s   g8g7   31   6127 14150.12kn/s
+2r2r1k/5pp1/4p2p/8/P2q4/6QP/2R2PP1/2R3K1 b                                       2D   0.72s   g7g6   45   8130 11354.75kn/s
+r3k2r/ppp2ppp/8/3pnNq1/5N2/3P2P1/PPPQ3P/R3K2R b KQkq                             2D   0.99s   e5f3   39   8614 8666.00kn/s
+5k2/2rR1pp1/5b1p/1P5P/PKB5/4r3/8/3R4 b                                           2D   0.39s   f6c3   34   5227 13471.65kn/s
+6k1/p4p2/bp5p/3R2p1/6P1/4P1BP/P4PK1/2r5 b                                        2D   0.24s   a6f1   29   3607 14782.79kn/s
+2r1r1k1/5pp1/2p2n1p/2Q5/2PPp3/2P1B2q/4BP2/1R3RK1 b                               2D   0.67s   h3e6   32   6076 9068.66kn/s
+8/1k6/ppP5/1P1p4/3P4/4K3/8/8 b                                                   2D   0.00s   b7a7   5   137 68500.00kn/s

@@ -30,7 +30,7 @@ private:
 
     int enPassantTarget;
 
-    Flags flags;
+    //Flags flags;
 
 public:
     ChessPiece* board[64];
@@ -72,12 +72,12 @@ public:
     void InitializeDefaultBoard();
     void MakeCompleteMove(int fromTile, int toTile, string move);
     void MakeMove(int fromTile, int toTile);
-    void PlayChessSound() const;
+    //void PlayChessSound() const;
     void promotePawn(int toTile);
     void ReverseBoard();
     void saveCurrentFENtofile(string file) const;
-    void SetPiecePositions();
-    void UpdateChessPiece(ChessPiece* piece, int InitialIndex);
+    //void SetPiecePositions();
+    //void UpdateChessPiece(ChessPiece* piece, int InitialIndex);
 
     bool canCastleKingSide(int KingIndex) const;
     bool canCastleQueenide(int KingIndex) const;

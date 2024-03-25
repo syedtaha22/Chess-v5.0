@@ -27,34 +27,16 @@
     <ClCompile Include="src\Engine\TranspositionTables.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Other\BoardStats.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Other\Flags.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Other\GameModes.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Other\GlobalVariables.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Other\ReadWrite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Other\User.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Pieces\ChessPiece.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\main\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Other\Menu.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Board\GraphicalBoard.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Pieces\Pieces.cpp">
@@ -71,25 +53,7 @@
     <ClInclude Include="headers\Engine\TranspositionTables.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="headers\Other\BoardStats.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="headers\Other\Flags.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="headers\Other\GameModes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="headers\Other\GlobalVariables.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="headers\Other\ReadWrite.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="headers\Other\Resources.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="headers\Other\User.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="headers\Pieces\ChessPiece.h">
@@ -101,13 +65,10 @@
     <ClInclude Include="headers\Engine\PieceSquareTables.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="headers\Other\Menu.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="headers\Pieces\Pieces.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="headers\Board\GraphicalBoard.h">
+    <ClInclude Include="headers\Other\ReadWrite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

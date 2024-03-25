@@ -10,8 +10,7 @@ public:
     int color;
     bool firstMove;
     bool isSlidingPiece;
-    Texture2D texture;
-    Rectangle rectangle;
+
     bool isDragged;
  
     bool canCastleQueenSide;
@@ -39,8 +38,8 @@ public:
 
     ChessPiece(int pieceType = EMPTY, int pieceColor = EMPTY, bool isFirstMove = true);
 
-    void AssignTextures();
-    void DestroyTextures();
+    //void AssignTextures();
+    //void DestroyTextures();
 
     
 
