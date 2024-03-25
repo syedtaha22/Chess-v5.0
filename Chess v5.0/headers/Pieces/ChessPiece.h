@@ -13,7 +13,7 @@ public:
     Texture2D texture;
     Rectangle rectangle;
     bool isDragged;
-    bool canCastle;
+ 
     bool canCastleQueenSide;
     bool canCastleKingSide;
     int PieceCode;
@@ -41,6 +41,8 @@ public:
 
     void AssignTextures();
     void DestroyTextures();
+
+    
 
     //Not Using Destructer here as It, Unexpectedly Destroys Pieces.
     //~ChessPiece(){}

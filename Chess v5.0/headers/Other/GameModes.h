@@ -2,6 +2,8 @@
 #define GAMEMODES_H
 
 #include "BoardStats.h"
+#include "../Board/GraphicalBoard.h"
+#include "Menu.h"
 
 
 class GameModes {
@@ -10,6 +12,7 @@ class GameModes {
     User Player;
     bool DoOnce;
     string FENString;
+    GraphicalBoard graphics;
 
 
 

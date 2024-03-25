@@ -19,7 +19,7 @@ void TranspositionTables::initZobristKeys() {
     }
 }
 
-void TranspositionTables::storeTranspositionTable(uint64_t hash, float score, int depth) {
+void TranspositionTables::storeTranspositionTable(uint64_t hash, int score, int depth) {
     transpositionTable[hash] = { score, depth };
     
     ComputeSizeOfTranspositionTable();
@@ -27,7 +27,7 @@ void TranspositionTables::storeTranspositionTable(uint64_t hash, float score, in
 
 void TranspositionTables::ComputeSizeOfTranspositionTable() {
 
-    size_t pairSize = sizeof(pair<const uint64_t, pair<float, int>>);                        // Size of each key-value pair in bytes
+    size_t pairSize = sizeof(pair<const uint64_t, pair<int, int>>);                          // Size of each key-value pair in bytes
     size_t numPairs = transpositionTable.size();                                             // Total number of pairs in the map
     size_t totalPairSize = pairSize * numPairs;                                              // Total size of pairs in bytes
     size_t overhead = sizeof(transpositionTable);                                            // Overhead of the unordered_map itself
@@ -74,19 +74,19 @@ void TranspositionTables::saveTranspositionTableToFile(string filename) {
 uint64_t TranspositionTables::computeHash(const ChessBoard& board) const {
     uint64_t hash = 0;
     for (int i = 0; i < 64; ++i) {
-        ChessPiece piece = board.board[i];
-        if (piece.type != EMPTY) {
-            int index = piece.PieceCode;
+        ChessPiece* piece = board.board[i];
+        if (piece->type != EMPTY) {
+            int index = piece->PieceCode;
             hash ^= zobristKeys[i][index];
         }
     }
     return hash;
 }
 
-pair<float, int> TranspositionTables::lookupTranspositionTable(uint64_t hash) const {
+pair<int, int> TranspositionTables::lookupTranspositionTable(uint64_t hash) const {
     auto it = transpositionTable.find(hash);
     if (it != transpositionTable.end()) {
         return it->second;
     }
-    return { -INFINITY, -1 }; // Not found
+    return { -infinity, -1 }; // Not found
 }

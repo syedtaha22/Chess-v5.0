@@ -4,13 +4,12 @@ ChessPiece::ChessPiece(int pieceType, int pieceColor, bool isFirstMove) : type(p
 
     PieceCode = pieceColor | pieceType;
     isSlidingPiece = (type == ROOK) || (type == BISHOP) || (type == QUEEN);
-    AssignTextures();
-    rectangle.width = tileSize;
-    rectangle.height = tileSize;
+    rectangle.width = rectangle.height = static_cast<float>(tileSize);
     isDragged = false;
     canCastleQueenSide = false;
     canCastleKingSide = false;
     EnpassantTarget = false;
+    texture = {0};
 
 
 }

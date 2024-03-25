@@ -2,7 +2,8 @@
 #define CHESSBOARD_H
 
 #include "../Pieces/ChessPiece.h"
-//#include "../Other/Flags.h"
+#include "../Pieces/Pieces.h"
+
 
 
 class ChessBoard {
@@ -13,13 +14,11 @@ private:
     vector<int> KnightMoveData;
     vector<int> KingMoveData;
 
-    vector<int> MovesForSelectedPiece;
     vector<int> OpponentMoves;
 
     bool currentPlayerIsWhite;
     bool DoCastle;
-    bool PieceIsCaptured;
-    pair<int, int> MoveIndices;
+    //<fromTile, toTile>
     // Scores for each piece type
     const int pawnScore = 1;
     const int rookScore = 5;
@@ -28,17 +27,25 @@ private:
     const int queenScore = 9;
     const int kingScore = 10;
 
+
     int enPassantTarget;
 
     Flags flags;
 
 public:
-    ChessPiece board[64];
+    ChessPiece* board[64];
+    vector<int> MovesForSelectedPiece;
     vector<string> moveHistory;
     bool isBoardReversed;
+    bool PieceIsCaptured;
+    pair<int, int> MoveIndices;
 
     ChessBoard();
-    ChessPiece GetPieceAtPosition(int index) const;
+
+    ChessPiece* GetPieceAtPosition(int index) const;
+
+    // Deep copy constructor
+    ChessBoard(const ChessBoard& other);
 
     int calculatePlayerScore(int playerColor) const;
     int getAttacksOnSquare(int squareIndex, int opponentColor) const;
@@ -56,10 +63,10 @@ public:
     void DisplayBoard() const;
     void DisplayMoves();
     void DisplayScores() const;
-    void DrawBoard() const;
-    void DrawSquareIndices() const;
-    void DrawCoordinates() const;
-    void DrawChessPiece() const;
+    //void DrawBoard() const;
+    //void DrawSquareIndices() const;
+    //void DrawCoordinates() const;
+    //void DrawChessPiece() const;
     void initializeBoard();
     void initializeBoardFromFEN(const string& fen);
     void InitializeDefaultBoard();
@@ -70,11 +77,11 @@ public:
     void ReverseBoard();
     void saveCurrentFENtofile(string file) const;
     void SetPiecePositions();
-    void UpdateChessPiece(ChessPiece& piece, int InitialIndex);
+    void UpdateChessPiece(ChessPiece* piece, int InitialIndex);
 
     bool canCastleKingSide(int KingIndex) const;
     bool canCastleQueenide(int KingIndex) const;
-    bool IsCastlingMove(string move, ChessPiece pieceMoved);
+    bool IsCastlingMove(string move, ChessPiece* pieceMoved);
     bool isCheck(const ChessBoard& chessboard, int playerColor, string calledby) const;
     bool isCheckmate(ChessBoard& chessboard, int playerColor) const;
     bool isCurrentPlayerWhite() const;
@@ -97,6 +104,18 @@ public:
     string GetCurrentFEN() const;
 
     bool IsEnPassantLegal(int pawnIndex, int targetIndex) const;
+
+
+    void LoadTextures();
+
+    ~ChessBoard(){
+ 
+        for (ChessPiece* piece : board) {
+            delete piece;
+        }
+
+    }
+
 };
 
 

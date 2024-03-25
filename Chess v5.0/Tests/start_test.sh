@@ -9,7 +9,7 @@ fi
 # Path to the text file containing FEN strings
 FEN_FILE="$1"
 
-# Path to your C++ program
+
 CPP_PROGRAM="./test_engine.exe"
 
 # Check if the FEN file exists

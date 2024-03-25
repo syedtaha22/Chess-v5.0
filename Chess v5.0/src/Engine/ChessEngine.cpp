@@ -11,6 +11,12 @@ ChessEngine::ChessEngine(int Color) : EngineColor(Color) {
     terminateSearch = false;
     startSearch = false;
     EngineSpeed = 0;
+    totalMoves = 0;
+    movesEvaluated = 0;
+    totalMovesToEvaluate = 0;
+
+
+    
 
 }
 
@@ -20,7 +26,7 @@ void ChessEngine::setEngineColor(int color) {
 
 void ChessEngine::shuffleMoves(vector<string>& possibleMoves) {
     long long seed = system_clock::now().time_since_epoch().count();
-    shuffle(possibleMoves.begin(), possibleMoves.end(), default_random_engine(seed));
+    shuffle(possibleMoves.begin(), possibleMoves.end(), default_random_engine(static_cast<unsigned int>(seed)));
 }
 
 void ChessEngine::SetDepth(int NewDepth) {
@@ -31,30 +37,35 @@ string ChessEngine::GenerateMove(const ChessBoard& board) {
     int bestScore = -infinity;
     
     string bestMove;
-    auto start = high_resolution_clock::now();
+    
     NumberofMovesLookedAhead = 0;
     NumberOfTranspositionsFound = 0;
+    movesEvaluated = 0;
+    totalMovesToEvaluate = 0;
+
    
 
     vector<string> possibleMoves = board.GetAllPossibleMovesInChessNotation(EngineColor);
-
+    totalMoves = static_cast<int>(possibleMoves.size());
+    totalMovesToEvaluate += static_cast<int>(possibleMoves.size());
     //Shuffle Moves to add randomness
     shuffleMoves(possibleMoves);
     //SortMoves(possibleMoves, board, EngineColor);
 
+    auto start = high_resolution_clock::now();
     for (const string& move : possibleMoves) {
         if (terminateSearch) {
             cout << "xxxxxxxxxx Search Terminated xxxxxxxxxx" << endl;
             terminateSearch = false;
             break;
         }
-        ChessBoard tempBoard = board;
+        ChessBoard tempBoard(board);
         pair<int, int> Indices = convertChessNotationToIndices(move);
         tempBoard.MakeMove(Indices.first, Indices.second);
 
 
-        int score = Minimax(tempBoard, MAX_DEPTH, -infinity, infinity, false, EngineColor == White ? Black : White);
-
+        int score = Minimax(tempBoard, MAX_DEPTH, -infinity, infinity, false, EngineColor == White ? Black : White, high_resolution_clock::now());
+        movesEvaluated++;
         if (score >= bestScore) {
             bestScore = score;
             bestMove = move;
@@ -62,7 +73,7 @@ string ChessEngine::GenerateMove(const ChessBoard& board) {
         auto end = high_resolution_clock::now();
         auto duration = duration_cast<milliseconds>(end - start);
         TimeTakenForSearch = static_cast<float>(duration.count())/1000; //Converted To seconds
-        EngineSpeed = NumberofMovesLookedAhead / TimeTakenForSearch;
+        EngineSpeed = NumberofMovesLookedAhead / static_cast<float>(TimeTakenForSearch);
     }
     
 
@@ -71,17 +82,29 @@ string ChessEngine::GenerateMove(const ChessBoard& board) {
     return bestMove;
 }
 
-int ChessEngine::Minimax(ChessBoard& board, int depth, int alpha, int beta, bool maximizingPlayer, int color) {
+int ChessEngine::Minimax(ChessBoard& board, int depth, int alpha, int beta, bool maximizingPlayer, int color, auto time) {
     NumberofMovesLookedAhead++;
-    if (terminateSearch) return 0;
-    //cout << color << endl;
 
-    uint64_t hash = transpostionTable.computeHash(board);
-    if (transpostionTable.isValuePresent(hash)) {
-        auto stored = transpostionTable.lookupTranspositionTable(hash);
-        if (stored.second >= depth) {
-            NumberOfTranspositionsFound++;
-            return stored.first;
+    //board.DrawChessPiece();
+
+    auto end = high_resolution_clock::now();
+    auto duration = duration_cast<milliseconds>(end - time);
+    auto Currenttime = static_cast<float>(duration.count()) / 1000; //Converted To seconds
+   
+
+    if (Currenttime > timeLimit && timeLimit != 0) return Evaluate(board, color);
+
+    if (terminateSearch) return 0;
+
+    uint64_t Boardhash;
+    if (useTranspositions) {
+        Boardhash = transpostionTable.computeHash(board);
+        if (transpostionTable.isValuePresent(Boardhash)) {
+            auto stored = transpostionTable.lookupTranspositionTable(Boardhash);
+            if (stored.second >= depth) {
+                NumberOfTranspositionsFound++;
+                return static_cast<int>(stored.first);
+            }
         }
     }
 
@@ -94,27 +117,32 @@ int ChessEngine::Minimax(ChessBoard& board, int depth, int alpha, int beta, bool
         int maxScore = -infinity;
        
         vector<string> possibleMoves = board.GetAllPossibleMovesInChessNotation(color);
+        totalMovesToEvaluate += static_cast<int>(possibleMoves.size());
         //Shuffle Moves to add randomness
         shuffleMoves(possibleMoves);
+        //SortMoves(possibleMoves, board, color);
 
         for (const string& move : possibleMoves) {
             if (terminateSearch) break;
-
-            ChessBoard tempBoard = board;
             pair<int, int> Indices = convertChessNotationToIndices(move);
-            tempBoard.MakeMove(Indices.first, Indices.second);
 
-            int score = Minimax(tempBoard, depth - 1, alpha, beta, false, color == White ? Black : White);
+            ChessBoard tempBoard(board);
+            tempBoard.MakeMove(Indices.first, Indices.second);
+            int score = Minimax(tempBoard, depth - 1, alpha, beta, false, color == White ? Black : White, time);
+            
+
 
             maxScore = max(maxScore, score);
             alpha = max(alpha, score);
 
-            transpostionTable.storeTranspositionTable(hash, maxScore, depth);
+            if (useTranspositions) transpostionTable.storeTranspositionTable(Boardhash, maxScore, depth);
 
             //Alpha-beta pruning
-            if (beta <= alpha) {
-                NumberOfBranchesPruned++;
-                break;
+            if(useAlphaBetaPruning){
+                if (beta <= alpha) {
+                    NumberOfBranchesPruned++;
+                    break;
+                }
             }
         }
         possibleMoves.clear();
@@ -125,6 +153,8 @@ int ChessEngine::Minimax(ChessBoard& board, int depth, int alpha, int beta, bool
         int minScore = infinity;
         
         vector<string> possibleMoves = board.GetAllPossibleMovesInChessNotation(color);
+        totalMovesToEvaluate += static_cast<int>(possibleMoves.size());
+        //SortMoves(possibleMoves, board, color);
 
         //Shuffle Moves to add randomness
         shuffleMoves(possibleMoves);
@@ -133,26 +163,62 @@ int ChessEngine::Minimax(ChessBoard& board, int depth, int alpha, int beta, bool
         for (const string& move : possibleMoves) {
             if (terminateSearch) break;
 
-            ChessBoard tempBoard = board;
             pair<int, int> Indices = convertChessNotationToIndices(move);
+
+            ChessBoard tempBoard(board);
             tempBoard.MakeMove(Indices.first, Indices.second);
 
-            int score = Minimax(tempBoard, depth - 1, alpha, beta, true, color == White ? Black : White);
+            int score = Minimax(tempBoard, depth - 1, alpha, beta, true, color == White ? Black : White, time);
+
 
             minScore = min(minScore, score);
             beta = min(beta, score);
 
-            transpostionTable.storeTranspositionTable(hash, minScore, depth);
+
+            if(useTranspositions) transpostionTable.storeTranspositionTable(Boardhash, minScore, depth);
 
             //Alpha-beta pruning
-            if (beta <= alpha) {
-                NumberOfBranchesPruned++;
-                break;
+            if (useAlphaBetaPruning) {
+                if (beta <= alpha) {
+                    NumberOfBranchesPruned++;
+                    break;
+                }
             }
         }
         possibleMoves.clear();
         return minScore;
     }
+}
+
+string ChessEngine::IterativeDeepening(const ChessBoard& board, int maxDepth) {
+    int bestScore = -infinity;
+    string bestMove;
+
+    vector<string> possibleMoves = board.GetAllPossibleMovesInChessNotation(EngineColor);
+    //SortMoves(possibleMoves, board, EngineColor);
+    shuffleMoves(possibleMoves);
+
+    for (const string& move : possibleMoves) {
+        if (terminateSearch) {
+            cout << "xxxxxxxxxx Search Terminated xxxxxxxxxx" << endl;
+            terminateSearch = false;
+            break;
+        }
+
+        ChessBoard tempBoard(board);
+        pair<int, int> Indices = convertChessNotationToIndices(move);
+        tempBoard.MakeMove(Indices.first, Indices.second);
+        int score = Minimax(tempBoard, maxDepth, -infinity, infinity, false, EngineColor == White ? Black : White, high_resolution_clock::now());
+
+        if (score >= bestScore) {
+            bestScore = score;
+            bestMove = move;
+        }
+    }
+
+    possibleMoves.clear();
+
+    return bestMove;
 }
 
 int ChessEngine::Evaluate(const ChessBoard& chessboard, char currentPlayerColor) const {
@@ -174,13 +240,13 @@ int ChessEngine::Evaluate(const ChessBoard& chessboard, char currentPlayerColor)
     // Evaluate material advantage
     int SelfMaterial = 0, OpponentMeterial = 0;
     for (int i = 0; i < Total_tiles; ++i) {
-        ChessPiece piece = chessboard.board[i];
-        if (piece.type != EMPTY) {
-            if (piece.color == EngineColor) {
-                SelfMaterial += pieceValues[piece.PieceCode];
+        ChessPiece* piece = chessboard.board[i];
+        if (piece->type != EMPTY) {
+            if (piece->color == EngineColor) {
+                SelfMaterial += pieceValues[piece->PieceCode];
             }
             else {
-                OpponentMeterial += pieceValues[piece.PieceCode];
+                OpponentMeterial += pieceValues[piece->PieceCode];
             }
         }
     }
@@ -189,8 +255,8 @@ int ChessEngine::Evaluate(const ChessBoard& chessboard, char currentPlayerColor)
     // Evaluate positional advantage using PSTs
     int positionalAdvantage = 0;
     for (int i = 0; i < Total_tiles; ++i) {
-        ChessPiece piece = chessboard.board[i];
-        if (piece.type != EMPTY) {
+        ChessPiece* piece = chessboard.board[i];
+        if (piece->type != EMPTY) {
             int pieceValue = getPSTValue(piece, i, currentPlayerColor);
             positionalAdvantage += pieceValue;
         }
@@ -222,12 +288,11 @@ void ChessEngine::adjustEndgamePositionalAdvantage(const ChessBoard& chessboard,
     positionalAdvantage += (currentPlayerColor == EngineColor ? -5 : 5) * kingDist;
 }
 
-
-int ChessEngine::getPSTValue(ChessPiece piece, int squareIndex, char currentPlayerColor) const {
+int ChessEngine::getPSTValue(ChessPiece* piece, int squareIndex, char currentPlayerColor) const {
     if (terminateSearch) return 0;
     const int* piecePST = nullptr;
 
-    switch (piece.type) {
+    switch (piece->type) {
     case PAWN:
         piecePST = (currentPlayerColor == Black) ? InvertTable(PawnPST) : PawnPST;
         break;
@@ -354,7 +419,7 @@ void ChessEngine::Reset() {
 
 // Function to check if a move results in a check
 bool ChessEngine::CheckAfterMove(const string& move, const ChessBoard& board, int color) const {
-    ChessBoard tempBoard = board; 
+    ChessBoard tempBoard(board); 
     pair<int, int> indices = convertChessNotationToIndices(move);
     tempBoard.MakeMove(indices.first, indices.second);
 
@@ -364,10 +429,10 @@ bool ChessEngine::CheckAfterMove(const string& move, const ChessBoard& board, in
 
 bool ChessEngine::IsCaptureMove(const string& move, const ChessBoard board) const {
     pair<int, int> indices = convertChessNotationToIndices(move);
-    ChessPiece targetPiece = board.GetPieceAtPosition(indices.second);
+    ChessPiece* targetPiece = board.GetPieceAtPosition(indices.second);
 
     // Check if the target piece is an opponent's piece
-    return targetPiece.color != board.GetPieceAtPosition(indices.first).color && targetPiece.color != EMPTY;
+    return targetPiece->color != board.GetPieceAtPosition(indices.first)->color && targetPiece->color != EMPTY;
 }
 
 double ChessEngine::getSizeOfTranspositionTable() const {

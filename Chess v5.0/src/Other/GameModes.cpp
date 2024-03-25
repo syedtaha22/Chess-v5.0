@@ -1,5 +1,7 @@
 #include "../../headers/Other/GameModes.h"
 
+
+
 GameModes::GameModes() {
     DoOnce = true;
 
@@ -27,7 +29,7 @@ void GameModes::Options() {
 
 void GameModes::HandleMoves(int PlayerColor) {
     for (int i = 0; i < Total_tiles; i++) {
-        if (chessboard.board[i].color == PlayerColor) {
+        if (chessboard.board[i]->color == PlayerColor) {
             chessboard.UpdateChessPiece(chessboard.board[i], i);
         }
     }
@@ -100,7 +102,7 @@ void GameModes::InitialiseSinglePlayerMode() {
 
         Player.setUserName("user");
         PlaySound(GameStarts);
-        chessboard.InitializeDefaultBoard();
+        //chessboard.InitializeDefaultBoard();
         chessboard.ComputeOpponentMoves();
 
         DoOnce = false;
@@ -127,11 +129,10 @@ void GameModes::SinglePlayerMode() {
 }
 
 void GameModes::DisplayBoard() const {
-    chessboard.DrawBoard();
-    chessboard.DrawChessPiece();
+    graphics.DrawBoard(chessboard);
+    graphics.DrawChessPiece(chessboard);
     //chessboard.DrawSquareIndices();
-    chessboard.DrawCoordinates();
-
+    graphics.DrawCoordinates(chessboard);
 }
 
 void GameModes::Destroy() {
@@ -147,11 +148,13 @@ void GameModes::SaveTranspositions() {
 }
 
 void GameModes::BoardSetUp() {
-    chessboard.InitializeDefaultBoard();
+    chessboard.initializeBoardFromFEN(FENString);
+    //chessboard.InitializeDefaultBoard();
+    //chessboard.initializeBoard();
 }
 
 void GameModes::Settings() {
-    Rectangle SetDepthBox = { (InfoBoxWidth / 2) - 40, screenHeight / 2 - 20, 200, 40 };
+    Rectangle SetDepthBox = { (InfoBoxWidth / 2.0f) - 40.0f, screenHeight / 2.0f - 20.0f, 200.0f, 40.0f };
     GuiTextBox(SetDepthBox, inputDepth, 3, true);
     enteredDepth = atoi(inputDepth);
 
@@ -163,7 +166,7 @@ void GameModes::Settings() {
 }
 
 void GameModes::FENSettings() {
-    Rectangle SetFENBox = { (InfoBoxWidth / 2) - 40, screenHeight / 2 - 20, 200, 40 };
+    Rectangle SetFENBox = { (InfoBoxWidth / 2.0f) - 40.0f, screenHeight / 2.0f - 20.0f, 200.0f, 40.0f };
     GuiTextBox(SetFENBox, feninput, 76, true);
    
     string fen = feninput;

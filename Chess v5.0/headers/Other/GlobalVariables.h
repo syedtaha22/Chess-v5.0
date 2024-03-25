@@ -15,10 +15,9 @@
 #include <iomanip>
 #include <limits>
 #include <filesystem>
-#define RAYGUI_IMPLEMENTATION
-#include "raygui.h"
 #include "raylib.h"
 #include "Flags.h"
+
 
 using namespace std;
 using namespace chrono;
@@ -43,6 +42,8 @@ extern int MaxHistorySize;
 extern int ReverseOffset;
 extern int BoardOffsetX;
 extern int BoardOffsetY;
+
+
 
 //InfoBox
 extern int Segments;
