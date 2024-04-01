@@ -18,7 +18,6 @@
 #include "raylib.h"
 #include "Flags.h"
 
-
 using namespace std;
 using namespace chrono;
  

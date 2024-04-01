@@ -5,82 +5,97 @@
 
 class BoardStats {
 private:
+
+    //Set a const Text Size for display
     const float TextSize = 50;
 
+    //Set a Reference point based on the Dimensions of The information Box on GUI
     const float textX = (InfoBoxWidth / 2) + InfoBoxX;
     const float textY = 100;
+
+    //Calulate the Height and Width of Board
     const int BoardDimensions = tileSize * boardSize;
 
+    //Colors
     const Color messageColor = WHITE;
     const Color AlertColor = RED;
     Color CheckAlertB;
     Color CheckAlertW;
 
+    //Evaluation Column
     float whiteProportion;
     float blackProportion;
 
+    //Constant Messages, so that we don't have to right them each time
     const char* BlackInCheck = "Black's King is in Check";
     const char* WhiteInCheck = "White's King is in Check";
     const char* ELO = "ELO: ";
     const char* Black_ = "Black";
     const char* White_ = "White";
-    Flags flags;
-
 
 public:
+
+    //Wether to Show Move History or Not
     bool ShowMoveHistory;
     bool SaveData;
+
+    //Decide Winner
     int winner;
+    //Message Regarding Who won
     string EndMessage;
 
 
 
     BoardStats();
 
+
     void DisplayEndMessage();
+
+    //Display Game Statistics in Single Player Mode
     void DisplayStats(ChessBoard& chessboard, ChessEngine& engine, User& player);
+
+    //Display Game Statistice in Multiplayer Mode
     void DisplayStats(ChessBoard& chessboard);
+
+    //Display Last Move or Move History based on flag
     void MovesAndHistory(string LastMovePlayed, ChessBoard& chessboard);
+
+    //Reset Stats
     void Reset();
+
+    //Displays the Move History
     void DisplayMoveHistory(ChessBoard chessboard) const;
+
     void DrawEvaluationColumn(ChessBoard& chessboard, ChessEngine& engine);
+    float Evaluate(const ChessBoard& chessboard, int Player, ChessEngine& engine) const;
+
+    //Draw Text with Roboto font 
     void DrawTextWithCustomFont(const char* text, float posX, float posY, float fontSize, Color color) const;
 
+
+    //Close a String Between Brackets
     string CloseInBrackets(string stringClose);
+
     string SetPrecision(const float& number, const int& precision) const;
 
+    //Check if Gamr ended or not
     bool GameIsEnded(ChessBoard& board);
 
+
     int updateEloRating(int PlayerARating, int PlayerBRating, bool engineWon) const;
-    float Evaluate(const ChessBoard& chessboard, int Player, ChessEngine& engine) const;
     double calculateExpectedScore(int PlayerARating, int PlayerBRating) const;
 
+    //Calculate and Return the center of a text string
     Vector2 TextCenter(const char* text, float fontSize);
 
+    //Functions related to FENs
     void DisplayNewDepthMessage(const int& newdepth);
     void DisplayNewFENMessage(const string& fen);
 
-    std::string format(int number) {
-        std::string str = std::to_string(number);
-        int len = static_cast<int>(str.length());
-        if (len <= 3) // No need for formatting if the number is less than 1000
-            return str;
+    // format(xxxxxxxxx) --> xxx,xxx,xxx
+    string format(int number);
 
-        int commas = (len - 1) / 3; // Calculate the number of commas to be inserted
-        std::string formatted;
-        formatted.reserve(len + commas);
-
-        int i = 0;
-        int j = len % 3 == 0 ? 3 : len % 3; // Adjust for the first segment
-        formatted.append(str, 0, j);
-
-        for (; i + j < len; i += j, j = 3) {
-            formatted.push_back(',');
-            formatted.append(str, i + j, 3);
-        }
-
-        return formatted;
-    }
+    
 };
 
 

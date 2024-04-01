@@ -8,7 +8,7 @@
 
 class Menu{
 
-
+private:
     Rectangle InfoBox;
     Rectangle StartButton;
     Rectangle MultiplayerButton;
@@ -25,7 +25,7 @@ class Menu{
     const float SettingMenuY = 545;
 
     /*
-        Define in GlobalVariable.h : 
+        Defined in GlobalVariable.h : 
 
         float InfoBoxX = 60;
         float InfoBoxY = 80;
@@ -81,13 +81,9 @@ public:
 
     }
 
-    bool isOptionPressed() const {
-        return StartSingleplayer || StartMultiplayer;
-    }
+    bool isOptionPressed() const { return StartSingleplayer || StartMultiplayer; }
 
-    void DrawMenuBox() {
-        DrawRectangleRounded(InfoBox, Roundedness, Segments, Translucent);
-    }
+    void DrawMenuBox() { DrawRectangleRounded(InfoBox, Roundedness, Segments, Translucent); }
 
 
 

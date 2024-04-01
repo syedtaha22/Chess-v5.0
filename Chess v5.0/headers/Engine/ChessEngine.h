@@ -1,21 +1,31 @@
 #ifndef CHESSENGINE_H
 #define CHESSENGINE_H
 
-#include "../Other/ReadWrite.h"
+#include "../Other/EloManager.h"
 #include "TranspositionTables.h"
 #include "PieceSquareTables.h"
 
 
-class ChessEngine : public ReadWrite {
-    int EngineColor;
-    int MAX_DEPTH = 2; // Maximum depth for the Minimax algorithm
+class ChessEngine : public EloManager {
 
+private:
+    //Represents the Color the Engine Plays as(Black by Default)
+    int EngineColor;
+
+    // Maximum depth for the Minimax algorithm
+    int MAX_DEPTH = 2; 
+
+    //Transpostion Tables to Store Positional Data
     TranspositionTables transpostionTable;
 
+    //Flags to start or End search
     bool terminateSearch; 
     bool startSearch;
+
+    //Time Limit for Search, (0 means not Time limit)
     const float timeLimit = 0;
 
+    //Flags Defining Wether to Use Features
     const bool useTranspositions = true;
     const bool useAlphaBetaPruning = true;
 
@@ -23,20 +33,23 @@ class ChessEngine : public ReadWrite {
 
 
 public:
+    //Default Rating for Engine
     int engineEloRating = 500;
+
+    //Data Regarding Engine, For Testing purposes
     int NumberofMovesLookedAhead;
-    double TimeTakenForSearch;
-    int NumberOfBranchesPruned;
     int NumberOfTranspositionsFound;
-    float EngineSpeed;
+    int NumberOfBranchesPruned;
     int totalMoves;
     int movesEvaluated;
     int totalMovesToEvaluate;
+    float EngineSpeed;
+    double TimeTakenForSearch;
     
    
     ChessEngine(int Color = EMPTY);
 
-    //Engine Setting
+    //Engine Settings
     void setEngineColor(int color);
     void SetDepth(int NewDepth);
     int getDepth() const;
@@ -70,7 +83,7 @@ public:
     void PlayMove(const string& move, ChessBoard& board) const;
     void DisplayMoves(vector<string>& moves);
 
-    //From ReadWrite.h
+    //From EloManager.h
     int readEloFromFile() override;
     void saveEloToFile() const override;
 

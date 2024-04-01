@@ -1,12 +1,12 @@
-#ifndef READWRITE_H
-#define READWRITE_H
+#ifndef EloManager_H
+#define EloManager_H
 
-class ReadWrite {
+class EloManager {
 
     virtual int readEloFromFile() = 0;
     virtual void saveEloToFile() const = 0;
 };
 
-#endif // !READWRITE_H
+#endif // !EloManager_H
 
 

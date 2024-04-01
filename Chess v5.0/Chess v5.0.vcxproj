@@ -129,6 +129,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Other\Settings.cpp" />
     <ClCompile Include="src\Board\GraphicalBoard.cpp" />
     <ClCompile Include="src\main\main.cpp" />
     <ClCompile Include="src\Other\Menu.cpp" />
@@ -139,7 +140,7 @@
     <ClCompile Include="src\Other\Flags.cpp" />
     <ClCompile Include="src\Other\GameModes.cpp" />
     <ClCompile Include="src\Other\GlobalVariables.cpp" />
-    <ClCompile Include="src\Other\ReadWrite.cpp" />
+    <ClCompile Include="src\Other\EloManager.cpp" />
     <ClCompile Include="src\Other\User.cpp" />
     <ClCompile Include="src\Pieces\ChessPiece.cpp" />
     <ClCompile Include="src\Pieces\Pieces.cpp" />
@@ -154,13 +155,14 @@
     <ClInclude Include="headers\Other\Flags.h" />
     <ClInclude Include="headers\Other\GameModes.h" />
     <ClInclude Include="headers\Other\GlobalVariables.h" />
-    <ClInclude Include="headers\Other\ReadWrite.h" />
+    <ClInclude Include="headers\Other\EloManager.h" />
     <ClInclude Include="headers\Other\Resources.h" />
     <ClInclude Include="headers\Other\User.h" />
     <ClInclude Include="headers\Pieces\ChessPiece.h" />
     <ClInclude Include="headers\Pieces\PieceCodes.h" />
     <ClInclude Include="headers\Other\Menu.h" />
     <ClInclude Include="headers\Pieces\Pieces.h" />
+    <ClInclude Include="headers\Other\Settings.h" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="Resources\Audio\ChessPieceCaptured.wav">
@@ -272,6 +274,9 @@
     <Font Include="Resources\Fonts\Roboto\Roboto-ThinItalic.ttf">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
     </Font>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

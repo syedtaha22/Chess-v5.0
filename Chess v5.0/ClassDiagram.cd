@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ChessBoard" Collapsed="true">
+    <Position X="12.75" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AhCUIEAwgABQBEQcmAIIgYfEQAMBAgRBINKgMUBAAco=</HashCode>
+      <FileName>headers\Board\ChessBoard.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChessEngine">
+    <Position X="15.75" Y="5.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>hFiCBDRACFAaDAAEGAAAQgAIiACAUAiADACAIAUIABg=</HashCode>
+      <FileName>headers\Engine\ChessEngine.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TranspositionTables">
+    <Position X="13.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAQAAAAAAAAAAAIAAAAAQAAACSAQEAIAAAAg=</HashCode>
+      <FileName>headers\Engine\TranspositionTables.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BoardStats">
+    <Position X="22.75" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>NQgEQAAACgAAFIAgASAIChoQFQQAIAAAAAQQAKAAAQA=</HashCode>
+      <FileName>headers\Other\BoardStats.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Flags">
+    <Position X="27.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAgAAQQRAABAAEAAAACjgAggAAISQIAAAQASAAI=</HashCode>
+      <FileName>headers\Other\Flags.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameModes">
+    <Position X="24.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAQQCQAAAADAAAIgUAAAAgAAAhAAAgC5kACUQhEoAA=</HashCode>
+      <FileName>headers\Other\GameModes.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="User" Collapsed="true">
+    <Position X="18" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAACAAQCAAAAQAAAAAAAAAAAAAAAAAAAAAQAAA=</HashCode>
+      <FileName>headers\Other\User.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChessPiece" Collapsed="true">
+    <Position X="6" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAABAAAAAAAAACAgIAYBAgDAAAAIBIAAAAA=</HashCode>
+      <FileName>headers\Pieces\ChessPiece.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Menu">
+    <Position X="20.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAABAAASACAQAQAAEAIAFAAAIAAACEgCAAABBAAA=</HashCode>
+      <FileName>headers\Other\Menu.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pawn">
+    <Position X="3.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>headers\Pieces\Pieces.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rook">
+    <Position X="7" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>headers\Pieces\Pieces.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Queen">
+    <Position X="8.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>headers\Pieces\Pieces.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Bishop">
+    <Position X="10.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>headers\Pieces\Pieces.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Knight">
+    <Position X="1.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>headers\Pieces\Pieces.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="King">
+    <Position X="5.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>headers\Pieces\Pieces.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EloManager" Collapsed="true">
+    <Position X="16.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>headers\Other\EloManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Settings" Collapsed="true">
+    <Position X="16.75" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAwAAAAAAAgAAAAAAAgBAAAAEAAAA=</HashCode>
+      <FileName>headers\Other\Settings.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

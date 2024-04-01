@@ -353,11 +353,11 @@ int ChessEngine::readEloFromFile() {
     string folder = "Data";
     if (!filesystem::exists(folder)) {
         cerr << "Folder " << folder << " does not exist. Using default Elo rating." << endl;
-        return engineEloRating;
+        return engineEloRating; //Return Default Rating
     }
 
     ifstream inputFile;
-    string filename = "Data/Engine'sELO.txt";
+    string filename = "Data/EnginesELO";
     inputFile.open(filename);
 
     int elo = engineEloRating; 
@@ -383,7 +383,7 @@ void ChessEngine::saveEloToFile() const {
     }
 
     ofstream outputFile;
-    string filename = "Data/Engine'sELO.txt";
+    string filename = "Data/EnginesELO";
     outputFile.open(filename);
 
     int defaultElo = 500;

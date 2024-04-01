@@ -76,8 +76,10 @@ uint64_t TranspositionTables::computeHash(const ChessBoard& board) const {
     for (int i = 0; i < 64; ++i) {
         ChessPiece* piece = board.board[i];
         if (piece->type != EMPTY) {
-            int index = piece->PieceCode;
-            hash ^= zobristKeys[i][index];
+            int type = piece->type;
+            if (piece->color == Black) type += 6;
+            if (type > 12) cerr << "Invalid Piece Type: " << type << endl;
+            hash ^= zobristKeys[i][type];
         }
     }
     return hash;

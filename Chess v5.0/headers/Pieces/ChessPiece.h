@@ -6,7 +6,7 @@
 
 class ChessPiece {
 public:
-    int type;
+    int type; 
     int color;
     bool firstMove;
     bool isSlidingPiece;
@@ -39,7 +39,9 @@ public:
 
     ChessPiece(int pieceType = EMPTY, int pieceColor = EMPTY, bool isFirstMove = true);
 
+    //Loads Textures Based on PieceCodes
     void AssignTextures();
+    //Unloads textures associated to the Piece
     void DestroyTextures();
 
     

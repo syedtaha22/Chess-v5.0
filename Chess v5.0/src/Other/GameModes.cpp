@@ -12,10 +12,10 @@ GameModes::GameModes() {
 void GameModes::InitialiseMultiplayerMode() {
     if (DoOnce) {
         PlaySound(GameStarts);
-        chessboard.initializeBoardFromFEN(FENString);
+        chessboard.initializeBoardFromFEN(FENString, true);
         chessboard.ComputeOpponentMoves();
         DoOnce = false;
-        flags.DisableSinglePlayer();
+        Flags::DisableSinglePlayer();
     }
 }
 
@@ -84,8 +84,8 @@ void GameModes::BackToMenu() {
     GameStats.Reset();
     Horizon.Reset();
     chessboard.DestroyBoard();
-    chessboard.initializeBoardFromFEN(FENString);
-    flags.EndGame();
+    chessboard.initializeBoardFromFEN(FENString, true);
+    Flags::EndGame();
 }
 
 void GameModes::CalculateELO() {
@@ -146,9 +146,9 @@ void GameModes::setFENstring(string newFen) {
 void GameModes::SaveTranspositions() {
     Horizon.SaveTranspositionTable();
 }
-
+  
 void GameModes::BoardSetUp() {
-    chessboard.initializeBoardFromFEN(FENString);
+    chessboard.initializeBoardFromFEN(FENString, true);
     //chessboard.InitializeDefaultBoard();
     //chessboard.initializeBoard();
 }
@@ -161,7 +161,7 @@ void GameModes::Settings() {
     GameStats.DisplayNewDepthMessage(enteredDepth);
     if (IsKeyPressed(KEY_ENTER)) {
         Horizon.SetDepth(enteredDepth);
-        flags.closeSettings();
+        Flags::closeSettings();
     }
 }
 
@@ -173,7 +173,7 @@ void GameModes::FENSettings() {
     GameStats.DisplayNewFENMessage(fen);
     if (IsKeyPressed(KEY_ENTER)) {
         if(fen != "") setFENstring(fen);
-        flags.closeFENSettings();
+        Flags::closeFENSettings();
     }
 
 }
@@ -181,5 +181,5 @@ void GameModes::FENSettings() {
 void GameModes::SetFENStrings(const string& fen) {
     FENString = fen;
     chessboard.DestroyBoard();
-    chessboard.initializeBoardFromFEN(FENString);
+    chessboard.initializeBoardFromFEN(FENString, true);
 }

@@ -38,3 +38,10 @@ void Flags::OpenFENSettings() { SetFEN = true; }
 bool Flags::isFENSettingsOpened() { return SetFEN; }
 
 void Flags::closeFENSettings() { SetFEN = false; }
+
+bool Flags::isMoveMade = false;
+bool Flags::SinglePlayer = false;
+bool Flags::MultiplayerGame = false;
+bool Flags::gameStarted = false;
+bool Flags::showSettings = false;
+bool Flags::SetFEN = false;

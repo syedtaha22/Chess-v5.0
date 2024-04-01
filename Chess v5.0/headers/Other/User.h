@@ -4,14 +4,14 @@
 #include "../Engine/ChessEngine.h"
 
 
-class User : public ReadWrite {
+class User : public EloManager {
 public:
     string Username;
     int ELO = 500;
 
     User(string name = "");
 
-    //From ReadWrite.h
+    //From EloManager.h
     int readEloFromFile() override;
     void saveEloToFile() const override;
 

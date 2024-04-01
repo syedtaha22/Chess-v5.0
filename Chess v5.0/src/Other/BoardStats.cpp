@@ -19,7 +19,7 @@ void BoardStats::DisplayEndMessage() {
 }
 
 bool BoardStats::GameIsEnded(ChessBoard& board) {
-    if (flags.MoveIsMade()) {
+    if (Flags::MoveIsMade()) {
 
         cout << "Checking....." << endl;
         int playerColor = board.isCurrentPlayerWhite() ? White : Black;
@@ -29,7 +29,7 @@ bool BoardStats::GameIsEnded(ChessBoard& board) {
             EndMessage += (board.isCurrentPlayerWhite() ? Black_ : White_);
             winner = board.isCurrentPlayerWhite() ? Black : White; // Set Winner
 
-            flags.GameStateChecked();
+            Flags::GameStateChecked();
             cout << "Check Complete" << endl;
             return true;
         }
@@ -37,7 +37,7 @@ bool BoardStats::GameIsEnded(ChessBoard& board) {
             EndMessage = "---Stalemate---";
             winner = -1; //No Winner
 
-            flags.GameStateChecked();
+            Flags::GameStateChecked();
             cout << "Check Complete" << endl;
             return true;
         }
@@ -45,13 +45,13 @@ bool BoardStats::GameIsEnded(ChessBoard& board) {
             EndMessage = "---Draw---";
             winner = -1; //No Winner
 
-            flags.GameStateChecked();
+            Flags::GameStateChecked();
             return true;
             cout << "Check Complete" << endl;
         }
 
         cout << "Check Complete" << endl;
-        flags.GameStateChecked();
+        Flags::GameStateChecked();
     }
 
 
@@ -72,7 +72,7 @@ void BoardStats::DisplayStats(ChessBoard& chessboard, ChessEngine& engine, User&
     string LastMovePlayed = "";
     string currentPlayer = (chessboard.isCurrentPlayerWhite()) ? "White" : "Black";
 
-    if (flags.MoveIsMade()) {        
+    if (Flags::MoveIsMade()) {        
         Color CheckAlertB = chessboard.isCheck(chessboard, Black, "Game stats: Display Stats") ? AlertColor : messageColor;
         Color CheckAlertW = chessboard.isCheck(chessboard, White, "Game stats: Display Stats") ? AlertColor : messageColor;
     }
@@ -134,7 +134,7 @@ void BoardStats::DisplayStats(ChessBoard& chessboard) {
     string LastMovePlayed = "";
     string currentPlayer = (chessboard.isCurrentPlayerWhite()) ? "White" : "Black";
 
-    if (flags.MoveIsMade()) {
+    if (Flags::MoveIsMade()) {
 
         CheckAlertB = chessboard.isCheck(chessboard, Black, "Game stats: Display Stats") ? AlertColor : messageColor;
         CheckAlertW = chessboard.isCheck(chessboard, White, "Game stats: Display Stats") ? AlertColor : messageColor;
@@ -221,7 +221,7 @@ Vector2 BoardStats::TextCenter(const char* text, float fontSize) {
 void BoardStats::DrawEvaluationColumn(ChessBoard& chessboard, ChessEngine& engine) {
 
     //Calculate Only When a move is made
-    if (flags.MoveIsMade()) {
+    if (Flags::MoveIsMade()) {
         float whiteScore = Evaluate(chessboard, White, engine);
         float blackScore = Evaluate(chessboard, Black, engine);
 
@@ -299,4 +299,25 @@ void BoardStats::DisplayNewDepthMessage(const int& newdepth) {
 void BoardStats::DisplayNewFENMessage(const string& fen) {
     string message = "New Depth: " + fen;
     DrawTextWithCustomFont(message.c_str(), textX - (TextCenter(message.c_str(), fontSize - 30).x / 2), textY + 70, fontSize - 30, messageColor);
+}
+std::string BoardStats::format(int number) {
+    std::string str = std::to_string(number);
+    int len = static_cast<int>(str.length());
+    if (len <= 3) // No need for formatting if the number is less than 1000
+        return str;
+
+    int commas = (len - 1) / 3; // Calculate the number of commas to be inserted
+    std::string formatted;
+    formatted.reserve(len + commas);
+
+    int i = 0;
+    int j = len % 3 == 0 ? 3 : len % 3; // Adjust for the first segment
+    formatted.append(str, 0, j);
+
+    for (; i + j < len; i += j, j = 3) {
+        formatted.push_back(',');
+        formatted.append(str, i + j, 3);
+    }
+
+    return formatted;
 }

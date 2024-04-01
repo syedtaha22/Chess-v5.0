@@ -84,7 +84,7 @@ int ChessBoard::calculatePlayerScore(int playerColor) const {
     return totalScore;
 }
 
-void ChessBoard::initializeBoardFromFEN(const string& fen) {
+void ChessBoard::initializeBoardFromFEN(const string& fen, bool loadTextures) {
     moveHistory.clear();
     MoveIndices = { -1,-1 };
     int row = 0, col = 0;
@@ -148,7 +148,7 @@ void ChessBoard::initializeBoardFromFEN(const string& fen) {
         }
     }
 
-    LoadTextures();
+   if(loadTextures) LoadTextures();
     // Set piece positions
     SetPiecePositions();
 }
@@ -234,7 +234,7 @@ string ChessBoard::GetCurrentFEN() const {
 
 void ChessBoard::InitializeDefaultBoard() {
     string DefaultFEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq";
-    initializeBoardFromFEN(DefaultFEN);
+    initializeBoardFromFEN(DefaultFEN, true);
 }
 
 void ChessBoard::initializeBoard() {
@@ -508,7 +508,7 @@ void ChessBoard::MakeMove(int fromTile, int toTile) {
 
     //Reverse board, if Multiplayer
     MoveIndices = make_pair(fromTile, toTile);
-    if (flags.isMultiplayerGame()) ReverseBoard();
+    if (Flags::isMultiplayerGame()) ReverseBoard();
     SetPiecePositions();
 }
 
@@ -575,7 +575,7 @@ void ChessBoard::MakeCompleteMove(int fromTile, int toTile, string move) {
         moveHistory.clear();
     }
 
-    //flags.CheckGameState();
+    //Flags::CheckGameState();
     AddMoveToHistory(move);
     MoveIndices = make_pair(fromTile, toTile);
     SetPiecePositions();
