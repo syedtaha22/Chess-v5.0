@@ -26,12 +26,10 @@ int main() {
     InitAudioDevice();
     GameModes Game;
     Menu GameMenu;
-    manager.saveElement(manager.depth, 3);
     
-    Game.Horizon.SetDepth(manager.get(manager.depth));
-    Game.setFENstring("7R/k7/8/3Q4/8/8/P6P/6K1 w");
+    //Game.Horizon.SetDepth(1);
     Game.BoardSetUp();
-
+    
     manager.save(Game.Horizon.getDepth(), Game.Player.ELO, Game.Horizon.engineEloRating);
 
     ChessPiecePlaced = LoadSound(ChessPiecePlacedFile.c_str());

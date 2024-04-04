@@ -6,6 +6,8 @@ ChessEngine::ChessEngine(int Color, int elo) : EngineColor(Color), engineEloRati
 
     if(engineEloRating == 0) engineEloRating = manager.get(manager.engineElo);
     if(engineEloRating == 0) engineEloRating = 500; //Default
+    MAX_DEPTH = manager.get(manager.depth);
+    if (MAX_DEPTH == 0) MAX_DEPTH = 2; //Default
     NumberofMovesLookedAhead = 0;
     TimeTakenForSearch = 0;
     NumberOfBranchesPruned = 0;

@@ -13,7 +13,7 @@ private:
     int EngineColor;
 
     // Maximum depth for the Minimax algorithm
-    int MAX_DEPTH = 2; 
+    int MAX_DEPTH;
 
     //Transpostion Tables to Store Positional Data
     TranspositionTables transpostionTable;
