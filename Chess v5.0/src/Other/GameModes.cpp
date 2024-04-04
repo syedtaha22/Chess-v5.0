@@ -92,8 +92,8 @@ void GameModes::CalculateELO() {
     int oldBlackELO = Horizon.engineEloRating;
     Horizon.engineEloRating = GameStats.updateEloRating(Horizon.engineEloRating, Player.ELO, (GameStats.winner == Black));
     Player.ELO = GameStats.updateEloRating(Player.ELO, oldBlackELO, (GameStats.winner == White));
-    Player.saveEloToFile();
-    Horizon.saveEloToFile();
+    manager.save(Horizon.getDepth(), Player.ELO, Horizon.engineEloRating);
+
 }
 
 void GameModes::InitialiseSinglePlayerMode() {
@@ -104,6 +104,7 @@ void GameModes::InitialiseSinglePlayerMode() {
         PlaySound(GameStarts);
         //chessboard.InitializeDefaultBoard();
         chessboard.ComputeOpponentMoves();
+
 
         DoOnce = false;
         //isSinglePlayer = true;
@@ -161,6 +162,7 @@ void GameModes::Settings() {
     GameStats.DisplayNewDepthMessage(enteredDepth);
     if (IsKeyPressed(KEY_ENTER)) {
         Horizon.SetDepth(enteredDepth);
+        manager.saveElement(manager.depth, enteredDepth);
         Flags::closeSettings();
     }
 }

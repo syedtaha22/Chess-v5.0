@@ -167,29 +167,36 @@ int ChessBoard::GetKingIndex(const int& playercolor) const {
 
 }
 
-void ChessBoard::saveCurrentFENtofile(string fileName) const {
+void ChessBoard::saveCurrentFENtofile(std::string fileName) const {
+    // Get the path to the user's appdata folder
+    const char* appdataFolder = std::getenv("APPDATA");
+    if (appdataFolder == nullptr) {
+        std::cerr << "Error: Unable to retrieve user's appdata folder path." << std::endl;
+        return;
+    }
+    // Construct the full path to the folder in the appdata folder
+    std::string folder = std::string(appdataFolder) + "\\ChessData";
+    if (!std::filesystem::is_directory(folder))
+        std::filesystem::create_directory(folder);
 
-    string folder = "Data";
-    if (!filesystem::is_directory(folder)) filesystem::create_directory(folder);
-    
-    string filename = "Data/" + fileName;
-    
-    ofstream file(filename, ios::app);
+    // Construct the full path to the file within the appdata folder
+    std::string filePath = folder + "\\" + fileName;
+
+    std::ofstream file(filePath, std::ios::app);
     if (!file.is_open()) {
-        cerr << "Error: Unable to open file for writing." << endl;
+        std::cerr << "Error: Unable to open file for writing." << std::endl;
         return;
     }
 
     // Generate FEN string from current board state
-    string fen = GetCurrentFEN();
+    std::string fen = GetCurrentFEN();
 
-    file << fen << endl;
+    file << fen << std::endl;
     file.close();
-    cout << "Saved FEN string to: " << filename << endl;
+    std::cout << "Saved FEN string to: " << filePath << std::endl;
 }
 
 string ChessBoard::GetCurrentFEN() const {
-
     string fen;
     for (int row = 0; row < 8; row++) {
         int emptyCount = 0;
@@ -225,7 +232,6 @@ string ChessBoard::GetCurrentFEN() const {
         }
     }
     fen += (currentPlayerIsWhite ? " w " : " b ");
-
     //Add Castling Rights......
 
     return fen;
@@ -577,7 +583,7 @@ void ChessBoard::MakeCompleteMove(int fromTile, int toTile, string move) {
         moveHistory.clear();
     }
 
-    //Flags::CheckGameState();
+    Flags::CheckGameState();
     AddMoveToHistory(move);
     MoveIndices = make_pair(fromTile, toTile);
     SetPiecePositions();
@@ -881,7 +887,6 @@ bool ChessBoard::isCheck(const ChessBoard& chessboard, int playerColor, string c
 }
 
 bool ChessBoard::isCheckmate(ChessBoard& chessboard, int playerColor) const {
-
     // King is not in check, so it can't be checkmate
     if (!isCheck(chessboard, playerColor, "board: Is Check Mate")) return false; 
    

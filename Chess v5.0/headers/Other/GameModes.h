@@ -9,7 +9,6 @@
 class GameModes {
 private:
     //Player
-    User Player;
 
     //Things that will be done once per match
     bool DoOnce;
@@ -24,6 +23,7 @@ private:
 
 public:
     //Game Related Objects
+    User Player;
     BoardStats GameStats;
     ChessBoard chessboard;
     ChessEngine Horizon;

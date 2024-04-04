@@ -4,16 +4,13 @@
 #include "../Engine/ChessEngine.h"
 
 
-class User : public EloManager {
+class User{
 public:
     string Username;
-    int ELO = 500;
+    int ELO;
+    const string filename = "UserELO.txt";
 
-    User(string name = "");
-
-    //From EloManager.h
-    int readEloFromFile() override;
-    void saveEloToFile() const override;
+    User(string name = "", int elo = EMPTY);
 
     void setUserName(string name);
 };

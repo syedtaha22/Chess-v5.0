@@ -1,12 +1,12 @@
 #ifndef CHESSENGINE_H
 #define CHESSENGINE_H
 
-#include "../Other/EloManager.h"
+
 #include "TranspositionTables.h"
 #include "PieceSquareTables.h"
 
 
-class ChessEngine : public EloManager {
+class ChessEngine{
 
 private:
     //Represents the Color the Engine Plays as(Black by Default)
@@ -32,9 +32,10 @@ private:
     const int infinity = numeric_limits<int>::max();
 
 
+
 public:
     //Default Rating for Engine
-    int engineEloRating = 500;
+    int engineEloRating;
 
     //Data Regarding Engine, For Testing purposes
     int NumberofMovesLookedAhead;
@@ -45,6 +46,7 @@ public:
     int totalMovesToEvaluate;
     float EngineSpeed;
     double TimeTakenForSearch;
+    const string filename = "EngineELO.txt";
     
    
     ChessEngine(int Color = EMPTY, int elo = EMPTY);
@@ -82,10 +84,6 @@ public:
 
     void PlayMove(const string& move, ChessBoard& board) const;
     void DisplayMoves(vector<string>& moves);
-
-    //From EloManager.h
-    int readEloFromFile() override;
-    void saveEloToFile() const override;
 
     void Reset();
 

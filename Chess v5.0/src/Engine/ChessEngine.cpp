@@ -4,7 +4,8 @@
 
 ChessEngine::ChessEngine(int Color, int elo) : EngineColor(Color), engineEloRating(elo) {
 
-    if(engineEloRating == 0) engineEloRating = readEloFromFile();
+    if(engineEloRating == 0) engineEloRating = manager.get(manager.engineElo);
+    if(engineEloRating == 0) engineEloRating = 500; //Default
     NumberofMovesLookedAhead = 0;
     TimeTakenForSearch = 0;
     NumberOfBranchesPruned = 0;
@@ -350,65 +351,6 @@ int* ChessEngine::InvertTable(const int* originalArray) const {
     return invertedArray;
 }
 
-int ChessEngine::readEloFromFile() {
-    string folder = "Data";
-    if (!filesystem::exists(folder)) {
-        cerr << "Folder " << folder << " does not exist. Using default Elo rating." << endl;
-        return engineEloRating; //Return Default Rating
-    }
-
-    ifstream inputFile;
-    string filename = "Data/EnginesELO";
-    inputFile.open(filename);
-
-    int elo = engineEloRating; 
-
-    if (inputFile.is_open()) {
-        inputFile >> elo;
-        inputFile.close();
-        cout << "Elo rating read from " << filename << ": " << elo << endl;
-    }
-    else {
-        cout << "Unable to open file " << filename << " for reading. Using default Elo rating." << endl;
-
-    }
-
-    return elo;
-}
-
-void ChessEngine::saveEloToFile() const {
-    string folder = "Data";
-
-    if (!filesystem::is_directory(folder)) {
-        filesystem::create_directory(folder);
-    }
-
-    ofstream outputFile;
-    string filename = "Data/EnginesELO";
-    outputFile.open(filename);
-
-    int defaultElo = 500;
-
-    if (outputFile.is_open()) {
-
-        outputFile << engineEloRating << endl;
-        outputFile.close();
-        cout << "Elo rating saved to " << filename << endl;
-    }
-    else {
-        cerr << "Unable to open file " << filename << " for writing. Creating a new file with default Elo rating." << endl;
-        outputFile.open(filename);
-        if (outputFile.is_open()) {
-            outputFile << defaultElo << std::endl;
-            outputFile.close();
-            cout << "New file created with default Elo rating: " << defaultElo << endl;
-        }
-        else {
-            cerr << "Unable to create file " << filename << " for writing." << endl;
-        }
-    }
-}
-
 void ChessEngine::Reset() {
     TimeTakenForSearch = 0;
     NumberofMovesLookedAhead = 0;
@@ -463,7 +405,6 @@ void ChessEngine::DisplayMoves(vector<string>& moves) {
     }
     cout << endl;
 }
-
 
 void ChessEngine::SaveTranspositionTable() {
     transpostionTable.saveTranspositionTableToFile("TranspositionTables.txt");

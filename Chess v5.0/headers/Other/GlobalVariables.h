@@ -17,9 +17,13 @@
 #include <filesystem>
 #include "raylib.h"
 #include "Flags.h"
+#include "EloManager.h"
+
 
 using namespace std;
 using namespace chrono;
+
+EloManager manager;
  
 extern Sound ChessPiecePlaced;
 extern Sound ChessPieceCaptured;

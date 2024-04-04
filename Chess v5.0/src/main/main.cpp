@@ -24,14 +24,15 @@ void CalculateAIMove(ChessEngine& engine, ChessBoard& board) {
 int main() {
     InitWindow(screenWidth, screenHeight, "Chess");
     InitAudioDevice();
-
-
     GameModes Game;
     Menu GameMenu;
-
-    Game.Horizon.SetDepth(2);
+    manager.saveElement(manager.depth, 3);
+    
+    Game.Horizon.SetDepth(manager.get(manager.depth));
+    Game.setFENstring("7R/k7/8/3Q4/8/8/P6P/6K1 w");
     Game.BoardSetUp();
 
+    manager.save(Game.Horizon.getDepth(), Game.Player.ELO, Game.Horizon.engineEloRating);
 
     ChessPiecePlaced = LoadSound(ChessPiecePlacedFile.c_str());
     ChessPieceCaptured = LoadSound(ChessPieceCapturedFile.c_str());
@@ -40,6 +41,8 @@ int main() {
     GameEnds = LoadSound(GameEndsFile.c_str());
     myFont = LoadFont(fontFile.c_str());
     Image icon = LoadImage(program_icon.c_str());
+
+
 
     SetWindowIcon(icon);
     SetTargetFPS(60);
@@ -78,7 +81,6 @@ int main() {
     //Game.SaveTranspositions();
     Game.chessboard.saveCurrentFENtofile("UnexpectedExits.txt");
     Game.Destroy();
-
     UnloadSound(ChessPiecePlaced);
     UnloadSound(ChessPieceCaptured);
     UnloadSound(KingChecked);
@@ -88,5 +90,6 @@ int main() {
     UnloadImage(icon);
     CloseAudioDevice();
     CloseWindow();
+
     return 0;
 }

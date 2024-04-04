@@ -25,6 +25,7 @@ bool BoardStats::GameIsEnded(ChessBoard& board) {
         int playerColor = board.isCurrentPlayerWhite() ? White : Black;
 
         if (board.isCheckmate(board, playerColor)) {
+            cout << winner << endl;
             EndMessage = "Winner is ";
             EndMessage += (board.isCurrentPlayerWhite() ? Black_ : White_);
             winner = board.isCurrentPlayerWhite() ? Black : White; // Set Winner
@@ -53,6 +54,7 @@ bool BoardStats::GameIsEnded(ChessBoard& board) {
         cout << "Check Complete" << endl;
         Flags::GameStateChecked();
     }
+
 
 
     if (winner != NULL) return true;

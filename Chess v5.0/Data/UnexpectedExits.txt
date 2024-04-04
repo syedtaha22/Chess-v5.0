@@ -156,3 +156,5 @@ r1bqkb1r/pppppppp/2n2n2/8/4P3/5N2/PPPP1PPP/RNBQKB1R w
 r1bqkb1r/ppp1pppp/2n2n2/3p4/2B1P3/5N2/PPPP1PPP/RNBQK2R w 
 rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w 
 r1bqkbnr/pppppppp/2n5/8/4P3/8/PPPP1PPP/RNBQKBNR w 
+rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w 
+rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w 
