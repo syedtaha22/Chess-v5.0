@@ -109,8 +109,8 @@ static void endFile(string filename) {
 
 int main(int argc, char* argv[]) {
 
-    if (argc < 2) {
-        cerr << "Usage: " << argv[0] << " <FEN string>" << endl;
+    if (argc < 3) {
+        cerr << "Usage: " << argv[0] << " <FEN string> <Depth>" << endl;
         return 1;
     }
 
@@ -118,7 +118,7 @@ int main(int argc, char* argv[]) {
     int MaxLenght = LongestFEN.length();
 
     const int NumOfFENS = 100;
-    const int Depth = 1;
+    const int Depth = stoi(argv[2]);
     const string filename = "analysis_results.json";
     const string fen_file = "src/main/fens.txt";
 
@@ -127,9 +127,9 @@ int main(int argc, char* argv[]) {
 
 
     ChessBoard board;
-    ChessEngine engine(Black);
+    ChessEngine engine(Black, 1000);
     engine.SetDepth(Depth);
-    board.initializeBoardFromFEN(fen, true);
+    board.initializeBoardFromFEN(fen, false);
 
     string bestMove = engine.GenerateMove(board);
     int depth = engine.getDepth();

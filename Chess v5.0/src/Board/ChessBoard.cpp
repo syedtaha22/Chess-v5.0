@@ -85,6 +85,7 @@ int ChessBoard::calculatePlayerScore(int playerColor) const {
 }
 
 void ChessBoard::initializeBoardFromFEN(const string& fen, bool loadTextures) {
+    //cout << "Starting Initialising...." << endl;
     moveHistory.clear();
     MoveIndices = { -1,-1 };
     int row = 0, col = 0;
@@ -148,9 +149,10 @@ void ChessBoard::initializeBoardFromFEN(const string& fen, bool loadTextures) {
         }
     }
 
-   if(loadTextures) LoadTextures();
+    if(loadTextures) LoadTextures();
     // Set piece positions
     SetPiecePositions();
+    //cout << "Initialised\n";
 }
 
 int ChessBoard::GetKingIndex(const int& playercolor) const {

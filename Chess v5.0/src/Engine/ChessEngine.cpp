@@ -2,8 +2,9 @@
 
 
 
-ChessEngine::ChessEngine(int Color) : EngineColor(Color) {
-    engineEloRating = readEloFromFile();
+ChessEngine::ChessEngine(int Color, int elo) : EngineColor(Color), engineEloRating(elo) {
+
+    if(engineEloRating == 0) engineEloRating = readEloFromFile();
     NumberofMovesLookedAhead = 0;
     TimeTakenForSearch = 0;
     NumberOfBranchesPruned = 0;

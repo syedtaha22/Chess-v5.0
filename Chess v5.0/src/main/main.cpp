@@ -15,9 +15,7 @@ void CalculateAIMove(ChessEngine& engine, ChessBoard& board) {
                 engine.PlayMove(move, board);
             }
             engine.StopSearching();
-
         }
-
     }
 }
 
@@ -33,6 +31,7 @@ int main() {
 
     Game.Horizon.SetDepth(2);
     Game.BoardSetUp();
+
 
     ChessPiecePlaced = LoadSound(ChessPiecePlacedFile.c_str());
     ChessPieceCaptured = LoadSound(ChessPieceCapturedFile.c_str());

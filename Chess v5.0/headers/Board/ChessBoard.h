@@ -4,8 +4,6 @@
 #include "../Pieces/ChessPiece.h"
 #include "../Pieces/Pieces.h"
 
-
-
     /*
      
     Default Board: 
@@ -20,8 +18,9 @@
     2 [60][61][62][63][64][65][66][67]
     1 [70][71][72][73][74][75][76][77]
         a   b   c   d   e   f   g   h
-    */
 
+
+    */
 
     /*
     
@@ -40,8 +39,6 @@
 
 
     */
-
-
 
 class ChessBoard {
 private:
@@ -188,8 +185,6 @@ public:
     string ConvertToChessNotation(int fromTile, int toTile) const;
     //Calculates and returns the Current FEN position of the Board
     string GetCurrentFEN() const;
-
-
 
     //Loops over the The Board and Loads textures for each Piece
     void LoadTextures();

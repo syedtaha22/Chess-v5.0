@@ -47,7 +47,7 @@ public:
     double TimeTakenForSearch;
     
    
-    ChessEngine(int Color = EMPTY);
+    ChessEngine(int Color = EMPTY, int elo = EMPTY);
 
     //Engine Settings
     void setEngineColor(int color);
