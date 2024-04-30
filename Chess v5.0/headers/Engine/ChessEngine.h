@@ -37,15 +37,6 @@ public:
     //Default Rating for Engine
     int engineEloRating;
 
-    //Data Regarding Engine, For Testing purposes
-    int NumberofMovesLookedAhead;
-    int NumberOfTranspositionsFound;
-    int NumberOfBranchesPruned;
-    int totalMoves;
-    int movesEvaluated;
-    int totalMovesToEvaluate;
-    float EngineSpeed;
-    double TimeTakenForSearch;
     const string filename = "EngineELO.txt";
     
    
