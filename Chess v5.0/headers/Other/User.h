@@ -1,7 +1,11 @@
 #ifndef USER_H
 #define USER_H
 
+
+//#include "../Board/GraphicalBoard.h"
+//#include "../Board/ChessBoard.h"
 #include "../Engine/ChessEngine.h"
+
 
 
 class User{

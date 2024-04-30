@@ -2,9 +2,7 @@
 #define GAMEMODES_H
 
 #include "BoardStats.h"
-#include "../Board/GraphicalBoard.h"
 #include "Menu.h"
-
 
 class GameModes {
 private:
@@ -27,6 +25,7 @@ public:
     BoardStats GameStats;
     ChessBoard chessboard;
     ChessEngine Horizon;
+
 
     //For settings
     char inputDepth[2] = { 0 }; 
