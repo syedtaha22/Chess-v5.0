@@ -33,7 +33,10 @@ private:
     const char* Black_ = "Black";
     const char* White_ = "White";
 
+    std::chrono::high_resolution_clock::time_point TimerStart = high_resolution_clock::now();
+
 public:
+
 
     //Wether to Show Move History or Not
     bool ShowMoveHistory;
@@ -44,10 +47,7 @@ public:
     //Message Regarding Who won
     string EndMessage;
 
-
-
     BoardStats();
-
 
     void DisplayEndMessage();
 
@@ -59,6 +59,12 @@ public:
 
     //Display Last Move or Move History based on flag
     void MovesAndHistory(string LastMovePlayed, ChessBoard& chessboard);
+
+    std::vector<std::string> getData(const ChessEngine& engine, const User& player, const ChessBoard& chessboard);
+    void DrawPlayerElos(int elo_W, int elo_B);
+
+    void DrawStatistics(const std::vector<std::string>& EngineData);
+    void DisplayPlayerTitles(const ChessBoard& chessboard);
 
     //Reset Stats
     void Reset();

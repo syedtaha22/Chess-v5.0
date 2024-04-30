@@ -14,7 +14,6 @@ BoardStats::BoardStats() {
 void BoardStats::DisplayEndMessage() {
     float posX = textX - ((TextCenter(EndMessage.c_str(), fontSize - 10).x) / 2);
     float posY = (static_cast<float>(screenHeight) / 2) - ((TextCenter(EndMessage.c_str(), fontSize - 10).y) / 2);
-
     DrawTextWithCustomFont(EndMessage.c_str(), posX, posY, fontSize - 10, AlertColor); // Balance Based on TextSize
 }
 
@@ -34,7 +33,7 @@ bool BoardStats::GameIsEnded(ChessBoard& board) {
             cout << "Check Complete" << endl;
             return true;
         }
-        if (!board.isCheck(board, playerColor, "stats: Game is Ended: stalemate") && board.GetAllPossibleMoves(playerColor).size() == 0) {
+        if (board.checkedPlayer == 0 && board.GetAllPossibleMoves(playerColor).size() == 0) {
             EndMessage = "---Stalemate---";
             winner = -1; //No Winner
 
@@ -70,63 +69,79 @@ string BoardStats::CloseInBrackets(string stringClose) {
 }
 
 void BoardStats::DisplayStats(ChessBoard& chessboard, ChessEngine& engine, User& player) {
-   
     string LastMovePlayed = "";
     string currentPlayer = (chessboard.isCurrentPlayerWhite()) ? "White" : "Black";
-
-    if (Flags::MoveIsMade()) {        
-        Color CheckAlertB = chessboard.isCheck(chessboard, Black, "Game stats: Display Stats") ? AlertColor : messageColor;
-        Color CheckAlertW = chessboard.isCheck(chessboard, White, "Game stats: Display Stats") ? AlertColor : messageColor;
-    }
+    std::vector<std::string> EngineData = getData(engine, player, chessboard);
 
     if (chessboard.moveHistory.size() != 0) LastMovePlayed = (chessboard.moveHistory.back());
         
     MovesAndHistory(LastMovePlayed, chessboard);
 
-    //Draw Player Titles
-    DrawTextWithCustomFont(Black_, textX - (TextCenter(Black_, fontSize).x / 2), textY - (TextCenter(Black_, fontSize).y / 2) + 20, fontSize, CheckAlertB);
-    DrawTextWithCustomFont(White_, textX - (TextCenter(White_, fontSize).x / 2), screenHeight - 146 - fontSize + 30, fontSize, CheckAlertW);
-    
-    //Update Constantly
-    int LookAheads = engine.NumberofMovesLookedAhead;
-    int BranchesPruned = engine.NumberOfBranchesPruned;
-    int FoundTranspostions = engine.NumberOfTranspositionsFound;
-    float TimeTaken = static_cast<float>((engine.TimeTakenForSearch));
-    float SizeOfTable = static_cast<float>(engine.getSizeOfTranspositionTable());
-    float Speed = engine.EngineSpeed / 1000; // n/s ---> kn/s
-    int currentDepth = engine.getDepth();
-    int moves = engine.totalMoves;
-    int evaluated = engine.movesEvaluated;
-    int totalToEvaluate = engine.totalMovesToEvaluate;
+    DisplayPlayerTitles(chessboard); //Draw Player Titles
+    DrawStatistics(EngineData); //Draw engine Statistics
+    DrawPlayerElos(player.ELO, engine.engineEloRating); // Draw Elo's
+}
 
-    float PercentagePruned = (totalToEvaluate != 0) ? (static_cast<float>(abs(LookAheads - totalToEvaluate)) / static_cast<float>(totalToEvaluate)) * 100 : 0;
-    
-    string WhiteELO = CloseInBrackets(ELO + to_string(player.ELO));
-    string BLackELO = CloseInBrackets(ELO + to_string(engine.engineEloRating));
-    string SpeedMessage = "Evaluation Speed: " + SetPrecision(Speed, 1) + "kn/s";
-    string BlackMessage = "Saw " + format(LookAheads) + " futures in " + SetPrecision(TimeTaken, 2) + "s";
-    string PruningMessage = "Pruned " + format(BranchesPruned) + " Branches";
-    string TableSizeMessage = "Size: " + SetPrecision(SizeOfTable, 2) + "Mbs";
-    string TranspostionsFound = "Total Transpostions Found: " + format(FoundTranspostions);
-    string depth = "Depth: " + to_string(currentDepth);
-    string EvaluationProgress = "Evaluated " + format(evaluated) + "/" + format(moves) + " moves";
-    string totalProgress = "Evaluated " + format(LookAheads) + "/" + format(totalToEvaluate) + " positions";
-    string Pruned = "Pruned " + SetPrecision(PercentagePruned, 2) + "% branches";
+void BoardStats::DisplayPlayerTitles(const ChessBoard& chessboard) {
+    Color CheckAlertB = chessboard.checkedPlayer == Black ? AlertColor : messageColor;
+    Color CheckAlertW = chessboard.checkedPlayer == White ? AlertColor : messageColor;
+    float b_posX = textX - (TextCenter(Black_, fontSize).x / 2);
+    float b_posY = textY - (TextCenter(Black_, fontSize).y / 2) + 20;   
 
-    DrawTextWithCustomFont(BlackMessage.c_str(), textX - (TextCenter(BlackMessage.c_str(), fontSize - 30).x / 2), textY + 70, fontSize - 30, messageColor);
-    DrawTextWithCustomFont(SpeedMessage.c_str(), textX - (TextCenter(SpeedMessage.c_str(), fontSize - 30).x / 2), textY + 90, fontSize - 30, messageColor);
-    DrawTextWithCustomFont(TableSizeMessage.c_str(), textX - (TextCenter(TableSizeMessage.c_str(), fontSize - 30).x / 2), textY + 110, fontSize - 30, messageColor);
-    DrawTextWithCustomFont(PruningMessage.c_str(), textX - (TextCenter(PruningMessage.c_str(), fontSize - 30).x / 2), textY + 130, fontSize - 30, messageColor);
-    DrawTextWithCustomFont(TranspostionsFound.c_str(), textX - (TextCenter(TranspostionsFound.c_str(), fontSize - 30).x / 2), textY + 150, fontSize - 30, messageColor);
-    DrawTextWithCustomFont(depth.c_str(), textX - (TextCenter(depth.c_str(), fontSize - 30).x / 2), textY + 170, fontSize - 30, messageColor);
-    DrawTextWithCustomFont(EvaluationProgress.c_str(), textX - (TextCenter(EvaluationProgress.c_str(), fontSize - 30).x / 2), textY + 190, fontSize - 30, messageColor);
-    DrawTextWithCustomFont(totalProgress.c_str(), textX - (TextCenter(totalProgress.c_str(), fontSize - 30).x / 2), textY + 210, fontSize - 30, messageColor);
-    DrawTextWithCustomFont(Pruned.c_str(), textX - (TextCenter(Pruned.c_str(), fontSize - 30).x / 2), textY + 230, fontSize - 30, messageColor);
+    float w_posX = textX - (TextCenter(White_, fontSize).x / 2);
+    float w_posY = screenHeight - 146 - fontSize + 30;
 
+    DrawTextWithCustomFont(Black_, b_posX, b_posY , fontSize, CheckAlertB);
+    DrawTextWithCustomFont(White_, w_posX, w_posY , fontSize, CheckAlertW);
+}
+
+void BoardStats::DrawStatistics(const std::vector<std::string>& EngineData) {
+    int offsetY = 70;
+    const float DataFontSize = fontSize - 30;
+    for (std::string message : EngineData) {
+        float posX = textX - (TextCenter(message.c_str(), fontSize - 30).x / 2);
+        float posY = textY + offsetY;
+        DrawTextWithCustomFont(message.c_str(), posX, posY, DataFontSize, messageColor);
+        offsetY += 20;
+    }
+}
+
+void BoardStats::DrawPlayerElos(int elo_W, int elo_B) {
+    std::string WhiteELO = CloseInBrackets(ELO + to_string(elo_W));
+    std::string BLackELO = CloseInBrackets(ELO + to_string(elo_B));
 
     //Draw ELO
-    DrawTextWithCustomFont(WhiteELO.c_str(), textX - (TextCenter(WhiteELO.c_str(), fontSize - 30).x / 2), static_cast<float>(screenHeight)-146 + 30, fontSize - 30, messageColor);
+    DrawTextWithCustomFont(WhiteELO.c_str(), textX - (TextCenter(WhiteELO.c_str(), fontSize - 30).x / 2), static_cast<float>(screenHeight) - 146 + 30, fontSize - 30, messageColor);
     DrawTextWithCustomFont(BLackELO.c_str(), textX - (TextCenter(BLackELO.c_str(), fontSize - 30).x / 2), textY + 50, fontSize - 30, messageColor);
+}
+
+std::vector<std::string> BoardStats::getData(const ChessEngine& engine, const User& player, const ChessBoard& chessboard){
+    int LookAheads = Heuristics.NumberofMovesLookedAhead;
+    int BranchesPruned = Heuristics.BranchesPruned;
+    int FoundTranspostions = Heuristics.TranspositionsFound;
+    float TimeTaken = static_cast<float>((Heuristics.TimeTaken));
+    float SizeOfTable = static_cast<float>(engine.getSizeOfTranspositionTable());
+    int Speed = Heuristics.Speed / 1000; // n/s ---> kn/s
+    int currentDepth = Heuristics.currentDepth;
+    int moves = Heuristics.totalMoves;
+    int evaluated = Heuristics.movesEvaluated;
+    int totalToEvaluate = Heuristics.totalMovesToEvaluate;
+    float PercentagePruned = (totalToEvaluate != 0) ? (static_cast<float>(abs(LookAheads - totalToEvaluate)) / static_cast<float>(totalToEvaluate)) * 100 : 0;
+
+
+    std::vector<std::string> DataArray = {
+        "Evaluation Speed: " + SetPrecision(Speed, 1) + "kn/s",
+        "Saw " + format(LookAheads) + " futures in " + SetPrecision(TimeTaken, 2) + "s",
+        "Pruned " + format(BranchesPruned) + " Branches",
+        "Size: " + SetPrecision(SizeOfTable, 2) + "Mbs",
+        "Total Transpostions Found: " + format(FoundTranspostions),
+        "Depth: " + to_string(currentDepth),
+        "Evaluated " + format(evaluated) + "/" + format(moves) + " moves",
+        "Evaluated " + format(LookAheads) + "/" + format(totalToEvaluate) + " positions",
+        "Pruned " + SetPrecision(PercentagePruned, 2) + "% branches"
+    };
+
+    return DataArray;
 
 }
 
@@ -136,20 +151,9 @@ void BoardStats::DisplayStats(ChessBoard& chessboard) {
     string LastMovePlayed = "";
     string currentPlayer = (chessboard.isCurrentPlayerWhite()) ? "White" : "Black";
 
-    if (Flags::MoveIsMade()) {
-
-        CheckAlertB = chessboard.isCheck(chessboard, Black, "Game stats: Display Stats") ? AlertColor : messageColor;
-        CheckAlertW = chessboard.isCheck(chessboard, White, "Game stats: Display Stats") ? AlertColor : messageColor;
-    }
-
     if (chessboard.moveHistory.size() != 0) LastMovePlayed = (chessboard.moveHistory.back());
-    
-
     MovesAndHistory(LastMovePlayed, chessboard);
-
-    //Player Titles
-    DrawTextWithCustomFont(Black_, textX - (TextCenter(Black_, fontSize).x / 2), textY - (TextCenter(Black_, fontSize).y / 2) + 20, fontSize, CheckAlertB);
-    DrawTextWithCustomFont(White_, textX - (TextCenter(White_, fontSize).x / 2), screenHeight - 146 - fontSize + 30, fontSize, CheckAlertB);
+    DisplayPlayerTitles(chessboard);
 }
 
 void BoardStats::MovesAndHistory(string LastMovePlayed, ChessBoard& chessboard) {
