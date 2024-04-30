@@ -28,8 +28,6 @@ int main() {
     Menu GameMenu;
     
     //Game.Horizon.SetDepth(1);
-    std::string fen = "k7/8/8/8/8/1QK5/8/8 w";
-    Game.setFENstring(fen);
     Game.BoardSetUp();
     
     Settings::save(Game.Horizon.getDepth(), Game.Player.ELO, Game.Horizon.engineEloRating);
