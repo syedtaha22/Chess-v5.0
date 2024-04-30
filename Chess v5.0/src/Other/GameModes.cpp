@@ -92,7 +92,7 @@ void GameModes::CalculateELO() {
     int oldBlackELO = Horizon.engineEloRating;
     Horizon.engineEloRating = GameStats.updateEloRating(Horizon.engineEloRating, Player.ELO, (GameStats.winner == Black));
     Player.ELO = GameStats.updateEloRating(Player.ELO, oldBlackELO, (GameStats.winner == White));
-    manager.save(Horizon.getDepth(), Player.ELO, Horizon.engineEloRating);
+    Settings::save(Horizon.getDepth(), Player.ELO, Horizon.engineEloRating);
 
 }
 
@@ -162,7 +162,7 @@ void GameModes::Settings() {
     GameStats.DisplayNewDepthMessage(enteredDepth);
     if (IsKeyPressed(KEY_ENTER)) {
         Horizon.SetDepth(enteredDepth);
-        manager.saveElement(manager.depth, enteredDepth);
+        Settings::saveElement(Settings::depth, enteredDepth);
         Flags::closeSettings();
     }
 }
