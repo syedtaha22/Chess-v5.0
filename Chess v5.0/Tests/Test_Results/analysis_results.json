@@ -10671,4 +10671,5 @@
 {"Speed":"10.41","TotalMoves":39,"bestMove":"b6b2","depth":2,"fen":"1r6/Q4pkp/1r1pb3/2b5/6P1/2P2P1P/P2KP3/R5NR b\r","numOfMovesSeen":7274,"timeTaken":"0.70"} , 
 {"Speed":"10.44","TotalMoves":36,"bestMove":"e4e2","depth":2,"fen":"3r2k1/R7/8/1PR1bNp1/2P1r3/8/2K5/8 b\r","numOfMovesSeen":5417,"timeTaken":"0.52"} , 
 {"Speed":"7.65","TotalMoves":45,"bestMove":"g6e5","depth":2,"fen":"3r2k1/1p3ppp/p5nq/8/2PbNPb1/P5PP/1B1Q2BK/5R2 b\r","numOfMovesSeen":11466,"timeTaken":"1.50"} , 
-{"Speed":"6.65","TotalMoves":29,"bestMove":"f5f1","depth":2,"fen":"5r1k/1Q5p/3pB1p1/4pr2/1P6/P5Pq/2P1P2P/1R3RK1 b\r","numOfMovesSeen":4713,"timeTaken":"0.71"} ] 
+{"Speed":"6.65","TotalMoves":29,"bestMove":"f5f1","depth":2,"fen":"5r1k/1Q5p/3pB1p1/4pr2/1P6/P5Pq/2P1P2P/1R3RK1 b\r","numOfMovesSeen":4713,"timeTaken":"0.71"} ] , 
+{"Speed":"24.61","TotalMoves":31,"bestMove":"d4f6","depth":2,"fen":"6k1/6r1/1p6/p4Q2/2Pq4/3p2P1/3R1P2/6K1 b","numOfMovesSeen":14768,"timeTaken":"0.60"}]

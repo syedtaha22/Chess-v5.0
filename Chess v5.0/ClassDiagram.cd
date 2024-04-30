@@ -111,11 +111,11 @@
       <FileName>headers\Pieces\Pieces.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="EloManager" Collapsed="true">
+  <Class Name="Settings" Collapsed="true">
     <Position X="16.75" Y="4" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAQCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>headers\Other\EloManager.h</FileName>
+      <FileName>headers\Other\Settings.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Settings" Collapsed="true">
