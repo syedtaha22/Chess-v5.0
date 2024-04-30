@@ -16,14 +16,15 @@
 #include <limits>
 #include <filesystem>
 #include "raylib.h"
+
+
 #include "Flags.h"
-#include "EloManager.h"
+#include "Settings.h"
 
 
 using namespace std;
 using namespace chrono;
 
-EloManager manager;
  
 extern Sound ChessPiecePlaced;
 extern Sound ChessPieceCaptured;
@@ -68,6 +69,21 @@ extern Color MoveHighlight;
 extern Color MovesForPieceHighLight;
 extern Color MoveHighlightRed;
 extern Color NextMoveHighlight;
+
+struct EngineStats {
+    int NumberofMovesLookedAhead = 0;
+    int BranchesPruned = 0;
+    int TranspositionsFound = 0;
+    float TimeTaken = 0;
+    float SizeOfTable = 0;
+    float Speed = 0; // n/s ---> kn/s
+    int currentDepth = 0;
+    int totalMoves = 0;
+    int movesEvaluated = 0;
+    int totalMovesToEvaluate = 0;
+};
+
+EngineStats Heuristics;
 
 //enum class PromotionPiece;
 //extern Rectangle PawnPromotionDialogue;
