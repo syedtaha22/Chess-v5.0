@@ -1,7 +1,7 @@
 #ifndef CHESSBOARD_H
 #define CHESSBOARD_H
 
-#include "../Pieces/ChessPiece.h"
+//#include "../Pieces/ChessPiece.h"
 #include "../Pieces/Pieces.h"
 
     /*
@@ -70,6 +70,8 @@ private:
     int enPassantTarget;
 
 
+
+
 public:
 
     //The Board
@@ -90,6 +92,8 @@ public:
     //Stores the last Move that was made in the Format
     //<Initial Index, Final Index>
     pair<int, int> MoveIndices;
+
+    int checkedPlayer;
 
     ChessBoard();
 
@@ -152,8 +156,8 @@ public:
 
     bool IsCastlingMove(string move, ChessPiece* pieceMoved);
 
-    bool isCheck(const ChessBoard& chessboard, int playerColor, string calledby) const;
-    bool isCheckmate(ChessBoard& chessboard, int playerColor) const;
+    bool isCheck(const ChessBoard& chessboard, const int playerColor, string calledby);
+    bool isCheckmate(ChessBoard& chessboard, const int playerColor) const;
 
     // returns currentPlayerIsWhite
     bool isCurrentPlayerWhite() const; 
@@ -188,6 +192,8 @@ public:
 
     //Loops over the The Board and Loads textures for each Piece
     void LoadTextures();
+
+    int getCurrentPlayer() const { return isCurrentPlayerWhite() ? White : Black; }
 
     ~ChessBoard(){
  

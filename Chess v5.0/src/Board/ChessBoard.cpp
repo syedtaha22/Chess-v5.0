@@ -13,6 +13,7 @@ ChessBoard::ChessBoard() {
     isBoardReversed = false;
     PieceIsCaptured = false;
     enPassantTarget = -1;
+    checkedPlayer = 0;
 }
 
 // Deep copy constructor
@@ -520,25 +521,6 @@ void ChessBoard::MakeMove(int fromTile, int toTile) {
     SetPiecePositions();
 }
 
-void ChessBoard::ReverseBoard() {
-    isBoardReversed = !isBoardReversed;
-}
-
-bool ChessBoard::IsCastlingMove(string move, ChessPiece* pieceMoved) {
-    return (pieceMoved->type == KING) && (move == "e1g1" || move == "e1c1" || move == "e8g8" || move == "e8c8");
-}
-
-bool ChessBoard::IsEnPassantCapture(int fromTile, int toTile) const {
-    ChessPiece* piece = board[fromTile];
-
-    if (piece->type == PAWN && toTile == enPassantTarget) {
-        if ((piece->color == White && fromTile/8 == 3) || (piece->color == Black && fromTile/8 == 4)) {
-            return true;
-        }
-    }
-    return false;
-}
-
 void ChessBoard::MakeCompleteMove(int fromTile, int toTile, string move) {
 
     //Move not Enpassant so, reset Target
@@ -583,7 +565,6 @@ void ChessBoard::MakeCompleteMove(int fromTile, int toTile, string move) {
         moveHistory.clear();
     }
 
-    Flags::CheckGameState();
     AddMoveToHistory(move);
     MoveIndices = make_pair(fromTile, toTile);
     SetPiecePositions();
@@ -592,16 +573,38 @@ void ChessBoard::MakeCompleteMove(int fromTile, int toTile, string move) {
     //DisplayBoard();
     //DisplayScores();
 
+    isCheck(*this, currentPlayerIsWhite ? Black : White, "ChessBoard::MakeCompleteMove");
+
+
+    Flags::CheckGameState();   
     currentPlayerIsWhite = !currentPlayerIsWhite;
     ComputeOpponentMoves();
     PlayChessSound();
     MovesForSelectedPiece.clear();
 }
 
+void ChessBoard::ReverseBoard() {
+    isBoardReversed = !isBoardReversed;
+}
+
+bool ChessBoard::IsCastlingMove(string move, ChessPiece* pieceMoved) {
+    return (pieceMoved->type == KING) && (move == "e1g1" || move == "e1c1" || move == "e8g8" || move == "e8c8");
+}
+
+bool ChessBoard::IsEnPassantCapture(int fromTile, int toTile) const {
+    ChessPiece* piece = board[fromTile];
+
+    if (piece->type == PAWN && toTile == enPassantTarget) {
+        if ((piece->color == White && fromTile/8 == 3) || (piece->color == Black && fromTile/8 == 4)) {
+            return true;
+        }
+    }
+    return false;
+}
+
 void ChessBoard::PlayChessSound() const {
-    ChessBoard temp(*this);
-    int PlayerColor = (temp.isCurrentPlayerWhite()) ? White : Black;
-    if (isCheck(temp, PlayerColor, "board: Play Chess Sound")) {
+    //std::cout << "Checked Player: " << checkedPlayer << std::endl;
+    if (checkedPlayer != 0) {
         PlaySound(KingChecked);
     }
     else if (PieceIsCaptured) {
@@ -845,10 +848,12 @@ bool ChessBoard::canCastleQueenide(int KingIndex) const {
     return true;
 }
 
-bool ChessBoard::isCheck(const ChessBoard& chessboard, int playerColor, string calledby) const {
+bool ChessBoard::isCheck(const ChessBoard& chessboard, const int playerColor, string calledby) {
     // The String CalledBy is important for Debugging Reasons
     // I found that most of the errors/bugs orignated from this function, and by who or how it was being called
     //chessboard.DisplayBoard();
+
+    checkedPlayer = 0; // No Player is Checked
     int kingIndex = -100;
     for (int i = 0; i < Total_tiles; i++) {
         if (chessboard.board[i]->type == KING && chessboard.board[i]->color == playerColor) {
@@ -878,20 +883,23 @@ bool ChessBoard::isCheck(const ChessBoard& chessboard, int playerColor, string c
             // Check if any of the possible moves include the king's position
             for (int move : possibleMoves) {
                 if (move == kingIndex) {
+                    checkedPlayer = playerColor;
+                    
                     return true; // King is in check
                 }
             }
         }
     }
+
     return false; // King is not in check
 }
 
-bool ChessBoard::isCheckmate(ChessBoard& chessboard, int playerColor) const {
+bool ChessBoard::isCheckmate(ChessBoard& chessboard, const int playerColor) const {
     // King is not in check, so it can't be checkmate
-    if (!isCheck(chessboard, playerColor, "board: Is Check Mate")) return false; 
+    if (checkedPlayer == 0) return false; 
    
     vector<int> possibleMoves = GetAllPossibleMoves(playerColor);
-    if (possibleMoves.size() > 0)return false; // King can escape from check, so it's not checkmate
+    if (possibleMoves.size() > 0) return false; // King can escape from check, so it's not checkmate
 
     return true; // King is in checkmate
 }
