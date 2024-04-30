@@ -6,6 +6,7 @@
 #include "PieceSquareTables.h"
 
 
+
 class ChessEngine{
 
 private:
@@ -38,26 +39,27 @@ public:
     int engineEloRating;
 
     const string filename = "EngineELO.txt";
-    
    
     ChessEngine(int Color = EMPTY, int elo = EMPTY);
 
     //Engine Settings
     void setEngineColor(int color);
     void SetDepth(int NewDepth);
-    int getDepth() const;
+    int getDepth() const; 
 
     //Functions Related to Search
     void StartSearch();
     void StopSearching();
     void TerminateSearch();
+
     bool isSearchStarted() const;
 
     //Move Searching Functions
     void shuffleMoves(vector<string>& possibleMoves);
     string GenerateMove(const ChessBoard& board);
     string IterativeDeepening(const ChessBoard& board, int maxDepth);
-    int Minimax(ChessBoard& board, int depth, int alpha, int beta, bool maximizingPlayer, int color, auto time);
+    int Minimax(ChessBoard& board, int depth, int alpha, int beta, auto time);
+
 
     //Evaluation Functions
     int Evaluate(const ChessBoard& chessboard, char currentPlayerColor) const;

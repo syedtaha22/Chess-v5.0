@@ -4,24 +4,13 @@
 
 ChessEngine::ChessEngine(int Color, int elo) : EngineColor(Color), engineEloRating(elo) {
 
-    if(engineEloRating == 0) engineEloRating = manager.get(manager.engineElo);
+    if(engineEloRating == 0) engineEloRating = Settings::get("engineElo");
     if(engineEloRating == 0) engineEloRating = 500; //Default
-    MAX_DEPTH = manager.get(manager.depth);
+    MAX_DEPTH = Settings::get("depth");
     if (MAX_DEPTH == 0) MAX_DEPTH = 2; //Default
-    NumberofMovesLookedAhead = 0;
-    TimeTakenForSearch = 0;
-    NumberOfBranchesPruned = 0;
-    NumberOfTranspositionsFound = 0;
+
     terminateSearch = false;
     startSearch = false;
-    EngineSpeed = 0;
-    totalMoves = 0;
-    movesEvaluated = 0;
-    totalMovesToEvaluate = 0;
-
-
-    
-
 }
 
 void ChessEngine::setEngineColor(int color) {
@@ -42,16 +31,16 @@ string ChessEngine::GenerateMove(const ChessBoard& board) {
     
     string bestMove;
     
-    NumberofMovesLookedAhead = 0;
-    NumberOfTranspositionsFound = 0;
-    movesEvaluated = 0;
-    totalMovesToEvaluate = 0;
+    Heuristics.NumberofMovesLookedAhead = 0;
+    Heuristics.TranspositionsFound = 0;
+    Heuristics.movesEvaluated = 0;
+    Heuristics.totalMovesToEvaluate = 0;
 
    
 
     vector<string> possibleMoves = board.GetAllPossibleMovesInChessNotation(EngineColor);
-    totalMoves = static_cast<int>(possibleMoves.size());
-    totalMovesToEvaluate += static_cast<int>(possibleMoves.size());
+    Heuristics.totalMoves = possibleMoves.size();
+    Heuristics.totalMovesToEvaluate += possibleMoves.size();
     //Shuffle Moves to add randomness
     shuffleMoves(possibleMoves);
     //SortMoves(possibleMoves, board, EngineColor);
@@ -68,16 +57,16 @@ string ChessEngine::GenerateMove(const ChessBoard& board) {
         tempBoard.MakeMove(Indices.first, Indices.second);
 
 
-        int score = Minimax(tempBoard, MAX_DEPTH, -infinity, infinity, false, EngineColor == White ? Black : White, high_resolution_clock::now());
-        movesEvaluated++;
+        int score = Minimax(tempBoard, MAX_DEPTH, -infinity, infinity, high_resolution_clock::now());
+        Heuristics.movesEvaluated++;
         if (score >= bestScore) {
             bestScore = score;
             bestMove = move;
         }
         auto end = high_resolution_clock::now();
         auto duration = duration_cast<milliseconds>(end - start);
-        TimeTakenForSearch = static_cast<float>(duration.count())/1000; //Converted To seconds
-        EngineSpeed = NumberofMovesLookedAhead / static_cast<float>(TimeTakenForSearch);
+        Heuristics.TimeTaken = static_cast<float>(duration.count())/1000; //Converted To seconds
+        Heuristics.Speed = Heuristics.NumberofMovesLookedAhead / static_cast<float>(Heuristics.TimeTaken);
     }
     
 
@@ -86,8 +75,9 @@ string ChessEngine::GenerateMove(const ChessBoard& board) {
     return bestMove;
 }
 
-int ChessEngine::Minimax(ChessBoard& board, int depth, int alpha, int beta, bool maximizingPlayer, int color, auto time) {
-    NumberofMovesLookedAhead++;
+int ChessEngine::Minimax(ChessBoard& board, int depth, int alpha, int beta, auto time) {
+    Heuristics.NumberofMovesLookedAhead++;
+    Heuristics.currentDepth = depth;
 
     //board.DrawChessPiece();
 
@@ -96,7 +86,7 @@ int ChessEngine::Minimax(ChessBoard& board, int depth, int alpha, int beta, bool
     auto Currenttime = static_cast<float>(duration.count()) / 1000; //Converted To seconds
    
 
-    if (Currenttime > timeLimit && timeLimit != 0) return Evaluate(board, color);
+    if (Currenttime > timeLimit && timeLimit != 0) return Evaluate(board, board.getCurrentPlayer());
 
     if (terminateSearch) return 0;
 
@@ -106,22 +96,23 @@ int ChessEngine::Minimax(ChessBoard& board, int depth, int alpha, int beta, bool
         if (transpostionTable.isValuePresent(Boardhash)) {
             auto stored = transpostionTable.lookupTranspositionTable(Boardhash);
             if (stored.second >= depth) {
-                NumberOfTranspositionsFound++;
+                Heuristics.TranspositionsFound++;
                 return static_cast<int>(stored.first);
             }
         }
     }
 
-    if (board.isCheckmate(board, color)) return (maximizingPlayer ? -infinity : infinity);
-    if (depth == 0) return Evaluate(board, color);
+    if (board.isCheckmate(board, board.getCurrentPlayer())) return (board.getCurrentPlayer() == EngineColor ? -infinity : infinity);
+    if (depth == 0) {
+        return Evaluate(board, board.getCurrentPlayer());
 
+    }
 
-
-    if (maximizingPlayer) {
+    if (board.getCurrentPlayer() == EngineColor) {
         int maxScore = -infinity;
        
-        vector<string> possibleMoves = board.GetAllPossibleMovesInChessNotation(color);
-        totalMovesToEvaluate += static_cast<int>(possibleMoves.size());
+        vector<string> possibleMoves = board.GetAllPossibleMovesInChessNotation(EngineColor);
+        Heuristics.totalMovesToEvaluate += possibleMoves.size();
         //Shuffle Moves to add randomness
         shuffleMoves(possibleMoves);
         //SortMoves(possibleMoves, board, color);
@@ -132,10 +123,8 @@ int ChessEngine::Minimax(ChessBoard& board, int depth, int alpha, int beta, bool
 
             ChessBoard tempBoard(board);
             tempBoard.MakeMove(Indices.first, Indices.second);
-            int score = Minimax(tempBoard, depth - 1, alpha, beta, false, color == White ? Black : White, time);
+            int score = Minimax(tempBoard, depth - 1, alpha, beta, time);
             
-
-
             maxScore = max(maxScore, score);
             alpha = max(alpha, score);
 
@@ -144,7 +133,7 @@ int ChessEngine::Minimax(ChessBoard& board, int depth, int alpha, int beta, bool
             //Alpha-beta pruning
             if(useAlphaBetaPruning){
                 if (beta <= alpha) {
-                    NumberOfBranchesPruned++;
+                    Heuristics.BranchesPruned++;
                     break;
                 }
             }
@@ -156,13 +145,9 @@ int ChessEngine::Minimax(ChessBoard& board, int depth, int alpha, int beta, bool
     else {
         int minScore = infinity;
         
-        vector<string> possibleMoves = board.GetAllPossibleMovesInChessNotation(color);
-        totalMovesToEvaluate += static_cast<int>(possibleMoves.size());
-        //SortMoves(possibleMoves, board, color);
-
-        //Shuffle Moves to add randomness
+        vector<string> possibleMoves = board.GetAllPossibleMovesInChessNotation(board.getCurrentPlayer());
+        Heuristics.totalMovesToEvaluate += possibleMoves.size();
         shuffleMoves(possibleMoves);
-
 
         for (const string& move : possibleMoves) {
             if (terminateSearch) break;
@@ -172,19 +157,17 @@ int ChessEngine::Minimax(ChessBoard& board, int depth, int alpha, int beta, bool
             ChessBoard tempBoard(board);
             tempBoard.MakeMove(Indices.first, Indices.second);
 
-            int score = Minimax(tempBoard, depth - 1, alpha, beta, true, color == White ? Black : White, time);
-
+            int score = Minimax(tempBoard, depth - 1, alpha, beta, time);
 
             minScore = min(minScore, score);
             beta = min(beta, score);
-
 
             if(useTranspositions) transpostionTable.storeTranspositionTable(Boardhash, minScore, depth);
 
             //Alpha-beta pruning
             if (useAlphaBetaPruning) {
                 if (beta <= alpha) {
-                    NumberOfBranchesPruned++;
+                    Heuristics.BranchesPruned++;
                     break;
                 }
             }
@@ -212,7 +195,7 @@ string ChessEngine::IterativeDeepening(const ChessBoard& board, int maxDepth) {
         ChessBoard tempBoard(board);
         pair<int, int> Indices = convertChessNotationToIndices(move);
         tempBoard.MakeMove(Indices.first, Indices.second);
-        int score = Minimax(tempBoard, maxDepth, -infinity, infinity, false, EngineColor == White ? Black : White, high_resolution_clock::now());
+        int score = Minimax(tempBoard, maxDepth, -infinity, infinity, high_resolution_clock::now());
 
         if (score >= bestScore) {
             bestScore = score;
@@ -354,12 +337,12 @@ int* ChessEngine::InvertTable(const int* originalArray) const {
 }
 
 void ChessEngine::Reset() {
-    TimeTakenForSearch = 0;
-    NumberofMovesLookedAhead = 0;
+    Heuristics.TimeTaken = 0;
+    Heuristics.NumberofMovesLookedAhead = 0;
     //terminateSearch = false;
     startSearch = false;
-    NumberOfBranchesPruned = 0;
-    NumberOfTranspositionsFound = 0;
+    Heuristics.BranchesPruned = 0;
+    Heuristics.TranspositionsFound = 0;
 }
 
 // Function to check if a move results in a check
