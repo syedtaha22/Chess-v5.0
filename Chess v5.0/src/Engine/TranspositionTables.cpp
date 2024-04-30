@@ -14,7 +14,6 @@ void TranspositionTables::initZobristKeys() {
     for (int i = 0; i < 64; ++i) {
         for (int j = 0; j < 12; ++j) {
             zobristKeys[i][j] = dis(gen);
-
         }
     }
 }
@@ -79,6 +78,7 @@ uint64_t TranspositionTables::computeHash(const ChessBoard& board) const {
             int type = piece->type;
             if (piece->color == Black) type += 6;
             if (type > 12) cerr << "Invalid Piece Type: " << type << endl;
+
             hash ^= zobristKeys[i][type];
         }
     }

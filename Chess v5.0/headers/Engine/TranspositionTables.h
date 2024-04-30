@@ -1,7 +1,7 @@
 #ifndef TRANSPOSITIONTABLES_H
 #define TRANSPOSITIONTABLES_H
 
-#include "../Board/ChessBoard.h"
+#include "../Board/GraphicalBoard.h"
 
 class TranspositionTables {
 private:
