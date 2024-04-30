@@ -5,8 +5,15 @@
 This is a chess engine developed in C++. The engine implements various chess algorithms, including minimax with alpha-beta pruning, transposition tables, and piece-square tables for evaluation.
 
 
+## Fixes - v5.2.0
+- Fixes a debug error causing an abort() call when closing the window.
+- Ensures that information related to unexpected exits is now properly saved in the appdata folder.
+- Adds functionality to create a 'setting.json' file to remember the last depth entered by the user.
+- Enhances the application to save ELO ratings to the 'setting.json' file after calculation.
+
+
 ## Features
-The Current Release v5.1.1 Includes The Following Features
+The Current Release v5.2.0 Includes The Following Features
 
 - Singleplayer Mode(Against AI)
 - Multiplayer Mode
@@ -28,7 +35,6 @@ Alternatively you can also open the porject on Visual Studio, and build the proj
 
 
 ## Usage
-
 Click on the shortcut on your Desktop. Choose a game mode 
 - Start(Single Player)
 - Multiplayer
@@ -39,7 +45,6 @@ By Defualt, "Load from FEN" will work Only for Multiplayer Game
 
 
 ## Navigating
-
 - Press "r" to Restart
 - Press "m" to return to Menu
   
@@ -53,6 +58,19 @@ The Search depth Can be set inside settings. For more Control you can can naviga
 *Changing `MAX_DEPTH` will increase Search times, and might even cause the program to crash completely*
 
 
+## Concepts relevant to Project
+v5.2.0 uses polymorphism to Assign Chess Pieces to the Board. Instead of Using a single Class for Chess Pieces, I have derived Six Classes from the ChessPiece class, and then Dynamically Assigned Chess Pieces on the Board. (This is still a Very basic Implementation of Polymorphism
+
+
+## Incase of Unexpected Exits, Weired Behaviors
+Incase of any weird behavior, like message not showing on Win, Engine calculation not stopping on game end etc., Kindly do the following
+- Take a ScreenShot
+- Close the program
+- Navigate over to AppData\Roaming\ChessData
+- Email the UnexpectedExits.txt file to me on my email along with a screenshot/explanation of the error
+
+Alternatively report an issue.
+  
 ## Contact
 
 For any inquiries or issues related to the chess engine, please contact me at syetaha@gmail.com.
