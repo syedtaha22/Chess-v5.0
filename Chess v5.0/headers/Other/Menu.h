@@ -4,7 +4,9 @@
 #include "GlobalVariables.h"
 
 #define RAYGUI_IMPLEMENTATION
-#include "raygui.h"
+#include "raygui.h" 
+
+
 
 class Menu{
 
@@ -15,14 +17,14 @@ private:
     Rectangle FENButton;
     Rectangle SettingsMenu;
 
-    const float height = 70;
-    const float width = 200;
+    const float height = 70.0f;
+    const float width = 200.0f;
 
-    const float buttonX = (InfoBoxWidth / 2) - 40;
-    const float StartButtonY = 185;
-    const float MultiPlayerbuttonY = 305;
-    const float FenButtonY = 425;
-    const float SettingMenuY = 545;
+    const float buttonX = (InfoBoxWidth / 2.0f) - 40.0f;
+    const float StartButtonY = 185.0f;
+    const float MultiPlayerbuttonY = 305.0f;
+    const float FenButtonY = 425.0f;
+    const float SettingMenuY = 545.0f;
 
     /*
         Defined in GlobalVariable.h : 
@@ -56,42 +58,12 @@ public:
     */
 
 
-    Menu() {
-        InfoBox = { InfoBoxX, InfoBoxY, InfoBoxWidth, InfoBoxHeight };
-        StartButton = { buttonX, StartButtonY, width, height };
-        MultiplayerButton = { buttonX, MultiPlayerbuttonY, width, height };
-        FENButton = { buttonX, FenButtonY, width, height };
-        SettingsMenu = { buttonX, SettingMenuY , width, height };
-
-
-
-        StartSingleplayer = false;
-        StartMultiplayer = false;
-        LoadFromFen = false;
-        OpenSettings = false;
-
-    }
-
-    void ShowMenu() {
-
-        StartSingleplayer = GuiButton(StartButton, "Start");
-        StartMultiplayer = GuiButton(MultiplayerButton, "Multiplayer");
-        LoadFromFen = GuiButton(FENButton, "Load From FEN\n(New)");
-        OpenSettings = GuiButton(SettingsMenu, "Settings\n(New)");
-
-    }
-
-    bool isOptionPressed() const { return StartSingleplayer || StartMultiplayer; }
-
-    void DrawMenuBox() { DrawRectangleRounded(InfoBox, Roundedness, Segments, Translucent); }
-
-
-
-
+    Menu();
+    void ShowMenu();
+    bool isOptionPressed() const;
+    void DrawMenuBox() const;
 
 };
-
-
 
 
 #endif // !MENU_H

@@ -121,11 +121,11 @@ std::vector<std::string> BoardStats::getData(const ChessEngine& engine, const Us
     int FoundTranspostions = Heuristics.TranspositionsFound;
     float TimeTaken = static_cast<float>((Heuristics.TimeTaken));
     float SizeOfTable = static_cast<float>(engine.getSizeOfTranspositionTable());
-    int Speed = Heuristics.Speed / 1000; // n/s ---> kn/s
+    float Speed = Heuristics.Speed / 1000; // n/s ---> kn/s
     int currentDepth = Heuristics.currentDepth;
-    int moves = Heuristics.totalMoves;
+    int moves = static_cast<int>(Heuristics.totalMoves);
     int evaluated = Heuristics.movesEvaluated;
-    int totalToEvaluate = Heuristics.totalMovesToEvaluate;
+    int totalToEvaluate = static_cast<int>(Heuristics.totalMovesToEvaluate);
     float PercentagePruned = (totalToEvaluate != 0) ? (static_cast<float>(abs(LookAheads - totalToEvaluate)) / static_cast<float>(totalToEvaluate)) * 100 : 0;
 
 
@@ -252,7 +252,7 @@ void BoardStats::DrawEvaluationColumn(ChessBoard& chessboard, ChessEngine& engin
 
 float BoardStats::Evaluate(const ChessBoard& chessboard, int Player, ChessEngine& engine) const {
     unordered_map<int, float> pieceValues = {
-        {PAWN, 1}, {KNIGHT, 3}, {BISHOP, 3}, {ROOK, 5}, {QUEEN, 9}, {KING, 10}
+        {PAWN, 1.0f}, {KNIGHT, 3.0f}, {BISHOP, 3.0f}, {ROOK, 5.0f}, {QUEEN, 9.0f}, {KING, 10.0f}
     };
 
     // Evaluate material advantage

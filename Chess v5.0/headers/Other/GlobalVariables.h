@@ -78,10 +78,11 @@ struct EngineStats {
     float SizeOfTable = 0;
     float Speed = 0; // n/s ---> kn/s
     int currentDepth = 0;
-    int totalMoves = 0;
+    size_t totalMoves = 0;
     int movesEvaluated = 0;
-    int totalMovesToEvaluate = 0;
+    size_t totalMovesToEvaluate = 0;
 };
+
 
 EngineStats Heuristics;
 
@@ -92,3 +93,21 @@ EngineStats Heuristics;
 
 
 
+/*
+
+GlobalVariables.h ---> Flags.h, Settings.h
+ChessPiece.h ---> PieceCodes.h, GlobalVariables.h
+Pieces.h ---> ChessPiece.h
+ChessBoard.h ---> Pieces.h
+GraphicalBoard.h ---> ChessBoard.h
+TranspositionTables.h ---> GraphicalBoard.h
+ChessEngine.h ---> TranspositionTables.h, PieceSquareTables.h
+User.h ---> ChessEngine.h
+BoardStats.h ---> User.h
+GamesModes.h ---> BoardStats.h, Menu.h
+Menu.h ---> GlobalVariables.h
+Classes:
+    Settings, Flags, ChessPiece, ChessBoard, GraphicalBoard, TranspositionTables, ChessEngine, User, BoardStats, GameModes, Menu, 
+
+
+*/
