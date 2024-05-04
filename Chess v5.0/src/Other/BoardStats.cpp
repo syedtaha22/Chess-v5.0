@@ -74,7 +74,7 @@ void BoardStats::DisplayStats(ChessBoard& chessboard, ChessEngine& engine, User&
     std::vector<std::string> EngineData = getData(engine, player, chessboard);
     std::vector<std::string> moveHistory = chessboard.getMoveHistory();
 
-        
+
     if (moveHistory.size() != 0) LastMovePlayed = (moveHistory.back());
 
     MovesAndHistory(LastMovePlayed, moveHistory);

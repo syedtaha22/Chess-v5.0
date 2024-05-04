@@ -77,7 +77,7 @@ string ChessEngine::GenerateMove(const ChessBoard& board) {
 
 int ChessEngine::Minimax(ChessBoard& board, int depth, int alpha, int beta, auto time) {
     Heuristics.NumberofMovesLookedAhead++;
-
+   
 
     //board.DrawChessPiece();
 
