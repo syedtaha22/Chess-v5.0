@@ -2,25 +2,23 @@
 
 void GraphicalBoard::DrawBoard(const ChessBoard& chessboard) const {
     for (int index = 0; index < Total_tiles; index++) {
-        pair<int, int> PieceCoords = chessboard.PieceCoordinates(index);
+        pair<int, int> PieceCoords = ConvertNotation()(index);
         Color squareColor = (PieceCoords.first + PieceCoords.second) % 2 == 0 ? lightSquare : darkSquare;
 
-        int LocationX = BoardOffsetX + (abs((chessboard.isBoardReversed * ReverseOffset) - PieceCoords.second)) * tileSize;
-        int LocationY = BoardOffsetY + (abs((chessboard.isBoardReversed * ReverseOffset) - PieceCoords.first)) * tileSize;
+        int LocationX = BoardOffsetX + (abs((chessboard.state.isBoardReversed * ReverseOffset) - PieceCoords.second)) * tileSize;
+        int LocationY = BoardOffsetY + (abs((chessboard.state.isBoardReversed * ReverseOffset) - PieceCoords.first)) * tileSize;
 
         //Draw The Board
         DrawRectangle(LocationX, LocationY, tileSize, tileSize, squareColor);
 
 
-
-
         // Highlight Last Move
-        if (chessboard.MoveIndices.first == index || chessboard.MoveIndices.second == index) {
+        if (chessboard.state.MoveIndices.first == index || chessboard.state.MoveIndices.second == index) {
             DrawRectangle(LocationX, LocationY, tileSize, tileSize, MoveHighlight);
         }
 
         // Show Moves for Piece
-        for (const auto& move : chessboard.MovesForSelectedPiece) {
+        for (const auto& move : chessboard.state.MovesForSelectedPiece) {
             if (move == index) {
                 float Diameter = 26;
                 float Radius = Diameter / 2;
@@ -40,17 +38,17 @@ void GraphicalBoard::DrawCoordinates(const ChessBoard& chessboard) const {
     const int TextSize = 15;
 
     for (int index = 0; index < Total_tiles; index++) {
-        pair<int, int> PieceCoords = chessboard.PieceCoordinates(index);
-        int LocX = BoardOffsetX + (abs((chessboard.isBoardReversed * ReverseOffset) - PieceCoords.second)) * tileSize;
-        int LocY = BoardOffsetY + (abs((chessboard.isBoardReversed * ReverseOffset) - PieceCoords.first)) * tileSize;
+        pair<int, int> PieceCoords = ConvertNotation()(index);
+        int LocX = BoardOffsetX + (abs((chessboard.state.isBoardReversed * ReverseOffset) - PieceCoords.second)) * tileSize;
+        int LocY = BoardOffsetY + (abs((chessboard.state.isBoardReversed * ReverseOffset) - PieceCoords.first)) * tileSize;
 
         // Condition to Decide, Font Color. 
         // if is Divisible by 2 and board is not reversed ---> darkSquare(color)
         // if is not Divisible by 2 and board is reversed ---> darkSquare(color)
         // otherwise lightSqaure(color)
 
-        bool ColorCondition = ((PieceCoords.first + PieceCoords.second) % 2 == 0 && !chessboard.isBoardReversed) ||
-            ((PieceCoords.first + PieceCoords.second) % 2 != 0 && chessboard.isBoardReversed);
+        bool ColorCondition = ((PieceCoords.first + PieceCoords.second) % 2 == 0 && !chessboard.state.isBoardReversed) ||
+            ((PieceCoords.first + PieceCoords.second) % 2 != 0 && chessboard.state.isBoardReversed);
 
         Color TextColor = (ColorCondition) ? darkSquare : lightSquare;
 
@@ -75,10 +73,10 @@ void GraphicalBoard::DrawCoordinates(const ChessBoard& chessboard) const {
 void GraphicalBoard::DrawSquareIndices(const ChessBoard& chessboard) const {
     //For Debugging Purposes, Draws tile index
     for (int index = 0; index < Total_tiles; index++) {
-        pair<int, int> PieceCoords = chessboard.PieceCoordinates(index);
+        pair<int, int> PieceCoords = ConvertNotation()(index);
 
-        int LocationX = BoardOffsetX + (abs((chessboard.isBoardReversed * ReverseOffset) - PieceCoords.second)) * tileSize;
-        int LocationY = BoardOffsetY + (abs((chessboard.isBoardReversed * ReverseOffset) - PieceCoords.first)) * tileSize;
+        int LocationX = BoardOffsetX + (abs((chessboard.state.isBoardReversed * ReverseOffset) - PieceCoords.second)) * tileSize;
+        int LocationY = BoardOffsetY + (abs((chessboard.state.isBoardReversed * ReverseOffset) - PieceCoords.first)) * tileSize;
 
         DrawText(to_string(index).c_str(), LocationX + 8, LocationY + 8, 10, RED);
     }

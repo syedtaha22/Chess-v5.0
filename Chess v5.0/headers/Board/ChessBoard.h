@@ -3,6 +3,7 @@
 
 //#include "../Pieces/ChessPiece.h"
 #include "../Pieces/Pieces.h"
+#include "BoardState.h"
 
     /*
      
@@ -73,6 +74,7 @@ private:
 
 
 public:
+    BoardState state;
 
     //The Board
     ChessPiece* board[64];
@@ -106,7 +108,7 @@ public:
     //Gets Number of attacks on a Square
     int getAttacksOnSquare(int squareIndex, int opponentColor) const;
     int GetKingIndex(const int& playercolor) const;
-    int getPieceScore(const int& type) const;
+
     //Returns the Index of the Piece, Based on its Location
     int getTileIndex(float x, float y, int tileSize);
 
@@ -187,6 +189,10 @@ public:
     void LoadTextures();
 
     int getCurrentPlayer() const { return isCurrentPlayerWhite() ? White : Black; }
+
+    std::vector<std::string> getMoveHistory() const { return state.moveHistory; }
+
+    int getCheckedPlayer() const { return state.checkedPlayer; }
 
     ~ChessBoard(){
  

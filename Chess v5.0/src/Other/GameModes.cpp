@@ -45,7 +45,7 @@ void GameModes::MultiplayerMode() {
             HandleMoves(Black);
         }
         Options();
-        if (GameStats.ShowMoveHistory) GameStats.DisplayMoveHistory(chessboard);
+        if (GameStats.ShowMoveHistory) GameStats.DisplayMoveHistory(chessboard.getMoveHistory());
         else GameStats.DisplayStats(chessboard);
         DisplayBoard();
 
@@ -121,7 +121,7 @@ void GameModes::SinglePlayerMode() {
 
 
         Options();
-        if (GameStats.ShowMoveHistory) GameStats.DisplayMoveHistory(chessboard);
+        if (GameStats.ShowMoveHistory) GameStats.DisplayMoveHistory(chessboard.getMoveHistory());
         else GameStats.DisplayStats(chessboard, Horizon, Player);
         DisplayBoard();
         GameStats.DrawEvaluationColumn(chessboard, Horizon);
@@ -185,3 +185,5 @@ void GameModes::SetFENStrings(const string& fen) {
     chessboard.DestroyBoard();
     chessboard.initializeBoardFromFEN(FENString, true);
 }
+
+

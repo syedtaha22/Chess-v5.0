@@ -33,7 +33,7 @@ bool BoardStats::GameIsEnded(ChessBoard& board) {
             cout << "Check Complete" << endl;
             return true;
         }
-        if (board.checkedPlayer == 0 && board.GetAllPossibleMoves(playerColor).size() == 0) {
+        if (board.getCheckedPlayer() == 0 && board.GetAllPossibleMoves(playerColor).size() == 0) {
             EndMessage = "---Stalemate---";
             winner = -1; //No Winner
 
@@ -72,10 +72,13 @@ void BoardStats::DisplayStats(ChessBoard& chessboard, ChessEngine& engine, User&
     string LastMovePlayed = "";
     string currentPlayer = (chessboard.isCurrentPlayerWhite()) ? "White" : "Black";
     std::vector<std::string> EngineData = getData(engine, player, chessboard);
+    std::vector<std::string> moveHistory = chessboard.getMoveHistory();
 
     if (chessboard.moveHistory.size() != 0) LastMovePlayed = (chessboard.moveHistory.back());
         
-    MovesAndHistory(LastMovePlayed, chessboard);
+    if (moveHistory.size() != 0) LastMovePlayed = (moveHistory.back());
+
+    MovesAndHistory(LastMovePlayed, moveHistory);
 
     DisplayPlayerTitles(chessboard); //Draw Player Titles
     DrawStatistics(EngineData); //Draw engine Statistics
@@ -83,8 +86,8 @@ void BoardStats::DisplayStats(ChessBoard& chessboard, ChessEngine& engine, User&
 }
 
 void BoardStats::DisplayPlayerTitles(const ChessBoard& chessboard) {
-    Color CheckAlertB = chessboard.checkedPlayer == Black ? AlertColor : messageColor;
-    Color CheckAlertW = chessboard.checkedPlayer == White ? AlertColor : messageColor;
+    Color CheckAlertB = chessboard.getCheckedPlayer() == Black ? AlertColor : messageColor;
+    Color CheckAlertW = chessboard.getCheckedPlayer() == White ? AlertColor : messageColor;
     float b_posX = textX - (TextCenter(Black_, fontSize).x / 2);
     float b_posY = textY - (TextCenter(Black_, fontSize).y / 2) + 20;   
 
@@ -150,14 +153,15 @@ void BoardStats::DisplayStats(ChessBoard& chessboard) {
 
     string LastMovePlayed = "";
     string currentPlayer = (chessboard.isCurrentPlayerWhite()) ? "White" : "Black";
+    std::vector<std::string> moveHistory = chessboard.getMoveHistory();
 
-    if (chessboard.moveHistory.size() != 0) LastMovePlayed = (chessboard.moveHistory.back());
-    MovesAndHistory(LastMovePlayed, chessboard);
+    if (moveHistory.size() != 0) LastMovePlayed = (moveHistory.back());
+    MovesAndHistory(LastMovePlayed, moveHistory);
     DisplayPlayerTitles(chessboard);
 }
 
-void BoardStats::MovesAndHistory(string LastMovePlayed, ChessBoard& chessboard) {
-    if (ShowMoveHistory) DisplayMoveHistory(chessboard);
+void BoardStats::MovesAndHistory(string LastMovePlayed, const std::vector<std::string>& moveHistory) {
+    if (ShowMoveHistory) DisplayMoveHistory(moveHistory);
     else {
         float X = textX - (TextCenter(LastMovePlayed.c_str(), fontSize - 10).x / 2);
         float Y = static_cast<float>(screenHeight) / 2 - 42;
@@ -165,11 +169,11 @@ void BoardStats::MovesAndHistory(string LastMovePlayed, ChessBoard& chessboard) 
     }
 }
 
-void BoardStats::DisplayMoveHistory(ChessBoard chessboard) const {
+void BoardStats::DisplayMoveHistory(const std::vector<std::string>& moveHistory) const {
 
     string Moves = "";
-    for (int index = 0; index < chessboard.moveHistory.size(); index++) {
-        Moves += chessboard.moveHistory[index];
+    for (int index = 0; index < moveHistory.size(); index++) {
+        Moves += moveHistory[index];
         Moves += ", ";
         if ((index + 1) % 6 == 0) {
             Moves += "\n\n";

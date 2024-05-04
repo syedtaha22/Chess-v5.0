@@ -7,13 +7,7 @@ ChessBoard::ChessBoard() {
     for (int i = 0; i < Total_tiles; ++i) {
         board[i] = new ChessPiece();
     }
-    currentPlayerIsWhite = true;
-    DoCastle = false;
-    MoveIndices = { -1, -1 };
-    isBoardReversed = false;
-    PieceIsCaptured = false;
-    enPassantTarget = -1;
-    checkedPlayer = 0;
+
 }
 
 // Deep copy constructor
@@ -22,13 +16,7 @@ ChessBoard::ChessBoard(const ChessBoard& other) {
     for (int i = 0; i < Total_tiles; ++i) {
         board[i] = new ChessPiece(*(other.board[i]));
     }
-    currentPlayerIsWhite = other.currentPlayerIsWhite;
-    DoCastle = other.DoCastle;
-    MoveIndices = other.MoveIndices;
-    isBoardReversed = other.isBoardReversed;
-    PieceIsCaptured = other.PieceIsCaptured;
-    enPassantTarget = other.enPassantTarget;
-
+    state = other.state;
 }
 
 int ChessBoard::getPieceScore(const int& type) const {
@@ -44,7 +32,7 @@ int ChessBoard::getPieceScore(const int& type) const {
 }
 
 void ChessBoard::AddMoveToHistory(string move) {
-    moveHistory.push_back(move);
+    state.moveHistory.push_back(move);
 }
 
 void ChessBoard::promotePawn(int toTile) {
@@ -54,7 +42,7 @@ void ChessBoard::promotePawn(int toTile) {
 
     //Promote Pawn to Queen
     delete board[toTile];
-    board[toTile] = new Queen(currentPlayerIsWhite ? White : Black);
+    board[toTile] = new Queen(state.currentPlayerIsWhite ? White : Black);
     board[toTile]->AssignTextures();
     SetPiecePositions();
 }
@@ -87,8 +75,8 @@ int ChessBoard::calculatePlayerScore(int playerColor) const {
 
 void ChessBoard::initializeBoardFromFEN(const string& fen, bool loadTextures) {
     //cout << "Starting Initialising...." << endl;
-    moveHistory.clear();
-    MoveIndices = { -1,-1 };
+    state.moveHistory.clear();
+    state.MoveIndices = { -1,-1 };
     int row = 0, col = 0;
     // Parse the FEN string
     for (char symbol : fen) {
@@ -126,7 +114,7 @@ void ChessBoard::initializeBoardFromFEN(const string& fen, bool loadTextures) {
         }
     }
     // Set the current player based on FEN
-    currentPlayerIsWhite = (fen.find("w") != string::npos);
+    state.currentPlayerIsWhite = (fen.find("w") != string::npos);
 
     //SetCastlingRights
     int WhiteKingIndex = GetKingIndex(White);
@@ -232,7 +220,7 @@ string ChessBoard::GetCurrentFEN() const {
             fen += '/';
         }
     }
-    fen += (currentPlayerIsWhite ? " w " : " b ");
+    fen += (state.currentPlayerIsWhite ? " w " : " b ");
     //Add Castling Rights......
 
     return fen;
@@ -420,7 +408,7 @@ void ChessBoard::UpdateChessPiece(ChessPiece* piece, int InitialIndex) {
 
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && CheckCollisionPointRec(GetMousePosition(), piece->rectangle)) {
             piece->isDragged = true;
-            MovesForSelectedPiece = GetAllPossibleMovesForPiece(piece->type, InitialIndex);
+            state.MovesForSelectedPiece = GetAllPossibleMovesForPiece(piece->type, InitialIndex);
 
         }
         if (piece->isDragged) {
@@ -436,7 +424,7 @@ void ChessBoard::UpdateChessPiece(ChessPiece* piece, int InitialIndex) {
             if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
                 float tileX = round((piece->rectangle.x - BoardOffsetX) / tileSize) * tileSize;
                 float tileY = round((piece->rectangle.y - BoardOffsetY) / tileSize) * tileSize;
-                int FinalIndex = abs((isBoardReversed * (Total_tiles - 1)) - getTileIndex(tileX, tileY, tileSize));
+                int FinalIndex = abs((state.isBoardReversed * (Total_tiles - 1)) - getTileIndex(tileX, tileY, tileSize));
                 
                 string Move = ConvertNotation()(InitialIndex, FinalIndex);
 
@@ -449,8 +437,8 @@ void ChessBoard::UpdateChessPiece(ChessPiece* piece, int InitialIndex) {
                 }
                 else {
                     piece->isDragged = false;
-                    int file = abs((isBoardReversed * ReverseOffset) - (InitialIndex % 8));
-                    int rank = abs((isBoardReversed * ReverseOffset) - (InitialIndex / 8));
+                    int file = abs((state.isBoardReversed * ReverseOffset) - (InitialIndex % 8));
+                    int rank = abs((state.isBoardReversed * ReverseOffset) - (InitialIndex / 8));
                     piece->rectangle.x = BoardOffsetX + static_cast<float>(file * tileSize);
                     piece->rectangle.y = BoardOffsetY + static_cast<float>(rank * tileSize);
                 }
@@ -461,7 +449,7 @@ void ChessBoard::UpdateChessPiece(ChessPiece* piece, int InitialIndex) {
 
 bool ChessBoard::isValidMove(int index){
     //Check if the Played Move is Valid
-    for (auto Move : MovesForSelectedPiece) {
+    for (const auto& Move : state.MovesForSelectedPiece) {
         if (index == Move){
             return true;
         }
@@ -504,10 +492,10 @@ void ChessBoard::MakeMove(int fromTile, int toTile) {
     board[fromTile]->firstMove = false;
     board[toTile] = board[fromTile];
     board[fromTile] = new ChessPiece(); // Empty the source square
-    MovesForSelectedPiece.clear();
+    state.MovesForSelectedPiece.clear();
 
     //Reverse board, if Multiplayer
-    MoveIndices = make_pair(fromTile, toTile);
+    state.MoveIndices = make_pair(fromTile, toTile);
     if (Flags::isMultiplayerGame()) ReverseBoard();
     SetPiecePositions();
 }
@@ -515,9 +503,9 @@ void ChessBoard::MakeMove(int fromTile, int toTile) {
 void ChessBoard::MakeCompleteMove(int fromTile, int toTile, string move) {
 
     //Move not Enpassant so, reset Target
-    if (!IsEnPassantCapture(fromTile, toTile) && enPassantTarget !=-1) {
-        cout << "Target Reset " << enPassantTarget << endl;
-        enPassantTarget = -1;
+    if (!IsEnPassantCapture(fromTile, toTile) && state.enPassantTarget !=-1) {
+        cout << "Target Reset " << state.enPassantTarget << endl;
+        state.enPassantTarget = -1;
     } 
 
     //Set Enpassant target. There can Only be own Pawn which is an Enpassant target
@@ -527,15 +515,15 @@ void ChessBoard::MakeCompleteMove(int fromTile, int toTile, string move) {
             int rowTo = toTile / 8;
 
             if ((rowFrom == 1 && rowTo == 3) || (rowFrom == 6 && rowTo == 4)) {
-                enPassantTarget = (fromTile + toTile) / 2;
-                board[enPassantTarget]->EnpassantTarget = true;
+                state.enPassantTarget = (fromTile + toTile) / 2;
+                board[state.enPassantTarget]->EnpassantTarget = true;
                 //cout << "Pawn at " << toTile << " is an Enpassant target" << " " << enPassantTarget << endl;
             }
         }
     }
 
 
-    PieceIsCaptured = isValidCaptureMove(fromTile, toTile);
+    state.PieceIsCaptured = isValidCaptureMove(fromTile, toTile);
     MakeMove(fromTile, toTile);
 
     // Pawn promotion
@@ -550,32 +538,32 @@ void ChessBoard::MakeCompleteMove(int fromTile, int toTile, string move) {
         }
     }
 
-    cout << (currentPlayerIsWhite ? "White" : "Black") << " Plays : " << move << "\n";
+    cout << (state.currentPlayerIsWhite ? "White" : "Black") << " Plays : " << move << "\n";
 
-    if (moveHistory.size() >= MaxHistorySize) {
-        moveHistory.clear();
+    if (state.moveHistory.size() >= MaxHistorySize) {
+        state.moveHistory.clear();
     }
 
     AddMoveToHistory(move);
-    MoveIndices = make_pair(fromTile, toTile);
+    state.MoveIndices = make_pair(fromTile, toTile);
     SetPiecePositions();
 
     //Uncomment for Debugging or to Show Board on terminal
-    //DisplayBoard();
-    //DisplayScores();
+    DisplayBoard();
+    DisplayScores();
 
-    isCheck(*this, currentPlayerIsWhite ? Black : White, "ChessBoard::MakeCompleteMove");
+    isCheck(*this, state.currentPlayerIsWhite ? Black : White, "ChessBoard::MakeCompleteMove");
 
 
     Flags::CheckGameState();   
-    currentPlayerIsWhite = !currentPlayerIsWhite;
+    state.currentPlayerIsWhite = !state.currentPlayerIsWhite;
     ComputeOpponentMoves();
     PlayChessSound();
-    MovesForSelectedPiece.clear();
+    state.MovesForSelectedPiece.clear();
 }
 
 void ChessBoard::ReverseBoard() {
-    isBoardReversed = !isBoardReversed;
+    state.isBoardReversed = !state.isBoardReversed;
 }
 
 bool ChessBoard::IsCastlingMove(string move, ChessPiece* pieceMoved) {
@@ -585,7 +573,7 @@ bool ChessBoard::IsCastlingMove(string move, ChessPiece* pieceMoved) {
 bool ChessBoard::IsEnPassantCapture(int fromTile, int toTile) const {
     ChessPiece* piece = board[fromTile];
 
-    if (piece->type == PAWN && toTile == enPassantTarget) {
+    if (piece->type == PAWN && toTile == state.enPassantTarget) {
         if ((piece->color == White && fromTile/8 == 3) || (piece->color == Black && fromTile/8 == 4)) {
             return true;
         }
@@ -595,10 +583,10 @@ bool ChessBoard::IsEnPassantCapture(int fromTile, int toTile) const {
 
 void ChessBoard::PlayChessSound() const {
     //std::cout << "Checked Player: " << checkedPlayer << std::endl;
-    if (checkedPlayer != 0) {
+    if (state.checkedPlayer != 0) {
         PlaySound(KingChecked);
     }
-    else if (PieceIsCaptured) {
+    else if (state.PieceIsCaptured) {
         PlaySound(ChessPieceCaptured);
     }
     else {
@@ -607,7 +595,7 @@ void ChessBoard::PlayChessSound() const {
 }
 
 bool ChessBoard::isCurrentPlayerWhite() const{
-    return currentPlayerIsWhite;
+    return state.currentPlayerIsWhite;
 }
 
 void ChessBoard::DisplayScores() const {
@@ -730,9 +718,9 @@ void ChessBoard::ComputePawnMoves(int pieceIndex, vector<int>& possibleMoves) co
                 possibleMoves.push_back(targetIndex);
             }
             // Check for en passant
-            if (enPassantTarget != -1) {
+            if (state.enPassantTarget != -1) {
                 // Check if the target index is the en passant target
-                if (targetIndex == enPassantTarget) {
+                if (targetIndex == state.enPassantTarget) {
                     // Check if the current piece can perform en passant
                     if ((piece->color == White && row == 3) || (piece->color == Black && row == 4)) {
                         possibleMoves.push_back(targetIndex);
@@ -844,7 +832,7 @@ bool ChessBoard::isCheck(const ChessBoard& chessboard, const int playerColor, st
     // I found that most of the errors/bugs orignated from this function, and by who or how it was being called
     //chessboard.DisplayBoard();
 
-    checkedPlayer = 0; // No Player is Checked
+    state.checkedPlayer = 0; // No Player is Checked
     int kingIndex = -100;
     for (int i = 0; i < Total_tiles; i++) {
         if (chessboard.board[i]->type == KING && chessboard.board[i]->color == playerColor) {
@@ -874,7 +862,7 @@ bool ChessBoard::isCheck(const ChessBoard& chessboard, const int playerColor, st
             // Check if any of the possible moves include the king's position
             for (int move : possibleMoves) {
                 if (move == kingIndex) {
-                    checkedPlayer = playerColor;
+                    state.checkedPlayer = playerColor;
                     
                     return true; // King is in check
                 }
@@ -887,7 +875,7 @@ bool ChessBoard::isCheck(const ChessBoard& chessboard, const int playerColor, st
 
 bool ChessBoard::isCheckmate(ChessBoard& chessboard, const int playerColor) const {
     // King is not in check, so it can't be checkmate
-    if (checkedPlayer == 0) return false; 
+    if (state.checkedPlayer == 0) return false; 
    
     vector<int> possibleMoves = GetAllPossibleMoves(playerColor);
     if (possibleMoves.size() > 0) return false; // King can escape from check, so it's not checkmate
@@ -963,8 +951,8 @@ int ChessBoard::getAttacksOnSquare(int squareIndex, int opponentColor) const {
 
 bool ChessBoard::IsTileUnderAttack(int squareIndex) const {
 
-    for (int i = 0; i < OpponentMoves.size(); i++) {
-        if (OpponentMoves[i] == squareIndex) {
+    for (int i = 0; i < state.OpponentMoves.size(); i++) {
+        if (state.OpponentMoves[i] == squareIndex) {
             return true;
         }
     }
@@ -972,7 +960,7 @@ bool ChessBoard::IsTileUnderAttack(int squareIndex) const {
 }
 
 void ChessBoard::DisplayMoves() {
-    for (auto move : OpponentMoves) {
+    for (auto move : state.OpponentMoves) {
         cout << move << endl;
     }
 }
@@ -999,10 +987,7 @@ vector<int> ChessBoard::GetAllPossibleMovesForPiece(int type, int index) const {
 }
 
 void ChessBoard::DestroyBoard() {
-    isBoardReversed = false;
-    moveHistory.clear();
-    MovesForSelectedPiece.clear();
-    OpponentMoves.clear();
+    state.reset();
     for (int i = 0; i < Total_tiles; i++) {
         board[i]->DestroyTextures();
     }
@@ -1042,7 +1027,7 @@ bool ChessBoard::isValidCaptureMove(int fromTile, int toTile) const {
 }
 
 void ChessBoard::ComputeOpponentMoves() {
-    OpponentMoves = GetAllPossibleMoves(isCurrentPlayerWhite() ? Black : White);
+    state.OpponentMoves = GetAllPossibleMoves(state.currentPlayerIsWhite ? Black : White);
 }
 
 void ChessBoard::LoadTextures(){
