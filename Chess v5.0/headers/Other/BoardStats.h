@@ -35,6 +35,8 @@ private:
 
     std::chrono::high_resolution_clock::time_point TimerStart = high_resolution_clock::now();
 
+    const int MinScore = 10; // Kings Score
+
 public:
 
 
@@ -58,7 +60,7 @@ public:
     void DisplayStats(ChessBoard& chessboard);
 
     //Display Last Move or Move History based on flag
-    void MovesAndHistory(string LastMovePlayed, ChessBoard& chessboard);
+    void MovesAndHistory(string LastMovePlayed, const std::vector<std::string>& moveHistory);
 
     std::vector<std::string> getData(const ChessEngine& engine, const User& player, const ChessBoard& chessboard);
     void DrawPlayerElos(int elo_W, int elo_B);
@@ -70,7 +72,7 @@ public:
     void Reset();
 
     //Displays the Move History
-    void DisplayMoveHistory(ChessBoard chessboard) const;
+    void DisplayMoveHistory(const std::vector<std::string>& moveHistory) const;
 
     void DrawEvaluationColumn(ChessBoard& chessboard, ChessEngine& engine);
     float Evaluate(const ChessBoard& chessboard, int Player, ChessEngine& engine) const;

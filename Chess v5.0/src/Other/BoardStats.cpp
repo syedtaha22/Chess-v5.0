@@ -41,7 +41,7 @@ bool BoardStats::GameIsEnded(ChessBoard& board) {
             cout << "Check Complete" << endl;
             return true;
         }
-        if (board.calculatePlayerScore(White) <= board.getPieceScore(KING) && board.calculatePlayerScore(Black) <= board.getPieceScore(KING)) {
+        if (board.calculatePlayerScore(White) <= MinScore && board.calculatePlayerScore(Black) <= MinScore) {
             EndMessage = "---Draw---";
             winner = -1; //No Winner
 
@@ -74,7 +74,6 @@ void BoardStats::DisplayStats(ChessBoard& chessboard, ChessEngine& engine, User&
     std::vector<std::string> EngineData = getData(engine, player, chessboard);
     std::vector<std::string> moveHistory = chessboard.getMoveHistory();
 
-    if (chessboard.moveHistory.size() != 0) LastMovePlayed = (chessboard.moveHistory.back());
         
     if (moveHistory.size() != 0) LastMovePlayed = (moveHistory.back());
 
