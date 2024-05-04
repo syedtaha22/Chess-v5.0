@@ -1,8 +1,6 @@
 #include "../../headers/Board/ChessBoard.h"
 
 
-
-
 ChessBoard::ChessBoard() {
     for (int i = 0; i < Total_tiles; ++i) {
         board[i] = new ChessPiece();
@@ -10,25 +8,12 @@ ChessBoard::ChessBoard() {
 
 }
 
-// Deep copy constructor
 ChessBoard::ChessBoard(const ChessBoard& other) {
     // Allocate memory for the new board
     for (int i = 0; i < Total_tiles; ++i) {
         board[i] = new ChessPiece(*(other.board[i]));
     }
     state = other.state;
-}
-
-int ChessBoard::getPieceScore(const int& type) const {
-    switch (type) {
-    case PAWN: return pawnScore;
-    case ROOK: return rookScore;
-    case KNIGHT: return knightScore;
-    case BISHOP: return bishopScore;
-    case QUEEN: return queenScore;
-    case KING: return kingScore;
-    default: return 0; // Unknown piece type
-    }
 }
 
 void ChessBoard::AddMoveToHistory(string move) {
@@ -297,102 +282,6 @@ void ChessBoard::SetPiecePositions() {
         board[index]->rectangle.y = BoardOffsetY + static_cast<float>((abs((state.isBoardReversed * ReverseOffset) - PieceCoords.first)) * tileSize);
     }
 }
-
-//void ChessBoard::DrawBoard() const {
-//    cout << "I'm Here\n";
-//    for (int index = 0; index < Total_tiles; index++) {
-//
-//        pair<int, int> PieceCoords = PieceCoordinates(index);
-//        Color squareColor = (PieceCoords.first + PieceCoords.second) % 2 == 0 ? lightSquare : darkSquare;
-//
-//        int LocationX = BoardOffsetX + (abs((isBoardReversed * ReverseOffset) - PieceCoords.second)) * tileSize;
-//        int LocationY = BoardOffsetY + (abs((isBoardReversed * ReverseOffset) - PieceCoords.first)) * tileSize;
-//
-//        //Draw The Board
-//        DrawRectangle(LocationX, LocationY, tileSize, tileSize, squareColor);
-//        
-//
-//       
-//
-//        // Highlight Last Move
-//        if (MoveIndices.first == index || MoveIndices.second == index) {
-//            DrawRectangle(LocationX, LocationY, tileSize, tileSize, MoveHighlight);
-//        }
-//
-//        // Show Moves for Piece
-//        for (const auto& move : MovesForSelectedPiece) {
-//            if (move == index) {
-//                float Diameter = 26;
-//                float Radius = Diameter / 2;
-//                float Offset = Diameter + Radius;
-//
-//                DrawRectangle(LocationX, LocationY, tileSize, tileSize, MovesForPieceHighLight); //Displays Red Squares
-//
-//                //Uncomment Below Line to get Circular Indicators
-//                //DrawCircle(LocationX + static_cast<int>(Offset), LocationY + static_cast<int>(Offset), Radius, Translucent);
-//            }
-//        }
-//        
-//    }
-//}
-//
-//void ChessBoard::DrawCoordinates() const{
-//    const int TextSize = 15;
-//
-//    for (int index = 0; index < Total_tiles; index++) {
-//        pair<int, int> PieceCoords = PieceCoordinates(index);
-//        int LocX = BoardOffsetX + (abs((isBoardReversed * ReverseOffset) - PieceCoords.second)) * tileSize;
-//        int LocY = BoardOffsetY + (abs((isBoardReversed * ReverseOffset) - PieceCoords.first)) * tileSize;
-//
-//        // Condition to Decide, Font Color. 
-//        // if is Divisible by 2 and board is not reversed ---> darkSquare(color)
-//        // if is not Divisible by 2 and board is reversed ---> darkSquare(color)
-//        // otherwise lightSqaure(color)
-//
-//        bool ColorCondition = ((PieceCoords.first + PieceCoords.second) % 2 == 0 && !isBoardReversed) ||
-//            ((PieceCoords.first + PieceCoords.second) % 2 != 0 && isBoardReversed);
-//
-//        Color TextColor = (ColorCondition) ? darkSquare : lightSquare;
-//
-//        // Row Coordinates(1-8)
-//        if (index % 8 == 0) {
-//            // X postion is Constant, the +8 is an offset from corner of tile
-//            Vector2 Position = { 800 + 8, static_cast<float>(LocY) + 8 };
-//
-//            DrawTextEx(myFont, to_string(8 - index / 8).c_str(), Position, TextSize, 0.1f, TextColor); 
-//        }
-//
-//        // Column Coordinates(a-h)
-//        if (index >= 56 && index <= 63) {
-//            // Y postion is Constant, the -20 is an offset from corner of tile
-//            Vector2 Position = { static_cast<float>(LocX + tileSize) - 20, 720 - 20 };
-//
-//            DrawTextEx(myFont, string(1, 'a' + index % 8).c_str(), Position, TextSize, 0.1f, TextColor);
-//        }
-//    }
-//}
-//
-//void ChessBoard::DrawSquareIndices() const {
-//    //For Debugging Purposes, Draws tile index
-//    for (int index = 0; index < Total_tiles; index++) {
-//        pair<int, int> PieceCoords = PieceCoordinates(index);
-//
-//        int LocationX = BoardOffsetX + (abs((isBoardReversed * ReverseOffset) - PieceCoords.second)) * tileSize;
-//        int LocationY = BoardOffsetY + (abs((isBoardReversed * ReverseOffset) - PieceCoords.first)) * tileSize;
-//
-//        DrawText(to_string(index).c_str(), LocationX + 8, LocationY + 8, 10, RED);
-//    }
-//
-//}
-//
-//void ChessBoard::DrawChessPiece() const {
-//    for (int index = 0; index < Total_tiles; index++) {
-//        auto something = board[index]->rectangle.x;
-//        int PositionX = static_cast<int>(board[index]->rectangle.x);
-//        int PositionY = static_cast<int>(board[index]->rectangle.y);
-//        DrawTexture(board[index]->texture, PositionX, PositionY, WHITE);
-//    }
-//}
 
 int ChessBoard::getTileIndex(float x, float y, int tileSize) {
 
@@ -889,14 +778,8 @@ vector<int> ChessBoard::GetAllPossibleMoves(int playerColor) const {
 
     for (int i = 0; i < Total_tiles; i++) {
         if (board[i]->color == playerColor) {
-            vector<int> moves;
+            vector<int> moves = GetAllPossibleMovesForPiece(board[i]->type, i);
 
-            // Compute moves based on the piece type
-            if (board[i]->isSlidingPiece) ComputeSlidingPieceMoves(i, moves);
-            else if (board[i]->type == PAWN) ComputePawnMoves(i, moves);            
-            else if (board[i]->type == KNIGHT) ComputeKnightMoves(i, moves);
-            else if (board[i]->type == KING) ComputeKingMoves(i, moves);
-            
             moves = FilterValidMoves(i, moves);
             for (auto move : moves) {
                 possibleMoves.push_back(move);
@@ -912,13 +795,7 @@ vector<string> ChessBoard::GetAllPossibleMovesInChessNotation(int playerColor) c
 
     for (int i = 0; i < Total_tiles; i++) {
         if (board[i]->color == playerColor) {
-            vector<int> moves;
-
-            // Compute moves based on the piece type
-            if (board[i]->isSlidingPiece) ComputeSlidingPieceMoves(i, moves);
-            else if (board[i]->type == PAWN) ComputePawnMoves(i, moves);
-            else if (board[i]->type == KNIGHT) ComputeKnightMoves(i, moves);
-            else if (board[i]->type == KING) ComputeKingMoves(i, moves);
+            vector<int> moves = GetAllPossibleMovesForPiece(board[i]->type, i);
 
             // Check if the move is legal (does not leave the king in check)
             for (int toTile : moves) {
@@ -934,7 +811,6 @@ vector<string> ChessBoard::GetAllPossibleMovesInChessNotation(int playerColor) c
             }
         }
     }
-
     return possibleMoves;
 }
 

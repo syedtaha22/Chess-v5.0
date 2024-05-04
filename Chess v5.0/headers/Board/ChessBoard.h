@@ -42,60 +42,12 @@
     */
 
 class ChessBoard {
-private:
-
-    //PreComputed Moves for Pieces
-    vector<int> SlidingPieceMoveData;
-    vector<int> PawnMoveData;
-    vector<int> KnightMoveData; 
-    vector<int> KingMoveData;
-
-    //PreComputed Moves for Opponents
-    vector<int> OpponentMoves;
-
-    //Returns true if it is Whites Turn To Play
-    bool currentPlayerIsWhite;
-
-    //Determines wether the Move made is a Castling Move or not
-    bool DoCastle;
-
-    // Scores for each piece type
-    const int pawnScore = 1;
-    const int rookScore = 5;
-    const int knightScore = 3;
-    const int bishopScore = 3;
-    const int queenScore = 9;
-    const int kingScore = 10;
-
-    //Stores Index of Pawn that is Capturable by En Passant
-    int enPassantTarget;
-
-
-
 
 public:
     BoardState state;
 
     //The Board
     ChessPiece* board[64];
-
-    //Precomputes Move for Selected Piece by User
-    vector<int> MovesForSelectedPiece;
-
-    //Contains a History of all Moves Mades
-    vector<string> moveHistory;
-
-    //Determines wether a board is Reversed or Not.(For Multiplayer Mode)
-    bool isBoardReversed;
-
-    //Wether the Move made was A Captured Move or not
-    bool PieceIsCaptured;
-
-    //Stores the last Move that was made in the Format
-    //<Initial Index, Final Index>
-    pair<int, int> MoveIndices;
-
-    int checkedPlayer;
 
     ChessBoard();
 
@@ -150,7 +102,6 @@ public:
 
     //Enables Pieces to be Dragged and Dropped, Verifies Moves, and Makes a Complete Valid Move
     void UpdateChessPiece(ChessPiece* piece, int InitialIndex);
-
 
     //See if a King and Castle Either side based on the Board
     bool canCastleKingSide(int KingIndex) const;
