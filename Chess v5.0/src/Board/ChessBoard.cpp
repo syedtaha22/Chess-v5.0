@@ -52,7 +52,7 @@ int ChessBoard::calculatePlayerScore(int playerColor) const {
     int totalScore = 0;
     for (int i = 0; i < Total_tiles; i++) {
         if (board[i]->color == playerColor) {
-            totalScore += getPieceScore(board[i]->type);
+            totalScore += board[i]->getScore();
         }
     }
     return totalScore;

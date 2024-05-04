@@ -5,6 +5,16 @@
 #include "PieceCodes.h"
 
 class ChessPiece {
+
+protected:
+    // Scores for each piece type
+    const int pawnScore = 1;
+    const int rookScore = 5;
+    const int knightScore = 3;
+    const int bishopScore = 3;
+    const int queenScore = 9;
+    const int kingScore = 10;
+
 public:
     int type; 
     int color;
@@ -18,6 +28,8 @@ public:
     bool canCastleKingSide;
     int PieceCode;
     int EnpassantTarget;
+
+
 
     /*
     -----------------------------Piece Type Codes-----------------------------
@@ -44,7 +56,7 @@ public:
     //Unloads textures associated to the Piece
     void DestroyTextures();
 
-    
+    virtual int getScore() const { return -10000; };
 
     //Not Using Destructer here as It, Unexpectedly Destroys Pieces.
     //~ChessPiece(){}
