@@ -125,7 +125,7 @@ std::vector<std::string> BoardStats::getData(const ChessEngine& engine, const Us
     float TimeTaken = static_cast<float>((Heuristics.TimeTaken));
     float SizeOfTable = static_cast<float>(engine.getSizeOfTranspositionTable());
     float Speed = Heuristics.Speed / 1000; // n/s ---> kn/s
-    int currentDepth = Heuristics.currentDepth;
+    int currentDepth = Heuristics.maxDepth;
     int moves = static_cast<int>(Heuristics.totalMoves);
     int evaluated = Heuristics.movesEvaluated;
     int totalToEvaluate = static_cast<int>(Heuristics.totalMovesToEvaluate);

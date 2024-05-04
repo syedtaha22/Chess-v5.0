@@ -77,7 +77,7 @@ struct EngineStats {
     float TimeTaken = 0;
     float SizeOfTable = 0;
     float Speed = 0; // n/s ---> kn/s
-    int currentDepth = 0;
+    int maxDepth = 0;
     size_t totalMoves = 0;
     int movesEvaluated = 0;
     size_t totalMovesToEvaluate = 0;

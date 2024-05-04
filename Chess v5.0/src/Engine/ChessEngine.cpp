@@ -35,7 +35,7 @@ string ChessEngine::GenerateMove(const ChessBoard& board) {
     Heuristics.TranspositionsFound = 0;
     Heuristics.movesEvaluated = 0;
     Heuristics.totalMovesToEvaluate = 0;
-
+    Heuristics.maxDepth = MAX_DEPTH;
    
 
     vector<string> possibleMoves = board.GetAllPossibleMovesInChessNotation(EngineColor);
@@ -77,7 +77,6 @@ string ChessEngine::GenerateMove(const ChessBoard& board) {
 
 int ChessEngine::Minimax(ChessBoard& board, int depth, int alpha, int beta, auto time) {
     Heuristics.NumberofMovesLookedAhead++;
-    Heuristics.currentDepth = depth;
 
 
     //board.DrawChessPiece();
