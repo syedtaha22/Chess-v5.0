@@ -1,7 +1,7 @@
 #ifndef CHESSPIECE_H
 #define CHESSPIECE_H
 
-#include "../Other/GlobalVariables.h"
+#include "../Functors/ConvertNotation.h"
 #include "PieceCodes.h"
 
 class ChessPiece {

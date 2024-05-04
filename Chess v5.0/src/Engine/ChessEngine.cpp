@@ -53,7 +53,7 @@ string ChessEngine::GenerateMove(const ChessBoard& board) {
             break;
         }
         ChessBoard tempBoard(board);
-        pair<int, int> Indices = convertChessNotationToIndices(move);
+        pair<int, int> Indices = ConvertNotation()(move);
         tempBoard.MakeMove(Indices.first, Indices.second);
 
 
@@ -78,6 +78,7 @@ string ChessEngine::GenerateMove(const ChessBoard& board) {
 int ChessEngine::Minimax(ChessBoard& board, int depth, int alpha, int beta, auto time) {
     Heuristics.NumberofMovesLookedAhead++;
     Heuristics.currentDepth = depth;
+
 
     //board.DrawChessPiece();
 
@@ -119,7 +120,7 @@ int ChessEngine::Minimax(ChessBoard& board, int depth, int alpha, int beta, auto
 
         for (const string& move : possibleMoves) {
             if (terminateSearch) break;
-            pair<int, int> Indices = convertChessNotationToIndices(move);
+            pair<int, int> Indices = ConvertNotation()(move);
 
             ChessBoard tempBoard(board);
             tempBoard.MakeMove(Indices.first, Indices.second);
@@ -152,7 +153,7 @@ int ChessEngine::Minimax(ChessBoard& board, int depth, int alpha, int beta, auto
         for (const string& move : possibleMoves) {
             if (terminateSearch) break;
 
-            pair<int, int> Indices = convertChessNotationToIndices(move);
+            pair<int, int> Indices = ConvertNotation()(move);
 
             ChessBoard tempBoard(board);
             tempBoard.MakeMove(Indices.first, Indices.second);
@@ -193,7 +194,7 @@ string ChessEngine::IterativeDeepening(const ChessBoard& board, int maxDepth) {
         }
 
         ChessBoard tempBoard(board);
-        pair<int, int> Indices = convertChessNotationToIndices(move);
+        pair<int, int> Indices = ConvertNotation()(move);
         tempBoard.MakeMove(Indices.first, Indices.second);
         int score = Minimax(tempBoard, maxDepth, -infinity, infinity, high_resolution_clock::now());
 
@@ -310,19 +311,11 @@ int ChessEngine::getPSTValue(ChessPiece* piece, int squareIndex, char currentPla
     }
 }
 
-pair<int, int> ChessEngine::convertChessNotationToIndices(const string& move) const {
-    int fromCol = move[0] - 'a';
-    int fromRow = 7 - (move[1] - '1');
-    int toCol = move[2] - 'a';
-    int toRow = 7 - (move[3] - '1');
-    int fromTile = fromRow * 8 + fromCol;
-    int toTile = toRow * 8 + toCol;
-    return make_pair(fromTile, toTile);
-}
+
 
 void ChessEngine::PlayMove(const string& move, ChessBoard& board) const {
 
-    pair<int, int> Indices = convertChessNotationToIndices(move);
+    pair<int, int> Indices = ConvertNotation()(move);
     board.MakeCompleteMove(Indices.first, Indices.second, move);
 }
 
@@ -348,7 +341,7 @@ void ChessEngine::Reset() {
 // Function to check if a move results in a check
 bool ChessEngine::CheckAfterMove(const string& move, const ChessBoard& board, int color) const {
     ChessBoard tempBoard(board); 
-    pair<int, int> indices = convertChessNotationToIndices(move);
+    pair<int, int> indices = ConvertNotation()(move);
     tempBoard.MakeMove(indices.first, indices.second);
 
     // Check if the move puts the opponent's king in check
@@ -356,7 +349,7 @@ bool ChessEngine::CheckAfterMove(const string& move, const ChessBoard& board, in
 }
 
 bool ChessEngine::IsCaptureMove(const string& move, const ChessBoard board) const {
-    pair<int, int> indices = convertChessNotationToIndices(move);
+    pair<int, int> indices = ConvertNotation()(move);
     ChessPiece* targetPiece = board.GetPieceAtPosition(indices.second);
 
     // Check if the target piece is an opponent's piece

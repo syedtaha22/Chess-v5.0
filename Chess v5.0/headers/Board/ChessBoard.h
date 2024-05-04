@@ -172,11 +172,6 @@ public:
     //Checks if Enpassant is Legal
     bool IsEnPassantLegal(int pawnIndex, int targetIndex) const;
 
-    //Converts a Chess Notation to Indices, for e.g e2e4 --> <60, 44>
-    pair<int, int> convertChessNotationToIndices(const string& move) const;
-    //Returns <rank, file>
-    pair<int, int> PieceCoordinates(int pieceIndex) const;
-
     vector<int> FilterValidMoves(int fromIndex, vector<int> possibleMoves) const;
 
     //Functions to get a list of all Possible Moves for a Player or Piece in different Formats
@@ -185,8 +180,6 @@ public:
     vector<string> GetAllCaptureMovesInChessNotation(int color) const;
     vector<string> GetAllPossibleMovesInChessNotation(int playerColor) const;
 
-    //Converts a Indexs to Moves
-    string ConvertToChessNotation(int fromTile, int toTile) const;
     //Calculates and returns the Current FEN position of the Board
     string GetCurrentFEN() const;
 

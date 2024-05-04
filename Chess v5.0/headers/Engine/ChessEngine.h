@@ -73,8 +73,6 @@ public:
     bool CheckAfterMove(const string& move, const ChessBoard& board, int color) const;
     bool IsCaptureMove(const string& move, const ChessBoard board) const;
 
-    pair<int, int> convertChessNotationToIndices(const string& move) const;
-
     void PlayMove(const string& move, ChessBoard& board) const;
     void DisplayMoves(vector<string>& moves);
 

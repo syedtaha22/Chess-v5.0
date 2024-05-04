@@ -301,21 +301,12 @@ void ChessBoard::DisplayBoard() const {
     cout << "   a  b  c  d  e  f  g  h" << endl;
 }
 
-pair<int, int> ChessBoard::PieceCoordinates(int pieceIndex) const {
-    if (pieceIndex < 0 || pieceIndex >= Total_tiles) {
-        return make_pair(-1, -1);
-    }
-    int rank = pieceIndex / boardSize;
-    int file = pieceIndex % boardSize;
-    return make_pair(rank, file);
-}
-
 void ChessBoard::SetPiecePositions() {
     //Set Piece Positions, on graphical Board everytime Board is changed
     for (int index = 0; index < Total_tiles; index++) {
-        pair<int, int> PieceCoords = PieceCoordinates(index);
-        board[index]->rectangle.x = BoardOffsetX + static_cast<float>((abs((isBoardReversed * ReverseOffset) - PieceCoords.second)) * tileSize);
-        board[index]->rectangle.y = BoardOffsetY + static_cast<float>((abs((isBoardReversed * ReverseOffset) - PieceCoords.first)) * tileSize);
+        pair<int, int> PieceCoords = ConvertNotation()(index);
+        board[index]->rectangle.x = BoardOffsetX + static_cast<float>((abs((state.isBoardReversed * ReverseOffset) - PieceCoords.second)) * tileSize);
+        board[index]->rectangle.y = BoardOffsetY + static_cast<float>((abs((state.isBoardReversed * ReverseOffset) - PieceCoords.first)) * tileSize);
     }
 }
 
@@ -447,7 +438,7 @@ void ChessBoard::UpdateChessPiece(ChessPiece* piece, int InitialIndex) {
                 float tileY = round((piece->rectangle.y - BoardOffsetY) / tileSize) * tileSize;
                 int FinalIndex = abs((isBoardReversed * (Total_tiles - 1)) - getTileIndex(tileX, tileY, tileSize));
                 
-                string Move = ConvertToChessNotation(InitialIndex, FinalIndex);
+                string Move = ConvertNotation()(InitialIndex, FinalIndex);
 
                 if (isValidMove(FinalIndex)) {
                     piece->isDragged = false;
@@ -486,7 +477,7 @@ void ChessBoard::MakeMove(int fromTile, int toTile) {
         board[captureIndex] = new ChessPiece();
     }
 
-    string move = ConvertToChessNotation(fromTile, toTile);
+    string move = ConvertNotation()(fromTile, toTile);
     //Castling
     if (IsCastlingMove(move, board[fromTile])) {
 
@@ -950,31 +941,13 @@ vector<string> ChessBoard::GetAllPossibleMovesInChessNotation(int playerColor) c
                 // Check if the king is in check after the move
                 if (!temp.isCheck(temp, playerColor, "board: Get all possible moves in chess notation")) {
                     // If not in check, add the move to possible moves after converting to ChessNotation
-                    possibleMoves.push_back(ConvertToChessNotation(i, toTile));
+                    possibleMoves.push_back(ConvertNotation()(i, toTile));
                 }
             }
         }
     }
 
     return possibleMoves;
-}
-
-string ChessBoard::ConvertToChessNotation(int fromTile, int toTile) const {
-    string chessNotation = "";
-
-    // Convert the 'fromTile' index to chess notation
-    char fromCol = 'a' + (fromTile % 8);
-    int fromRow = 8 - (fromTile / 8);
-    chessNotation += fromCol;
-    chessNotation += to_string(fromRow);
-
-    // Add the 'toTile' index to chess notation
-    char toCol = 'a' + (toTile % 8);
-    int toRow = 8 - (toTile / 8);
-    chessNotation += toCol;
-    chessNotation += to_string(toRow);
-
-    return chessNotation;
 }
 
 int ChessBoard::getAttacksOnSquare(int squareIndex, int opponentColor) const {
@@ -1047,7 +1020,7 @@ vector<string> ChessBoard::GetAllCaptureMovesInChessNotation(int color) const {
         if (piece->color == color) {
             for (int toTile = 0; toTile < Total_tiles; toTile++) {
                 if (fromTile != toTile && isValidCaptureMove(fromTile, toTile)) {
-                    string move = ConvertToChessNotation(fromTile, toTile);
+                    string move = ConvertNotation()(fromTile, toTile);
                     captureMoves.push_back(move);
                 }
             }
@@ -1066,16 +1039,6 @@ bool ChessBoard::isValidCaptureMove(int fromTile, int toTile) const {
 
     // Check if there is a piece at the 'from' tile and it is of opposite color to the piece at the 'to' tile
     return fromPiece->type != EMPTY && toPiece->type != EMPTY && fromPiece->color != toPiece->color;
-}
-
-pair<int, int> ChessBoard::convertChessNotationToIndices(const string& move) const {
-    int fromCol = move[0] - 'a';
-    int fromRow = 7 - (move[1] - '1');
-    int toCol = move[2] - 'a';
-    int toRow = 7 - (move[3] - '1');
-    int fromTile = fromRow * 8 + fromCol;
-    int toTile = toRow * 8 + toCol;
-    return make_pair(fromTile, toTile);
 }
 
 void ChessBoard::ComputeOpponentMoves() {
