@@ -438,8 +438,8 @@ void ChessBoard::MakeCompleteMove(int fromTile, int toTile, string move) {
     SetPiecePositions();
 
     //Uncomment for Debugging or to Show Board on terminal
-    DisplayBoard();
-    DisplayScores();
+    //DisplayBoard();
+    //DisplayScores();
 
     isCheck(*this, state.currentPlayerIsWhite ? Black : White, "ChessBoard::MakeCompleteMove");
 
@@ -450,6 +450,7 @@ void ChessBoard::MakeCompleteMove(int fromTile, int toTile, string move) {
     PlayChessSound();
     state.MovesForSelectedPiece.clear();
 }
+
 
 void ChessBoard::ReverseBoard() {
     state.isBoardReversed = !state.isBoardReversed;
@@ -471,7 +472,6 @@ bool ChessBoard::IsEnPassantCapture(int fromTile, int toTile) const {
 }
 
 void ChessBoard::PlayChessSound() const {
-    //std::cout << "Checked Player: " << checkedPlayer << std::endl;
     if (state.checkedPlayer != 0) {
         PlaySound(KingChecked);
     }

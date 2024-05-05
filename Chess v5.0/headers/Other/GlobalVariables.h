@@ -47,7 +47,7 @@ extern int ReverseOffset;
 extern int BoardOffsetX;
 extern int BoardOffsetY;
 
-
+const int infinity = numeric_limits<int>::max();
 
 //InfoBox
 extern int Segments;

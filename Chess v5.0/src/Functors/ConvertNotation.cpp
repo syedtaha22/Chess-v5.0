@@ -37,3 +37,5 @@ pair<int, int> ConvertNotation::operator()(int pieceIndex) const {
     return make_pair(rank, file);
 }
 
+
+

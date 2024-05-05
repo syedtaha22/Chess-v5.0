@@ -4,7 +4,7 @@
 
 static void CalculateAIMove(ChessEngine& engine, ChessBoard& board) {
     while (true) {
-        if (engine.isSearchStarted() && !board.isCurrentPlayerWhite()) {
+        if (engine.state.isSearchStarted() && !board.isCurrentPlayerWhite()) {
 
             //string move;
             string move;
@@ -14,10 +14,11 @@ static void CalculateAIMove(ChessEngine& engine, ChessBoard& board) {
             if (move != "") {
                 engine.PlayMove(move, board);
             }
-            engine.StopSearching();
+            engine.state.StopSearching();
         }
     }
 }
+
 
 
 
@@ -30,7 +31,7 @@ int main() {
     //Game.Horizon.SetDepth(1);
     Game.BoardSetUp();
     
-    Settings::save(Game.Horizon.getDepth(), Game.Player.ELO, Game.Horizon.engineEloRating);
+    Settings::save(Game.Horizon.state.getDepth(), Game.Player.ELO, Game.Horizon.state.engineEloRating);
 
     ChessPiecePlaced = LoadSound(ChessPiecePlacedFile.c_str());
     ChessPieceCaptured = LoadSound(ChessPieceCapturedFile.c_str());

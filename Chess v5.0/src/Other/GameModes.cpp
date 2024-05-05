@@ -106,23 +106,20 @@ void GameModes::InitialiseSinglePlayerMode() {
 
 
         DoOnce = false;
-        //isSinglePlayer = true;
     }
 
 }
 
-void GameModes::SinglePlayerMode() {
-    InitialiseSinglePlayerMode();
-    if (!GameStats.GameIsEnded(chessboard)) {
 
+void GameModes::SinglePlayerMode() {
+    
     if (!GameStats.GameIsEnded(chessboard)) {
         InitialiseSinglePlayerMode();
         if (chessboard.isCurrentPlayerWhite()) HandleMoves(White);
         else Horizon.state.StartSearch();
 
 
-
-        Options();
+        
         if (GameStats.ShowMoveHistory) GameStats.DisplayMoveHistory(chessboard.getMoveHistory());
         else GameStats.DisplayStats(chessboard, Horizon, Player);
         DisplayBoard();
