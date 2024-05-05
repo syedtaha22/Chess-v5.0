@@ -109,7 +109,6 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalOptions>/FORCE:MULTIPLE %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -129,8 +128,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Engine\EngineState.cpp" />
     <ClCompile Include="src\Functors\ConvertNotation.cpp" />
-    <ClCompile Include="src\Other\ConvertNotation.cpp" />
     <ClCompile Include="src\Board\BoardState.cpp" />
     <ClCompile Include="src\Board\GraphicalBoard.cpp" />
     <ClCompile Include="src\main\main.cpp" />
@@ -148,6 +147,8 @@
     <ClCompile Include="src\Pieces\Pieces.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="headers\Engine\EngineState.h" />
+    <ClInclude Include="headers\Engine\ChessEngineStatistics.h" />
     <ClInclude Include="headers\Functors\ConvertNotation.h" />
     <ClInclude Include="headers\Board\BoardState.h" />
     <ClInclude Include="headers\Board\GraphicalBoard.h" />

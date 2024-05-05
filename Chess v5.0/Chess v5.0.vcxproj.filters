@@ -63,10 +63,10 @@
     <ClCompile Include="src\Board\BoardState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Other\ConvertNotation.cpp">
+    <ClCompile Include="src\Functors\ConvertNotation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Functors\ConvertNotation.cpp">
+    <ClCompile Include="src\Engine\EngineState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -123,6 +123,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="headers\Functors\ConvertNotation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\Engine\EngineState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\Engine\ChessEngineStatistics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

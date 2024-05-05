@@ -25,6 +25,7 @@
 using namespace std;
 using namespace chrono;
 
+
  
 extern Sound ChessPiecePlaced;
 extern Sound ChessPieceCaptured;
@@ -70,21 +71,7 @@ extern Color MovesForPieceHighLight;
 extern Color MoveHighlightRed;
 extern Color NextMoveHighlight;
 
-struct EngineStats {
-    int NumberofMovesLookedAhead = 0;
-    int BranchesPruned = 0;
-    int TranspositionsFound = 0;
-    float TimeTaken = 0;
-    float SizeOfTable = 0;
-    float Speed = 0; // n/s ---> kn/s
-    int maxDepth = 0;
-    size_t totalMoves = 0;
-    int movesEvaluated = 0;
-    size_t totalMovesToEvaluate = 0;
-};
 
-
-EngineStats Heuristics;
 
 //enum class PromotionPiece;
 //extern Rectangle PawnPromotionDialogue;
