@@ -60,7 +60,7 @@ void GameModes::ResetBoard(bool calculateELO) {
     DisplayBoard();
 
     GameStats.DisplayEndMessage();
-    Horizon.TerminateSearch();
+    Horizon.state.TerminateSearch();
 
     if (GameStats.SaveData) {
         if (calculateELO) CalculateELO();
@@ -72,38 +72,36 @@ void GameModes::ResetBoard(bool calculateELO) {
 }
 
 void GameModes::RestartGame() {
-
-    Horizon.TerminateSearch();
+    Horizon.state.reset();
     DoOnce = true;
     GameStats.Reset();
-    Horizon.Reset();
     chessboard.DestroyBoard();
 }
 
 void GameModes::BackToMenu() {
     DoOnce = true;
     GameStats.Reset();
-    Horizon.Reset();
+    Horizon.state.reset();
     chessboard.DestroyBoard();
     chessboard.initializeBoardFromFEN(FENString, true);
     Flags::EndGame();
 }
 
 void GameModes::CalculateELO() {
-    int oldBlackELO = Horizon.engineEloRating;
-    Horizon.engineEloRating = GameStats.updateEloRating(Horizon.engineEloRating, Player.ELO, (GameStats.winner == Black));
+    int oldBlackELO = Horizon.state.engineEloRating;
+    Horizon.state.engineEloRating = GameStats.updateEloRating(Horizon.state.engineEloRating, Player.ELO, (GameStats.winner == Black));
     Player.ELO = GameStats.updateEloRating(Player.ELO, oldBlackELO, (GameStats.winner == White));
-    Settings::save(Horizon.getDepth(), Player.ELO, Horizon.engineEloRating);
+    Settings::save(Horizon.state.getDepth(), Player.ELO, Horizon.state.engineEloRating);
 
 }
 
 void GameModes::InitialiseSinglePlayerMode() {
     if (DoOnce) {
-        Horizon.setEngineColor(Black);
+        Horizon.state.setEngineColor(Black);
 
         Player.setUserName("user");
         PlaySound(GameStarts);
-        //chessboard.InitializeDefaultBoard();
+        chessboard.InitializeDefaultBoard();
         chessboard.ComputeOpponentMoves();
 
 
@@ -117,8 +115,11 @@ void GameModes::SinglePlayerMode() {
     InitialiseSinglePlayerMode();
     if (!GameStats.GameIsEnded(chessboard)) {
 
+    if (!GameStats.GameIsEnded(chessboard)) {
+        InitialiseSinglePlayerMode();
         if (chessboard.isCurrentPlayerWhite()) HandleMoves(White);
-        else Horizon.StartSearch();
+        else Horizon.state.StartSearch();
+
 
 
         Options();
@@ -126,6 +127,7 @@ void GameModes::SinglePlayerMode() {
         else GameStats.DisplayStats(chessboard, Horizon, Player);
         DisplayBoard();
         GameStats.DrawEvaluationColumn(chessboard, Horizon);
+        Options();
     }
     else ResetBoard(true);
 }
@@ -146,7 +148,7 @@ void GameModes::setFENstring(string newFen) {
 }
 
 void GameModes::SaveTranspositions() {
-    Horizon.SaveTranspositionTable();
+    Horizon.state.SaveTranspositionTable();
 }
   
 void GameModes::BoardSetUp() {
@@ -162,7 +164,7 @@ void GameModes::Settings() {
 
     GameStats.DisplayNewDepthMessage(enteredDepth);
     if (IsKeyPressed(KEY_ENTER)) {
-        Horizon.SetDepth(enteredDepth);
+        Horizon.state.setDepth(enteredDepth);
         Settings::saveElement(Settings::depth, enteredDepth);
         Flags::closeSettings();
     }

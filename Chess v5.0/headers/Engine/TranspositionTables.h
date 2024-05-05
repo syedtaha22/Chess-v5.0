@@ -3,6 +3,7 @@
 
 #include "../Board/GraphicalBoard.h"
 
+
 class TranspositionTables {
 private:
 

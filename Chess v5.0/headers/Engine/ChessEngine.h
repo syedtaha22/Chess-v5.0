@@ -1,58 +1,17 @@
-#ifndef CHESSENGINE_H
-#define CHESSENGINE_H
+#ifndef CHESS_ENGINE_H
+#define CHESS_ENGINE_H
 
 
-#include "TranspositionTables.h"
+#include "EngineState.h"
 #include "PieceSquareTables.h"
-
-
 
 class ChessEngine{
 
-private:
-    //Represents the Color the Engine Plays as(Black by Default)
-    int EngineColor;
-
-    // Maximum depth for the Minimax algorithm
-    int MAX_DEPTH;
-
-    //Transpostion Tables to Store Positional Data
-    TranspositionTables transpostionTable;
-
-    //Flags to start or End search
-    bool terminateSearch; 
-    bool startSearch;
-
-    //Time Limit for Search, (0 means not Time limit)
-    const float timeLimit = 0;
-
-    //Flags Defining Wether to Use Features
-    const bool useTranspositions = true;
-    const bool useAlphaBetaPruning = true;
-
-    const int infinity = numeric_limits<int>::max();
-
-
-
 public:
-    //Default Rating for Engine
-    int engineEloRating;
-
+    EngineState state;
     const string filename = "EngineELO.txt";
    
-    ChessEngine(int Color = EMPTY, int elo = EMPTY);
-
-    //Engine Settings
-    void setEngineColor(int color);
-    void SetDepth(int NewDepth);
-    int getDepth() const; 
-
-    //Functions Related to Search
-    void StartSearch();
-    void StopSearching();
-    void TerminateSearch();
-
-    bool isSearchStarted() const;
+    ChessEngine(int Color = EMPTY);
 
     //Move Searching Functions
     void shuffleMoves(vector<string>& possibleMoves);
@@ -75,13 +34,6 @@ public:
 
     void PlayMove(const string& move, ChessBoard& board) const;
     void DisplayMoves(vector<string>& moves);
-
-    void Reset();
-
-    //Functions Related To Transposition Tables
-    double getSizeOfTranspositionTable() const;
-    void SaveTranspositionTable();
-
 
     void SortMoves(vector<string>& moves, const ChessBoard& board, int color) const {
         // Define custom comparator to sort moves
@@ -106,11 +58,7 @@ public:
         // Sort moves using the custom comparator
         sort(moves.begin(), moves.end(), customComparator);
     }
-
 };
 
 
-#endif // !CHESSENGINE_H
-
-
-
+#endif // !CHESS_ENGINE_H

@@ -81,7 +81,7 @@ void BoardStats::DisplayStats(ChessBoard& chessboard, ChessEngine& engine, User&
 
     DisplayPlayerTitles(chessboard); //Draw Player Titles
     DrawStatistics(EngineData); //Draw engine Statistics
-    DrawPlayerElos(player.ELO, engine.engineEloRating); // Draw Elo's
+    DrawPlayerElos(player.ELO, engine.state.engineEloRating); // Draw Elo's
 }
 
 void BoardStats::DisplayPlayerTitles(const ChessBoard& chessboard) {
@@ -122,7 +122,7 @@ std::vector<std::string> BoardStats::getData(const ChessEngine& engine, const Us
     int BranchesPruned = Heuristics.BranchesPruned;
     int FoundTranspostions = Heuristics.TranspositionsFound;
     float TimeTaken = static_cast<float>((Heuristics.TimeTaken));
-    float SizeOfTable = static_cast<float>(engine.getSizeOfTranspositionTable());
+    float SizeOfTable = static_cast<float>(engine.state.getSizeOfTranspositionTable());
     float Speed = Heuristics.Speed / 1000; // n/s ---> kn/s
     int currentDepth = Heuristics.maxDepth;
     int moves = static_cast<int>(Heuristics.totalMoves);
