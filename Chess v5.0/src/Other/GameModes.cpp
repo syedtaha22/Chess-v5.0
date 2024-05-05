@@ -1,6 +1,7 @@
 #include "../../headers/Other/GameModes.h"
 
 
+#include "raygui.h" 
 
 GameModes::GameModes() {
     DoOnce = true;

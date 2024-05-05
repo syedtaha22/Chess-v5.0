@@ -3,11 +3,6 @@
 
 #include "GlobalVariables.h"
 
-#define RAYGUI_IMPLEMENTATION
-#include "raygui.h" 
-
-
-
 class Menu{
 
 private:

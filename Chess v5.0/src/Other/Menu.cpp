@@ -1,5 +1,11 @@
 #include "../../headers/Other/Menu.h"
 
+#ifndef RAYGUI_IMPLEMENTATION
+#define RAYGUI_IMPLEMENTATION
+#endif // !RAYGUI_IMPLEMENTATION
+
+#include "raygui.h" 
+
 Menu::Menu() {
     InfoBox = { InfoBoxX, InfoBoxY, InfoBoxWidth, InfoBoxHeight };
     StartButton = { buttonX, StartButtonY, width, height };
