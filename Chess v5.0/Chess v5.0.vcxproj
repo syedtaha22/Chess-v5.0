@@ -128,6 +128,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\namespaces\Utility.cpp" />
     <ClCompile Include="src\Engine\EngineState.cpp" />
     <ClCompile Include="src\Functors\ConvertNotation.cpp" />
     <ClCompile Include="src\Board\BoardState.cpp" />
@@ -147,6 +148,7 @@
     <ClCompile Include="src\Pieces\Pieces.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="headers\Functors\CheckAfterMove.h" />
     <ClInclude Include="headers\Engine\EngineState.h" />
     <ClInclude Include="headers\Engine\ChessEngineStatistics.h" />
     <ClInclude Include="headers\Functors\ConvertNotation.h" />
@@ -156,6 +158,8 @@
     <ClInclude Include="headers\Engine\ChessEngine.h" />
     <ClInclude Include="headers\Engine\PieceSquareTables.h" />
     <ClInclude Include="headers\Engine\TranspositionTables.h" />
+    <ClInclude Include="headers\Functors\DebugItem.h" />
+    <ClInclude Include="headers\namespaces\Utility.h" />
     <ClInclude Include="headers\Other\BoardStats.h" />
     <ClInclude Include="headers\Other\Flags.h" />
     <ClInclude Include="headers\Other\GameModes.h" />
@@ -167,6 +171,8 @@
     <ClInclude Include="headers\Pieces\PieceCodes.h" />
     <ClInclude Include="headers\Other\Menu.h" />
     <ClInclude Include="headers\Pieces\Pieces.h" />
+    <ClInclude Include="headers\Functors\SortMoves.h" />
+    <ClInclude Include="headers\Functors\IsCaptureMove.h" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="Resources\Audio\ChessPieceCaptured.wav">

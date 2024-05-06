@@ -7,15 +7,15 @@ ChessEngine::ChessEngine(int Color) {
     state.initPieceValues();
 }
 
-void ChessEngine::shuffleMoves(vector<string>& possibleMoves) {
-    long long seed = system_clock::now().time_since_epoch().count();
-    shuffle(possibleMoves.begin(), possibleMoves.end(), default_random_engine(static_cast<unsigned int>(seed)));
+void ChessEngine::shuffleMoves(std::vector<std::string>& possibleMoves) {
+    long long seed = std::chrono::system_clock::now().time_since_epoch().count();
+    shuffle(possibleMoves.begin(), possibleMoves.end(), std::default_random_engine(static_cast<unsigned int>(seed)));
 }
 
-string ChessEngine::GenerateMove(const ChessBoard& board) {
+std::string ChessEngine::GenerateMove(const ChessBoard& board) {
     int bestScore = -infinity;
     
-    string bestMove;
+    std::string bestMove;
     
     Heuristics.NumberofMovesLookedAhead = 0;
     Heuristics.TranspositionsFound = 0;
@@ -24,33 +24,35 @@ string ChessEngine::GenerateMove(const ChessBoard& board) {
     Heuristics.maxDepth = state.MAX_DEPTH;
    
 
-    vector<string> possibleMoves = board.GetAllPossibleMovesInChessNotation(state.EngineColor);
+    std::vector<std::string> possibleMoves = board.GetAllPossibleMovesInChessNotation(state.EngineColor);
     Heuristics.totalMoves = possibleMoves.size();
     Heuristics.totalMovesToEvaluate += possibleMoves.size();
     //Shuffle Moves to add randomness
     shuffleMoves(possibleMoves);
-    //SortMoves(possibleMoves, board, EngineColor);
 
-    auto start = high_resolution_clock::now();
-    for (const string& move : possibleMoves) {
+    //Sort Moves
+    //SortMoves()(possibleMoves, board, state.EngineColor);
+
+    auto start = std::chrono::high_resolution_clock::now();
+    for (const std::string& move : possibleMoves) {
         if (state.terminateSearch) {
-            cout << "xxxxxxxxxx Search Terminated xxxxxxxxxx" << endl;
+            std::cout << "xxxxxxxxxx Search Terminated xxxxxxxxxx" << std::endl;
             state.terminateSearch = false;
             break;
         }
         ChessBoard tempBoard(board);
-        pair<int, int> Indices = ConvertNotation()(move);
+        std::pair<int, int> Indices = ConvertNotation()(move);
         tempBoard.MakeMove(Indices.first, Indices.second);
 
 
-        int score = Minimax(tempBoard, state.MAX_DEPTH, -infinity, infinity, high_resolution_clock::now());
+        int score = Minimax(tempBoard, state.MAX_DEPTH, -infinity, infinity, std::chrono::high_resolution_clock::now());
         Heuristics.movesEvaluated++;
         if (score >= bestScore) {
             bestScore = score;
             bestMove = move;
         }
-        auto end = high_resolution_clock::now();
-        auto duration = duration_cast<milliseconds>(end - start);
+        auto end = std::chrono::high_resolution_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
         Heuristics.TimeTaken = static_cast<float>(duration.count())/1000; //Converted To seconds
         Heuristics.Speed = Heuristics.NumberofMovesLookedAhead / static_cast<float>(Heuristics.TimeTaken);
     }
@@ -67,8 +69,8 @@ int ChessEngine::Minimax(ChessBoard& board, int depth, int alpha, int beta, auto
 
     //board.DrawChessPiece();
 
-    auto end = high_resolution_clock::now();
-    auto duration = duration_cast<milliseconds>(end - time);
+    auto end = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - time);
     auto Currenttime = static_cast<float>(duration.count()) / 1000; //Converted To seconds
    
 
@@ -89,30 +91,27 @@ int ChessEngine::Minimax(ChessBoard& board, int depth, int alpha, int beta, auto
     }
 
     if (board.isCheckmate(board, board.getCurrentPlayer())) return (board.getCurrentPlayer() == state.EngineColor ? -infinity : infinity);
-    if (depth == 0) {
-        return Evaluate(board, board.getCurrentPlayer());
-
-    }
+    if (depth == 0) { return Evaluate(board, board.getCurrentPlayer()); }
 
     if (board.getCurrentPlayer() == state.EngineColor) {
         int maxScore = -infinity;
        
-        vector<string> possibleMoves = board.GetAllPossibleMovesInChessNotation(state.EngineColor);
+        std::vector<std::string> possibleMoves = board.GetAllPossibleMovesInChessNotation(state.EngineColor);
         Heuristics.totalMovesToEvaluate += possibleMoves.size();
         //Shuffle Moves to add randomness
         shuffleMoves(possibleMoves);
         //SortMoves(possibleMoves, board, color);
 
-        for (const string& move : possibleMoves) {
+        for (const std::string& move : possibleMoves) {
             if (state.terminateSearch) break;
-            pair<int, int> Indices = ConvertNotation()(move);
+            std::pair<int, int> Indices = ConvertNotation()(move);
 
             ChessBoard tempBoard(board);
             tempBoard.MakeMove(Indices.first, Indices.second);
             int score = Minimax(tempBoard, depth - 1, alpha, beta, time);
             
-            maxScore = max(maxScore, score);
-            alpha = max(alpha, score);
+            maxScore = std::max(maxScore, score);
+            alpha = std::max(alpha, score);
 
             if (state.useTranspositions) state.transpostionTable.storeTranspositionTable(Boardhash, maxScore, depth);
 
@@ -131,22 +130,22 @@ int ChessEngine::Minimax(ChessBoard& board, int depth, int alpha, int beta, auto
     else {
         int minScore = infinity;
         
-        vector<string> possibleMoves = board.GetAllPossibleMovesInChessNotation(board.getCurrentPlayer());
+        std::vector<std::string> possibleMoves = board.GetAllPossibleMovesInChessNotation(board.getCurrentPlayer());
         Heuristics.totalMovesToEvaluate += possibleMoves.size();
         shuffleMoves(possibleMoves);
 
-        for (const string& move : possibleMoves) {
+        for (const std::string& move : possibleMoves) {
             if (state.terminateSearch) break;
 
-            pair<int, int> Indices = ConvertNotation()(move);
+            std::pair<int, int> Indices = ConvertNotation()(move);
 
             ChessBoard tempBoard(board);
             tempBoard.MakeMove(Indices.first, Indices.second);
 
             int score = Minimax(tempBoard, depth - 1, alpha, beta, time);
 
-            minScore = min(minScore, score);
-            beta = min(beta, score);
+            minScore = std::min(minScore, score);
+            beta = std::min(beta, score);
 
             if(state.useTranspositions) state.transpostionTable.storeTranspositionTable(Boardhash, minScore, depth);
 
@@ -163,25 +162,25 @@ int ChessEngine::Minimax(ChessBoard& board, int depth, int alpha, int beta, auto
     }
 }
 
-string ChessEngine::IterativeDeepening(const ChessBoard& board, int maxDepth) {
+std::string ChessEngine::IterativeDeepening(const ChessBoard& board, int maxDepth) {
     int bestScore = -infinity;
-    string bestMove;
+    std::string bestMove;
 
-    vector<string> possibleMoves = board.GetAllPossibleMovesInChessNotation(state.EngineColor);
+    std::vector<std::string> possibleMoves = board.GetAllPossibleMovesInChessNotation(state.EngineColor);
     //SortMoves(possibleMoves, board, EngineColor);
     shuffleMoves(possibleMoves);
 
-    for (const string& move : possibleMoves) {
+    for (const std::string& move : possibleMoves) {
         if (state.terminateSearch) {
-            cout << "xxxxxxxxxx Search Terminated xxxxxxxxxx" << endl;
+            std::cout << "xxxxxxxxxx Search Terminated xxxxxxxxxx" << std::endl;
             state.terminateSearch = false;
             break;
         }
 
         ChessBoard tempBoard(board);
-        pair<int, int> Indices = ConvertNotation()(move);
+        std::pair<int, int> Indices = ConvertNotation()(move);
         tempBoard.MakeMove(Indices.first, Indices.second);
-        int score = Minimax(tempBoard, maxDepth, -infinity, infinity, high_resolution_clock::now());
+        int score = Minimax(tempBoard, maxDepth, -infinity, infinity, std::chrono::high_resolution_clock::now());
 
         if (score >= bestScore) {
             bestScore = score;
@@ -238,7 +237,7 @@ void ChessEngine::adjustEndgamePositionalAdvantage(const ChessBoard& chessboard,
     int opponentKingCol = opponentKingSquareIndex % 8;
 
     // Encourage forcing opponent's king to the corner
-    int cornerDist = min(min(opponentKingRow, 7 - opponentKingRow), min(opponentKingCol, 7 - opponentKingCol));
+    int cornerDist = std::min(std::min(opponentKingRow, 7 - opponentKingRow), std::min(opponentKingCol, 7 - opponentKingCol));
     positionalAdvantage += (currentPlayerColor == state.EngineColor ? 10 : -10) * cornerDist;
 
     // Encourage bringing own king closer to the opponent's king
@@ -281,9 +280,9 @@ int ChessEngine::getPSTValue(ChessPiece* piece, int squareIndex, char currentPla
     }
 }
 
-void ChessEngine::PlayMove(const string& move, ChessBoard& board) const {
+void ChessEngine::PlayMove(const std::string& move, ChessBoard& board) const {
 
-    pair<int, int> Indices = ConvertNotation()(move);
+    std::pair<int, int> Indices = ConvertNotation()(move);
     board.MakeCompleteMove(Indices.first, Indices.second, move);
 }
 
@@ -297,26 +296,10 @@ int* ChessEngine::InvertTable(const int* originalArray) const {
     return invertedArray;
 }
 
-bool ChessEngine::CheckAfterMove(const string& move, const ChessBoard& board, int color) const {
-    ChessBoard tempBoard(board); 
-    pair<int, int> indices = ConvertNotation()(move);
-    tempBoard.MakeMove(indices.first, indices.second);
+//void ChessEngine::DisplayMoves(std::vector<std::string>& moves) {
+//    for (const auto& move : moves) {
+//        std::cout << move << " ";
+//    }
+//    std::cout << std::endl;
+//}
 
-    // Check if the move puts the opponent's king in check
-    return tempBoard.isCheck(tempBoard, (color == White ? White : Black), "Engine: Check after move");
-}
-
-bool ChessEngine::IsCaptureMove(const string& move, const ChessBoard board) const {
-    pair<int, int> indices = ConvertNotation()(move);
-    ChessPiece* targetPiece = board.GetPieceAtPosition(indices.second);
-
-    // Check if the target piece is an opponent's piece
-    return targetPiece->color != board.GetPieceAtPosition(indices.first)->color && targetPiece->color != EMPTY;
-}
-
-void ChessEngine::DisplayMoves(vector<string>& moves) {
-    for (const auto& move : moves) {
-        cout << move << " ";
-    }
-    cout << endl;
-}

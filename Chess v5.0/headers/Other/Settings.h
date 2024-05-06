@@ -6,15 +6,13 @@
 #include<fstream>
 #include "json/json.h"
 
-using namespace std;
-
 class Settings {
-    static const string filename;
+    static const std::string filename;
     
 public:
-    static string depth;
-    static string engineElo;
-    static string userElo;
+    static std::string depth;
+    static std::string engineElo;
+    static std::string userElo;
 
     static void save(int depth, int userElo, int engineElo);
     static int get(const std::string& element);

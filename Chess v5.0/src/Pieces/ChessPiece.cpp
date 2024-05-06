@@ -17,11 +17,11 @@ ChessPiece::ChessPiece(int pieceType, int pieceColor, bool isFirstMove) : type(p
 void ChessPiece::AssignTextures() {
 
     if (type != EMPTY) {
-        string fileName = "Resources\\";
+        std::string fileName = "Resources\\";
         fileName += (color == White) ? "WhitePieces\\" : "BlackPieces\\";
         int temp;
         temp = color | type;
-        fileName += to_string(PieceCode);
+        fileName += std::to_string(PieceCode);
         fileName += ".png";
         texture = LoadTexture(fileName.c_str());
     }
@@ -29,7 +29,7 @@ void ChessPiece::AssignTextures() {
 
 void ChessPiece::DestroyTextures() {
     if (type != EMPTY) {
-        cout << "Unloaded Texture for: " << color << " " << type << endl;
+        std::cout << "Unloaded Texture for: " << color << " " << type << std::endl;
         UnloadTexture(texture);
     }
 }

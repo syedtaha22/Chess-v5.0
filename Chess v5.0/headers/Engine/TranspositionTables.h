@@ -1,7 +1,7 @@
 #ifndef TRANSPOSITIONTABLES_H
 #define TRANSPOSITIONTABLES_H
 
-#include "../Board/GraphicalBoard.h"
+#include "../Functors/SortMoves.h"
 
 
 class TranspositionTables {
@@ -14,8 +14,8 @@ private:
     */
 
     uint64_t zobristKeys[64][12]; 
-    unordered_map<uint64_t, pair<int, int>> transpositionTable;
-    const int infinity = numeric_limits<int>::max();
+    std::unordered_map<uint64_t, std::pair<int, int>> transpositionTable;
+    const int infinity = std::numeric_limits<int>::max();
 
 public:
     double SizeOfTranspostionTable;
@@ -30,12 +30,12 @@ public:
     void ComputeSizeOfTranspositionTable();
 
     //For Debugging and Testing, save The Transpostions to a File
-    void saveTranspositionTableToFile(string filename);
+    void saveTranspositionTableToFile(std::string filename);
 
     //Compute Hash value
     uint64_t computeHash(const ChessBoard& board) const;
 
-    pair<int, int> lookupTranspositionTable(uint64_t hash) const;
+    std::pair<int, int> lookupTranspositionTable(uint64_t hash) const;
 
     bool isValuePresent(uint64_t hash);
 

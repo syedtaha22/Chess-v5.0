@@ -2,7 +2,7 @@
 #define CHESSBOARD_H
 
 //#include "../Pieces/ChessPiece.h"
-#include "../Pieces/Pieces.h"
+#include "../Functors/DebugItem.h"
 #include "BoardState.h"
 
     /*
@@ -64,13 +64,13 @@ public:
     //Returns the Index of the Piece, Based on its Location
     int getTileIndex(float x, float y, int tileSize);
 
-    void AddMoveToHistory(string move);
+    void AddMoveToHistory(std::string move);
 
     //Functions to Compute Moves for a Piece
-    void ComputeKingMoves(int KingIndex, vector<int>& possibleMoves) const;
-    void ComputeKnightMoves(int pieceIndex, vector<int>& possibleMoves) const;
-    void ComputePawnMoves(int pieceIndex, vector<int>& possibleMoves) const;
-    void ComputeSlidingPieceMoves(int pieceIndex, vector<int>& possibleMoves) const;
+    void ComputeKingMoves(int KingIndex, std::vector<int>& possibleMoves) const;
+    void ComputeKnightMoves(int pieceIndex, std::vector<int>& possibleMoves) const;
+    void ComputePawnMoves(int pieceIndex, std::vector<int>& possibleMoves) const;
+    void ComputeSlidingPieceMoves(int pieceIndex, std::vector<int>& possibleMoves) const;
 
     //Calculates opponents Moves, and Stores in to OpponentMoves
     void ComputeOpponentMoves();
@@ -78,24 +78,24 @@ public:
     void DestroyBoard();
 
     //Displays Board Elements, on Terminal(For Debugging)
-    void DisplayBoard() const;
+    //void DisplayBoard() const;
     void DisplayMoves();
     void DisplayScores() const;
 
     //Functions to Initialise a Board
     void initializeBoard(); //--> Hard Coded Initilisation
-    void initializeBoardFromFEN(const string& fen, bool loadTextures); //Initialises From a Given FEN string
+    void initializeBoardFromFEN(const std::string& fen, bool loadTextures); //Initialises From a Given FEN std::string
     void InitializeDefaultBoard(); //--> Uses the Defualt FEN string to initialise using 
 
     //Functions To make Moves 
     void MakeMove(int fromTile, int toTile); //--> Swaps the Squares on the Board
-    void MakeCompleteMove(int fromTile, int toTile, string move);
+    void MakeCompleteMove(int fromTile, int toTile, std::string move);
 
     void PlayChessSound() const;
 
     void promotePawn(int toTile);
     void ReverseBoard();
-    void saveCurrentFENtofile(string file) const;
+    void saveCurrentFENtofile(std::string file) const;
 
     //Sets the Postion of Chess Piece on the GUI
     void SetPiecePositions();
@@ -107,9 +107,9 @@ public:
     bool canCastleKingSide(int KingIndex) const;
     bool canCastleQueenide(int KingIndex) const;
 
-    bool IsCastlingMove(string move, ChessPiece* pieceMoved);
+    bool IsCastlingMove(std::string move, ChessPiece* pieceMoved);
 
-    bool isCheck(const ChessBoard& chessboard, const int playerColor, string calledby);
+    bool isCheck(const ChessBoard& chessboard, const int playerColor, std::string calledby);
     bool isCheckmate(ChessBoard& chessboard, const int playerColor) const;
 
     // returns currentPlayerIsWhite
@@ -125,16 +125,16 @@ public:
     //Checks if Enpassant is Legal
     bool IsEnPassantLegal(int pawnIndex, int targetIndex) const;
 
-    vector<int> FilterValidMoves(int fromIndex, vector<int> possibleMoves) const;
+    std::vector<int> FilterValidMoves(int fromIndex, std::vector<int> possibleMoves) const;
 
     //Functions to get a list of all Possible Moves for a Player or Piece in different Formats
-    vector<int> GetAllPossibleMoves(int playerColor) const;
-    vector<int> GetAllPossibleMovesForPiece(int type, int index) const;
-    vector<string> GetAllCaptureMovesInChessNotation(int color) const;
-    vector<string> GetAllPossibleMovesInChessNotation(int playerColor) const;
+    std::vector<int> GetAllPossibleMoves(int playerColor) const;
+    std::vector<int> GetAllPossibleMovesForPiece(int type, int index) const;
+    std::vector<std::string> GetAllCaptureMovesInChessNotation(int color) const;
+    std::vector<std::string> GetAllPossibleMovesInChessNotation(int playerColor) const;
 
     //Calculates and returns the Current FEN position of the Board
-    string GetCurrentFEN() const;
+    std::string GetCurrentFEN() const;
 
     //Loops over the The Board and Loads textures for each Piece
     void LoadTextures();

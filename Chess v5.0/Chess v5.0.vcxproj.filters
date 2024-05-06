@@ -69,6 +69,9 @@
     <ClCompile Include="src\Engine\EngineState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\namespaces\Utility.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headers\Board\ChessBoard.h">
@@ -129,6 +132,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="headers\Engine\ChessEngineStatistics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\Functors\SortMoves.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\Functors\CheckAfterMove.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\Functors\IsCaptureMove.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\Functors\DebugItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\namespaces\Utility.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,10 +1,9 @@
-#pragma once
+#ifndef CONVERT_NOTATION_H
+#define CONVERT_NOTATION_H
 
 #include "../Other/GlobalVariables.h"
 
-//#include <utility>
-
-class ConvertNotation{
+class ConvertNotation {
 public:
 
     //Converts a Chess Notation to Indices, for e.g e2e4 --> <60, 44>
@@ -14,6 +13,9 @@ public:
     std::string operator()(int fromTile, int toTile) const;
 
     //Converts Indices to Coordinates
-    pair<int, int> operator()(int pieceIndex) const;
+    std::pair<int, int> operator()(int pieceIndex) const;
 };
+
+#endif // !CONVERT_NOTATION_H
+
 

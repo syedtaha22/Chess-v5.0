@@ -2,7 +2,7 @@
 
 void GraphicalBoard::DrawBoard(const ChessBoard& chessboard) const {
     for (int index = 0; index < Total_tiles; index++) {
-        pair<int, int> PieceCoords = ConvertNotation()(index);
+        std::pair<int, int> PieceCoords = ConvertNotation()(index);
         Color squareColor = (PieceCoords.first + PieceCoords.second) % 2 == 0 ? lightSquare : darkSquare;
 
         int LocationX = BoardOffsetX + (abs((chessboard.state.isBoardReversed * ReverseOffset) - PieceCoords.second)) * tileSize;
@@ -38,7 +38,7 @@ void GraphicalBoard::DrawCoordinates(const ChessBoard& chessboard) const {
     const int TextSize = 15;
 
     for (int index = 0; index < Total_tiles; index++) {
-        pair<int, int> PieceCoords = ConvertNotation()(index);
+        std::pair<int, int> PieceCoords = ConvertNotation()(index);
         int LocX = BoardOffsetX + (abs((chessboard.state.isBoardReversed * ReverseOffset) - PieceCoords.second)) * tileSize;
         int LocY = BoardOffsetY + (abs((chessboard.state.isBoardReversed * ReverseOffset) - PieceCoords.first)) * tileSize;
 
@@ -57,7 +57,7 @@ void GraphicalBoard::DrawCoordinates(const ChessBoard& chessboard) const {
             // X postion is Constant, the +8 is an offset from corner of tile
             Vector2 Position = { 800 + 8, static_cast<float>(LocY) + 8 };
 
-            DrawTextEx(myFont, to_string(8 - index / 8).c_str(), Position, TextSize, 0.1f, TextColor);
+            DrawTextEx(myFont, std::to_string(8 - index / 8).c_str(), Position, TextSize, 0.1f, TextColor);
         }
 
         // Column Coordinates(a-h)
@@ -65,7 +65,7 @@ void GraphicalBoard::DrawCoordinates(const ChessBoard& chessboard) const {
             // Y postion is Constant, the -20 is an offset from corner of tile
             Vector2 Position = { static_cast<float>(LocX + tileSize) - 20, 720 - 20 };
 
-            DrawTextEx(myFont, string(1, 'a' + index % 8).c_str(), Position, TextSize, 0.1f, TextColor);
+            DrawTextEx(myFont, std::string(1, 'a' + index % 8).c_str(), Position, TextSize, 0.1f, TextColor);
         }
     }
 }
@@ -73,12 +73,12 @@ void GraphicalBoard::DrawCoordinates(const ChessBoard& chessboard) const {
 void GraphicalBoard::DrawSquareIndices(const ChessBoard& chessboard) const {
     //For Debugging Purposes, Draws tile index
     for (int index = 0; index < Total_tiles; index++) {
-        pair<int, int> PieceCoords = ConvertNotation()(index);
+        std::pair<int, int> PieceCoords = ConvertNotation()(index);
 
         int LocationX = BoardOffsetX + (abs((chessboard.state.isBoardReversed * ReverseOffset) - PieceCoords.second)) * tileSize;
         int LocationY = BoardOffsetY + (abs((chessboard.state.isBoardReversed * ReverseOffset) - PieceCoords.first)) * tileSize;
 
-        DrawText(to_string(index).c_str(), LocationX + 8, LocationY + 8, 10, RED);
+        DrawText(std::to_string(index).c_str(), LocationX + 8, LocationY + 8, 10, RED);
     }
 
 }

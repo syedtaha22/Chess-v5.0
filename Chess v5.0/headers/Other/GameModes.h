@@ -12,7 +12,7 @@ private:
     bool DoOnce;
 
     
-    string FENString;
+    std::string FENString;
 
 
     GraphicalBoard graphics;
@@ -31,7 +31,7 @@ public:
     char inputDepth[2] = { 0 }; 
     char feninput[75] = { 0 };
     int enteredDepth;
-    string enteredFEN;
+    std::string enteredFEN;
 
     GameModes();
 
@@ -63,7 +63,7 @@ public:
     void CalculateELO();
 
     //FEN related Functions
-    void setFENstring(string newFen);
+    void setFENstring(std::string newFen);
     void FENSettings();
 
     void SaveTranspositions();
@@ -72,7 +72,7 @@ public:
     void Destroy();
 
 
-    void SetFENStrings(const string& fen);
+    void SetFENStrings(const std::string& fen);
 
 
 

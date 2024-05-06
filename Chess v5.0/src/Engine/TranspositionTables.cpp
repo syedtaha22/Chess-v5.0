@@ -7,9 +7,9 @@ TranspositionTables::TranspositionTables() {
 }
 
 void TranspositionTables::initZobristKeys() {
-    random_device rd;
-    mt19937_64 gen(rd());
-    uniform_int_distribution<uint64_t> dis(0, UINT64_MAX);
+    std::random_device rd;
+    std::mt19937_64 gen(rd());
+    std::uniform_int_distribution<uint64_t> dis(0, UINT64_MAX);
 
     for (int i = 0; i < 64; ++i) {
         for (int j = 0; j < 12; ++j) {
@@ -26,7 +26,7 @@ void TranspositionTables::storeTranspositionTable(uint64_t hash, int score, int 
 
 void TranspositionTables::ComputeSizeOfTranspositionTable() {
 
-    size_t pairSize = sizeof(pair<const uint64_t, pair<int, int>>);                          // Size of each key-value pair in bytes
+    size_t pairSize = sizeof(std::pair<const uint64_t, std::pair<int, int>>);                          // Size of each key-value pair in bytes
     size_t numPairs = transpositionTable.size();                                             // Total number of pairs in the map
     size_t totalPairSize = pairSize * numPairs;                                              // Total size of pairs in bytes
     size_t overhead = sizeof(transpositionTable);                                            // Overhead of the unordered_map itself
@@ -45,26 +45,26 @@ bool TranspositionTables::isValuePresent(uint64_t hash) {
     return false;
 }
 
-void TranspositionTables::saveTranspositionTableToFile(string filename) {
-    string folder = "Data";
+void TranspositionTables::saveTranspositionTableToFile(std::string filename) {
+    std::string folder = "Data";
 
-    if (!filesystem::is_directory(folder)) {
-        filesystem::create_directory(folder);
+    if (!std::filesystem::is_directory(folder)) {
+        std::filesystem::create_directory(folder);
     }
 
     filename = "Data/" + filename;
 
-    ofstream outputFile(filename);
+    std::ofstream outputFile(filename);
     int MaxLenght = 20;
     if (outputFile.is_open()) {
         for (const auto& entry : transpositionTable) {
-            outputFile << left << setw(MaxLenght) << entry.first << right << setw(5) << entry.second.second << "D   " << entry.second.first << endl;
+            outputFile << std::left << std::setw(MaxLenght) << entry.first << std::right << std::setw(5) << entry.second.second << "D   " << entry.second.first << std::endl;
         }
         outputFile.close();
-        cout << "Saved Transposition Tables to: " << filename << endl;
+        std::cout << "Saved Transposition Tables to: " << filename << std::endl;
     }
     else {
-        cerr << "Error: Unable to open file for writing." << endl;
+        std::cerr << "Error: Unable to open file for writing." << std::endl;
     }
 
 
@@ -77,7 +77,7 @@ uint64_t TranspositionTables::computeHash(const ChessBoard& board) const {
         if (piece->type != EMPTY) {
             int type = piece->type;
             if (piece->color == Black) type += 6;
-            if (type > 12) cerr << "Invalid Piece Type: " << type << endl;
+            if (type > 12) std::cerr << "Invalid Piece Type: " << type << std::endl;
 
             hash ^= zobristKeys[i][type];
         }
@@ -85,7 +85,7 @@ uint64_t TranspositionTables::computeHash(const ChessBoard& board) const {
     return hash;
 }
 
-pair<int, int> TranspositionTables::lookupTranspositionTable(uint64_t hash) const {
+std::pair<int, int> TranspositionTables::lookupTranspositionTable(uint64_t hash) const {
     auto it = transpositionTable.find(hash);
     if (it != transpositionTable.end()) {
         return it->second;

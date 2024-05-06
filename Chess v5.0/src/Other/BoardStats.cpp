@@ -14,23 +14,23 @@ BoardStats::BoardStats() {
 void BoardStats::DisplayEndMessage() {
     float posX = textX - ((TextCenter(EndMessage.c_str(), fontSize - 10).x) / 2);
     float posY = (static_cast<float>(screenHeight) / 2) - ((TextCenter(EndMessage.c_str(), fontSize - 10).y) / 2);
-    DrawTextWithCustomFont(EndMessage.c_str(), posX, posY, fontSize - 10, AlertColor); // Balance Based on TextSize
+    Utility::DrawTextWithCustomFont(EndMessage.c_str(), posX, posY, fontSize - 10, AlertColor); // Balance Based on TextSize
 }
 
 bool BoardStats::GameIsEnded(ChessBoard& board) {
     if (Flags::MoveIsMade()) {
 
-        cout << "Checking....." << endl;
+        //std::cout << "Checking....." << std::endl;
         int playerColor = board.isCurrentPlayerWhite() ? White : Black;
 
         if (board.isCheckmate(board, playerColor)) {
-            cout << winner << endl;
+            std::cout << winner << std::endl;
             EndMessage = "Winner is ";
             EndMessage += (board.isCurrentPlayerWhite() ? Black_ : White_);
             winner = board.isCurrentPlayerWhite() ? Black : White; // Set Winner
 
             Flags::GameStateChecked();
-            cout << "Check Complete" << endl;
+            //std::cout << "Check Complete" << std::endl;
             return true;
         }
         if (board.getCheckedPlayer() == 0 && board.GetAllPossibleMoves(playerColor).size() == 0) {
@@ -38,7 +38,7 @@ bool BoardStats::GameIsEnded(ChessBoard& board) {
             winner = -1; //No Winner
 
             Flags::GameStateChecked();
-            cout << "Check Complete" << endl;
+            //std::cout << "Check Complete" << std::endl;
             return true;
         }
         if (board.calculatePlayerScore(White) <= MinScore && board.calculatePlayerScore(Black) <= MinScore) {
@@ -47,10 +47,10 @@ bool BoardStats::GameIsEnded(ChessBoard& board) {
 
             Flags::GameStateChecked();
             return true;
-            cout << "Check Complete" << endl;
+            //std::cout << "Check Complete" << std::endl;
         }
 
-        cout << "Check Complete" << endl;
+        //std::cout << "Check Complete" << std::endl;
         Flags::GameStateChecked();
     }
 
@@ -61,16 +61,9 @@ bool BoardStats::GameIsEnded(ChessBoard& board) {
 
 }
 
-string BoardStats::CloseInBrackets(string stringClose) {
-    string temp = "(";
-    temp += stringClose;
-    temp += ")";
-    return temp;
-}
-
 void BoardStats::DisplayStats(ChessBoard& chessboard, ChessEngine& engine, User& player) {
-    string LastMovePlayed = "";
-    string currentPlayer = (chessboard.isCurrentPlayerWhite()) ? "White" : "Black";
+    std::string LastMovePlayed = "";
+    std::string currentPlayer = (chessboard.isCurrentPlayerWhite()) ? "White" : "Black";
     std::vector<std::string> EngineData = getData(engine, player, chessboard);
     std::vector<std::string> moveHistory = chessboard.getMoveHistory();
 
@@ -93,8 +86,8 @@ void BoardStats::DisplayPlayerTitles(const ChessBoard& chessboard) {
     float w_posX = textX - (TextCenter(White_, fontSize).x / 2);
     float w_posY = screenHeight - 146 - fontSize + 30;
 
-    DrawTextWithCustomFont(Black_, b_posX, b_posY , fontSize, CheckAlertB);
-    DrawTextWithCustomFont(White_, w_posX, w_posY , fontSize, CheckAlertW);
+    Utility::DrawTextWithCustomFont(Black_, b_posX, b_posY , fontSize, CheckAlertB);
+    Utility::DrawTextWithCustomFont(White_, w_posX, w_posY , fontSize, CheckAlertW);
 }
 
 void BoardStats::DrawStatistics(const std::vector<std::string>& EngineData) {
@@ -103,18 +96,18 @@ void BoardStats::DrawStatistics(const std::vector<std::string>& EngineData) {
     for (std::string message : EngineData) {
         float posX = textX - (TextCenter(message.c_str(), fontSize - 30).x / 2);
         float posY = textY + offsetY;
-        DrawTextWithCustomFont(message.c_str(), posX, posY, DataFontSize, messageColor);
+        Utility::DrawTextWithCustomFont(message.c_str(), posX, posY, DataFontSize, messageColor);
         offsetY += 20;
     }
 }
 
 void BoardStats::DrawPlayerElos(int elo_W, int elo_B) {
-    std::string WhiteELO = CloseInBrackets(ELO + to_string(elo_W));
-    std::string BLackELO = CloseInBrackets(ELO + to_string(elo_B));
+    std::string WhiteELO = Utility::CloseInBrackets(ELO + std::to_string(elo_W));
+    std::string BLackELO = Utility::CloseInBrackets(ELO + std::to_string(elo_B));
 
     //Draw ELO
-    DrawTextWithCustomFont(WhiteELO.c_str(), textX - (TextCenter(WhiteELO.c_str(), fontSize - 30).x / 2), static_cast<float>(screenHeight) - 146 + 30, fontSize - 30, messageColor);
-    DrawTextWithCustomFont(BLackELO.c_str(), textX - (TextCenter(BLackELO.c_str(), fontSize - 30).x / 2), textY + 50, fontSize - 30, messageColor);
+    Utility::DrawTextWithCustomFont(WhiteELO.c_str(), textX - (TextCenter(WhiteELO.c_str(), fontSize - 30).x / 2), static_cast<float>(screenHeight) - 146 + 30, fontSize - 30, messageColor);
+    Utility::DrawTextWithCustomFont(BLackELO.c_str(), textX - (TextCenter(BLackELO.c_str(), fontSize - 30).x / 2), textY + 50, fontSize - 30, messageColor);
 }
 
 std::vector<std::string> BoardStats::getData(const ChessEngine& engine, const User& player, const ChessBoard& chessboard){
@@ -130,16 +123,16 @@ std::vector<std::string> BoardStats::getData(const ChessEngine& engine, const Us
     int totalToEvaluate = static_cast<int>(Heuristics.totalMovesToEvaluate);
     float PercentagePruned = (totalToEvaluate != 0) ? (static_cast<float>(abs(LookAheads - totalToEvaluate)) / static_cast<float>(totalToEvaluate)) * 100 : 0;
 
-
+    using namespace Utility;
     std::vector<std::string> DataArray = {
         "Evaluation Speed: " + SetPrecision(Speed, 1) + "kn/s",
-        "Saw " + format(LookAheads) + " futures in " + SetPrecision(TimeTaken, 2) + "s",
-        "Pruned " + format(BranchesPruned) + " Branches",
+        "Saw " + AddCommas(LookAheads) + " futures in " + SetPrecision(TimeTaken, 2) + "s",
+        "Pruned " + AddCommas(BranchesPruned) + " Branches",
         "Size: " + SetPrecision(SizeOfTable, 2) + "Mbs",
-        "Total Transpostions Found: " + format(FoundTranspostions),
-        "Depth: " + to_string(currentDepth),
-        "Evaluated " + format(evaluated) + "/" + format(moves) + " moves",
-        "Evaluated " + format(LookAheads) + "/" + format(totalToEvaluate) + " positions",
+        "Total Transpostions Found: " + AddCommas(FoundTranspostions),
+        "Depth: " + std::to_string(currentDepth),
+        "Evaluated " + AddCommas(evaluated) + "/" + AddCommas(moves) + " moves",
+        "Evaluated " + AddCommas(LookAheads) + "/" + AddCommas(totalToEvaluate) + " positions",
         "Pruned " + SetPrecision(PercentagePruned, 2) + "% branches"
     };
 
@@ -150,8 +143,8 @@ std::vector<std::string> BoardStats::getData(const ChessEngine& engine, const Us
 void BoardStats::DisplayStats(ChessBoard& chessboard) {
     //Overriden Function
 
-    string LastMovePlayed = "";
-    string currentPlayer = (chessboard.isCurrentPlayerWhite()) ? "White" : "Black";
+    std::string LastMovePlayed = "";
+    std::string currentPlayer = (chessboard.isCurrentPlayerWhite()) ? "White" : "Black";
     std::vector<std::string> moveHistory = chessboard.getMoveHistory();
 
     if (moveHistory.size() != 0) LastMovePlayed = (moveHistory.back());
@@ -159,18 +152,18 @@ void BoardStats::DisplayStats(ChessBoard& chessboard) {
     DisplayPlayerTitles(chessboard);
 }
 
-void BoardStats::MovesAndHistory(string LastMovePlayed, const std::vector<std::string>& moveHistory) {
+void BoardStats::MovesAndHistory(std::string LastMovePlayed, const std::vector<std::string>& moveHistory) {
     if (ShowMoveHistory) DisplayMoveHistory(moveHistory);
     else {
         float X = textX - (TextCenter(LastMovePlayed.c_str(), fontSize - 10).x / 2);
         float Y = static_cast<float>(screenHeight) / 2 - 42;
-        DrawTextWithCustomFont(LastMovePlayed.c_str(), X, Y, fontSize - 10, AlertColor);
+        Utility::DrawTextWithCustomFont(LastMovePlayed.c_str(), X, Y, fontSize - 10, AlertColor);
     }
 }
 
 void BoardStats::DisplayMoveHistory(const std::vector<std::string>& moveHistory) const {
 
-    string Moves = "";
+    std::string Moves = "";
     for (int index = 0; index < moveHistory.size(); index++) {
         Moves += moveHistory[index];
         Moves += ", ";
@@ -178,7 +171,7 @@ void BoardStats::DisplayMoveHistory(const std::vector<std::string>& moveHistory)
             Moves += "\n\n";
         }
     }
-    DrawTextWithCustomFont(Moves.c_str(), 150, textY + 90, fontSize - 20, RED);
+    Utility::DrawTextWithCustomFont(Moves.c_str(), 150, textY + 90, fontSize - 20, RED);
 }
 
 double BoardStats::calculateExpectedScore(int PlayerARating, int PlayerBRating) const {
@@ -218,11 +211,6 @@ void BoardStats::Reset() {
     SaveData = true;
 }
 
-void BoardStats::DrawTextWithCustomFont(const char* text, float posX, float posY, float fontSize, Color color) const {
-    Vector2 Position = { posX, posY };
-    DrawTextEx(myFont, text, Position, fontSize, 1.0, color);
-}
-
 Vector2 BoardStats::TextCenter(const char* text, float fontSize) {
     return MeasureTextEx(myFont, text, fontSize, 1.0);
 }
@@ -239,8 +227,8 @@ void BoardStats::DrawEvaluationColumn(ChessBoard& chessboard, ChessEngine& engin
         blackProportion = (totalScore != 0) ? (blackScore / totalScore) : 0;
     }
       
-    string WhiteProp = SetPrecision(whiteProportion, 1); // White Proportions
-    string BlackProp = SetPrecision(blackProportion, 1); // Black Proportions
+    std::string WhiteProp = Utility::SetPrecision(whiteProportion, 1); // White Proportions
+    std::string BlackProp = Utility::SetPrecision(blackProportion, 1); // Black Proportions
 
     Rectangle columnRect = { 763, 80, 25, 640 }; // { x, y, width, height };
 
@@ -249,12 +237,12 @@ void BoardStats::DrawEvaluationColumn(ChessBoard& chessboard, ChessEngine& engin
     Rectangle whitePart = { columnRect.x, columnRect.y + blackPart.height, columnRect.width, columnRect.height * whiteProportion };
     DrawRectangleRec(whitePart, WHITE); 
     DrawRectangleRec(blackPart, BLACK); 
-    DrawTextWithCustomFont(WhiteProp.c_str(), 765, 703, 15, BLACK);
-    DrawTextWithCustomFont(BlackProp.c_str(), 765, 85, 15, WHITE);
+    Utility::DrawTextWithCustomFont(WhiteProp.c_str(), 765, 703, 15, BLACK);
+    Utility::DrawTextWithCustomFont(BlackProp.c_str(), 765, 85, 15, WHITE);
 }
 
 float BoardStats::Evaluate(const ChessBoard& chessboard, int Player, ChessEngine& engine) const {
-    unordered_map<int, float> pieceValues = {
+    std::unordered_map<int, float> pieceValues = {
         {PAWN, 1.0f}, {KNIGHT, 3.0f}, {BISHOP, 3.0f}, {ROOK, 5.0f}, {QUEEN, 9.0f}, {KING, 10.0f}
     };
 
@@ -275,11 +263,11 @@ float BoardStats::Evaluate(const ChessBoard& chessboard, int Player, ChessEngine
     }
 
     // Evaluate move options and capture moves
-    vector<string> moves = chessboard.GetAllPossibleMovesInChessNotation(Player);
+    std::vector<std::string> moves = chessboard.GetAllPossibleMovesInChessNotation(Player);
     int moveOptions = static_cast<int>(moves.size());
     int captureMoves = 0;
     for (const auto& move : moves) {
-        if (engine.IsCaptureMove(move, chessboard)) {
+        if (IsCaptureMove()(move, chessboard)) {
             captureMoves++;
         }
     }
@@ -293,41 +281,12 @@ float BoardStats::Evaluate(const ChessBoard& chessboard, int Player, ChessEngine
     return evaluation;
 }
 
-string BoardStats::SetPrecision(const float& number, const int& precision) const {
-    ostringstream temp;
-    temp << fixed << setprecision(precision) << number;
-    return temp.str();
-   
-}
-
 void BoardStats::DisplayNewDepthMessage(const int& newdepth) {
-    string message = "New Depth: " + to_string(newdepth);
-    DrawTextWithCustomFont(message.c_str(), textX - (TextCenter(message.c_str(), fontSize - 30).x / 2), textY + 70, fontSize - 30, messageColor);
+    std::string message = "New Depth: " + std::to_string(newdepth);
+    Utility::DrawTextWithCustomFont(message.c_str(), textX - (TextCenter(message.c_str(), fontSize - 30).x / 2), textY + 70, fontSize - 30, messageColor);
 }
 
-void BoardStats::DisplayNewFENMessage(const string& fen) {
-    string message = "New Depth: " + fen;
-    DrawTextWithCustomFont(message.c_str(), textX - (TextCenter(message.c_str(), fontSize - 30).x / 2), textY + 70, fontSize - 30, messageColor);
-}
-std::string BoardStats::format(int number) {
-    std::string str = std::to_string(number);
-    size_t len = str.length();
-    if (len <= 3) // No need for formatting if the number is less than 1000
-        return str;
-
-    size_t commas = (len - 1) / 3; // Calculate the number of commas to be inserted
-    std::string formatted;
-    formatted.reserve(len + commas);
-
-    size_t i = 0;
-    size_t j = len % 3 == 0 ? 3 : len % 3; // Adjust for the first segment
-
-    formatted.append(str, 0, j);
-
-    for (; i + j < len; i += j, j = 3) {
-        formatted.push_back(',');
-        formatted.append(str, i + j, 3);
-    }
-
-    return formatted;
+void BoardStats::DisplayNewFENMessage(const std::string& fen) {
+    std::string message = "New FEN: " + fen;
+    Utility::DrawTextWithCustomFont(message.c_str(), textX - (TextCenter(message.c_str(), fontSize - 30).x / 2), textY + 70, fontSize - 30, messageColor);
 }

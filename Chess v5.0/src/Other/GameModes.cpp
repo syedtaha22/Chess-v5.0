@@ -26,6 +26,7 @@ void GameModes::Options() {
     }
     if (IsKeyPressed(KEY_R)) RestartGame();
     if (IsKeyPressed(KEY_M)) BackToMenu();
+    if (IsKeyPressed(KEY_C)) system("cls");
 }
 
 void GameModes::HandleMoves(int PlayerColor) {
@@ -140,7 +141,7 @@ void GameModes::Destroy() {
     chessboard.DestroyBoard();
 }
 
-void GameModes::setFENstring(string newFen) {
+void GameModes::setFENstring(std::string newFen) {
     FENString = newFen;
 }
 
@@ -171,7 +172,7 @@ void GameModes::FENSettings() {
     Rectangle SetFENBox = { (InfoBoxWidth / 2.0f) - 40.0f, screenHeight / 2.0f - 20.0f, 200.0f, 40.0f };
     GuiTextBox(SetFENBox, feninput, 76, true);
    
-    string fen = feninput;
+    std::string fen = feninput;
     GameStats.DisplayNewFENMessage(fen);
     if (IsKeyPressed(KEY_ENTER)) {
         if(fen != "") setFENstring(fen);
@@ -180,7 +181,7 @@ void GameModes::FENSettings() {
 
 }
 
-void GameModes::SetFENStrings(const string& fen) {
+void GameModes::SetFENStrings(const std::string& fen) {
     FENString = fen;
     chessboard.DestroyBoard();
     chessboard.initializeBoardFromFEN(FENString, true);

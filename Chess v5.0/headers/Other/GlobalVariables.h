@@ -20,12 +20,6 @@
 
 #include "Flags.h"
 #include "Settings.h"
-
-
-using namespace std;
-using namespace chrono;
-
-
  
 extern Sound ChessPiecePlaced;
 extern Sound ChessPieceCaptured;
@@ -48,7 +42,7 @@ extern int ReverseOffset;
 extern int BoardOffsetX;
 extern int BoardOffsetY;
 
-const int infinity = numeric_limits<int>::max();
+const int infinity = std::numeric_limits<int>::max();
 
 //InfoBox
 extern int Segments;

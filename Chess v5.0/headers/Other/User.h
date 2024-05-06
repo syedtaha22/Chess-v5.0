@@ -5,13 +5,13 @@
 
 class User{
 public:
-    string Username;
+    std::string Username;
     int ELO;
-    const string filename = "UserELO.txt";
+    const std::string filename = "UserELO.txt";
 
-    User(string name = "", int elo = EMPTY);
+    User(std::string name = "", int elo = EMPTY);
 
-    void setUserName(string name);
+    void setUserName(std::string name);
 };
 
 

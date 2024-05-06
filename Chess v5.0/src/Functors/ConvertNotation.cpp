@@ -28,13 +28,13 @@ std::string ConvertNotation::operator()(int fromTile, int toTile) const {
     return chessNotation;
 }
 
-pair<int, int> ConvertNotation::operator()(int pieceIndex) const {
+std::pair<int, int> ConvertNotation::operator()(int pieceIndex) const {
     if (pieceIndex < 0 || pieceIndex >= Total_tiles) {
-        return make_pair(-1, -1);
+        return std::make_pair(-1, -1);
     }
     int rank = pieceIndex / boardSize;
     int file = pieceIndex % boardSize;
-    return make_pair(rank, file);
+    return std::make_pair(rank, file);
 }
 
 

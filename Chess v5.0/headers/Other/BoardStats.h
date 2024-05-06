@@ -1,7 +1,8 @@
 #ifndef BOARDSTATS_H
 #define BOARDSTATS_H
 
-#include "User.h"
+#include "../namespaces/Utility.h"
+
 
 class BoardStats {
 private:
@@ -33,7 +34,7 @@ private:
     const char* Black_ = "Black";
     const char* White_ = "White";
 
-    std::chrono::high_resolution_clock::time_point TimerStart = high_resolution_clock::now();
+    std::chrono::high_resolution_clock::time_point TimerStart = std::chrono::high_resolution_clock::now();
 
     const int MinScore = 10; // Kings Score
 
@@ -47,7 +48,7 @@ public:
     //Decide Winner
     int winner;
     //Message Regarding Who won
-    string EndMessage;
+    std::string EndMessage;
 
     BoardStats();
 
@@ -60,7 +61,7 @@ public:
     void DisplayStats(ChessBoard& chessboard);
 
     //Display Last Move or Move History based on flag
-    void MovesAndHistory(string LastMovePlayed, const std::vector<std::string>& moveHistory);
+    void MovesAndHistory(std::string LastMovePlayed, const std::vector<std::string>& moveHistory);
 
     std::vector<std::string> getData(const ChessEngine& engine, const User& player, const ChessBoard& chessboard);
     void DrawPlayerElos(int elo_W, int elo_B);
@@ -78,13 +79,13 @@ public:
     float Evaluate(const ChessBoard& chessboard, int Player, ChessEngine& engine) const;
 
     //Draw Text with Roboto font 
-    void DrawTextWithCustomFont(const char* text, float posX, float posY, float fontSize, Color color) const;
+    //void DrawTextWithCustomFont(const char* text, float posX, float posY, float fontSize, Color color) const;
 
 
     //Close a String Between Brackets
-    string CloseInBrackets(string stringClose);
+    //string CloseInBrackets(string stringClose);
 
-    string SetPrecision(const float& number, const int& precision) const;
+    //string SetPrecision(const float& number, const int& precision) const;
 
     //Check if Gamr ended or not
     bool GameIsEnded(ChessBoard& board);
@@ -98,10 +99,10 @@ public:
 
     //Functions related to FENs
     void DisplayNewDepthMessage(const int& newdepth);
-    void DisplayNewFENMessage(const string& fen);
+    void DisplayNewFENMessage(const std::string& fen);
 
     // format(xxxxxxxxx) --> xxx,xxx,xxx
-    string format(int number);
+    //string format(int number);
 
     
 };

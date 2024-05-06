@@ -30,7 +30,7 @@ public:
     const bool useTranspositions = true;
     const bool useAlphaBetaPruning = true;
 
-    unordered_map<int, int> pieceValues;
+    std::unordered_map<int, int> pieceValues;
 
     int engineEloRating;
 
