@@ -148,6 +148,7 @@
     <ClCompile Include="src\Pieces\Pieces.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="headers\Functors\CalculateELO.h" />
     <ClInclude Include="headers\Functors\CheckAfterMove.h" />
     <ClInclude Include="headers\Engine\EngineState.h" />
     <ClInclude Include="headers\Engine\ChessEngineStatistics.h" />
@@ -166,6 +167,7 @@
     <ClInclude Include="headers\Other\GlobalVariables.h" />
     <ClInclude Include="headers\Other\Settings.h" />
     <ClInclude Include="headers\Other\Resources.h" />
+    <ClInclude Include="headers\Other\StatisticalConstants.h" />
     <ClInclude Include="headers\Other\User.h" />
     <ClInclude Include="headers\Pieces\ChessPiece.h" />
     <ClInclude Include="headers\Pieces\PieceCodes.h" />
