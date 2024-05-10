@@ -6,7 +6,6 @@
 #include "PieceSquareTables.h"
 
 class ChessEngine{
-
 public:
     EngineState state;
     const std::string filename = "EngineELO.txt";

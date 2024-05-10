@@ -3,8 +3,6 @@
 
 #include "ChessBoard.h"
 
-
-
 class GraphicalBoard {
 public:
 
@@ -21,9 +19,4 @@ public:
     void DrawChessPiece(const ChessBoard& chessboard) const;
 };
 
-
-
-
 #endif // !GRAPHICALBOARD_H
-
-

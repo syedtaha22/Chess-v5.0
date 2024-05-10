@@ -61,8 +61,6 @@ public:
     int getAttacksOnSquare(int squareIndex, int opponentColor) const;
     int GetKingIndex(const int& playercolor) const;
 
-    //Returns the Index of the Piece, Based on its Location
-    int getTileIndex(float x, float y, int tileSize);
 
     void AddMoveToHistory(std::string move);
 
@@ -78,7 +76,6 @@ public:
     void DestroyBoard();
 
     //Displays Board Elements, on Terminal(For Debugging)
-    //void DisplayBoard() const;
     void DisplayMoves();
     void DisplayScores() const;
 
@@ -146,14 +143,10 @@ public:
     int getCheckedPlayer() const { return state.checkedPlayer; }
 
     ~ChessBoard(){
- 
         for (ChessPiece* piece : board) {
             delete piece;
         }
-
     }
-
-
 };
 
 

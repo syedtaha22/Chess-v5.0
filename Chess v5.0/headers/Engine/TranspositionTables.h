@@ -4,6 +4,7 @@
 #include "../Functors/SortMoves.h"
 
 
+
 class TranspositionTables {
 private:
 

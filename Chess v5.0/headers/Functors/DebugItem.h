@@ -6,11 +6,13 @@
 class DebugItem {
 public:
 
+    //Display Vector on Terminal
 	void operator()(const std::vector<std::string>& moves) {
 		for (const auto& move : moves) { std::cout << move << " "; }
 		std::cout << std::endl;
 	}
 
+    //Display Board on Terminal
     void operator()(ChessPiece* board[]) const {
         //Display Board on Terminal. For Debugging Purposes
 

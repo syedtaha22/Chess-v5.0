@@ -7,6 +7,7 @@ class SortMoves {
 public:
 
     void operator()(std::vector<std::string>& moves, const ChessBoard& board, int color) const {
+
         // Define custom comparator to sort moves
         auto customComparator = [&](const std::string& move1, const std::string& move2) {
             // Check if move1 gives check
