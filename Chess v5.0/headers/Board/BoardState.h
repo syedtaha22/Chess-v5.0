@@ -1,7 +1,8 @@
 #pragma once
 
-#include<iostream>
-#include<vector>
+#include "../Functors/DebugItem.h"
+
+
 
 struct BoardState{
 
@@ -70,6 +71,10 @@ struct BoardState{
             checkedPlayer = other.checkedPlayer;
         }
         return *this; // Return a reference to the modified object
+    }
+
+    int getCurrentPlayer() const {
+        return currentPlayerIsWhite ? White : Black;
     }
 
     void reset() {
