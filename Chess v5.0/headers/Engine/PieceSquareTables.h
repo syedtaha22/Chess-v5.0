@@ -9,9 +9,6 @@
 //const int BISHOP = 4;
 //const int ROOK = 5;
 //const int QUEEN = 6;
-//
-//const int White = 8;
-//const int Black = 16;
 
 
 struct PieceSquareTables{
