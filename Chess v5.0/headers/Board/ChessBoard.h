@@ -2,7 +2,7 @@
 #define CHESSBOARD_H
 
 //#include "../Pieces/ChessPiece.h"
-#include "../Functors/DebugItem.h"
+
 #include "BoardState.h"
 
     /*
@@ -65,10 +65,10 @@ public:
     void AddMoveToHistory(std::string move);
 
     //Functions to Compute Moves for a Piece
-    void ComputeKingMoves(int KingIndex, std::vector<int>& possibleMoves) const;
-    void ComputeKnightMoves(int pieceIndex, std::vector<int>& possibleMoves) const;
-    void ComputePawnMoves(int pieceIndex, std::vector<int>& possibleMoves) const;
-    void ComputeSlidingPieceMoves(int pieceIndex, std::vector<int>& possibleMoves) const;
+    std::vector<int> ComputeKingMoves(int KingIndex) const;
+    std::vector<int> ComputeKnightMoves(int pieceIndex) const;
+    std::vector<int> ComputePawnMoves(int pieceIndex) const;
+    std::vector<int> ComputeSlidingPieceMoves(int pieceIndex) const;
 
     //Calculates opponents Moves, and Stores in to OpponentMoves
     void ComputeOpponentMoves();
@@ -106,8 +106,8 @@ public:
 
     bool IsCastlingMove(std::string move, ChessPiece* pieceMoved);
 
-    bool isCheck(const ChessBoard& chessboard, const int playerColor, std::string calledby);
-    bool isCheckmate(ChessBoard& chessboard, const int playerColor) const;
+    bool isCheck(const ChessBoard& chessboard, const int playerColor);
+    bool isCheckmate() const;
 
     // returns currentPlayerIsWhite
     bool isCurrentPlayerWhite() const; 
@@ -126,8 +126,8 @@ public:
 
     //Functions to get a list of all Possible Moves for a Player or Piece in different Formats
     std::vector<int> GetAllPossibleMoves(int playerColor) const;
-    std::vector<int> GetAllPossibleMovesForPiece(int type, int index) const;
-    std::vector<std::string> GetAllCaptureMovesInChessNotation(int color) const;
+    std::vector<int> GetAllPossibleMovesForPiece(int type, int index, bool FilterInvalidMoves) const;
+    //std::vector<std::string> GetAllCaptureMovesInChessNotation(int color) const;
     std::vector<std::string> GetAllPossibleMovesInChessNotation(int playerColor) const;
 
     //Calculates and returns the Current FEN position of the Board
@@ -136,7 +136,7 @@ public:
     //Loops over the The Board and Loads textures for each Piece
     void LoadTextures();
 
-    int getCurrentPlayer() const { return isCurrentPlayerWhite() ? White : Black; }
+    int getCurrentPlayer() const { return state.currentPlayerIsWhite ? White : Black; }
 
     std::vector<std::string> getMoveHistory() const { return state.moveHistory; }
 

@@ -7,9 +7,9 @@ static void CalculateAIMove(ChessEngine& engine, ChessBoard& board) {
         if (engine.state.isSearchStarted() && !board.isCurrentPlayerWhite()) {
 
             //string move;
-            string move;
+            std::string move;
             board.ComputeOpponentMoves();
-            cout << "Running...\n";
+            std::cout << "Running...\n";
             move = engine.GenerateMove(board);
             if (move != "") {
                 engine.PlayMove(move, board);
@@ -18,8 +18,6 @@ static void CalculateAIMove(ChessEngine& engine, ChessBoard& board) {
         }
     }
 }
-
-
 
 
 int main() {
@@ -46,7 +44,7 @@ int main() {
     SetWindowIcon(icon);
     SetTargetFPS(60);
 
-    thread EngineThread(CalculateAIMove, ref(Game.Horizon), ref(Game.chessboard));
+    std::thread EngineThread(CalculateAIMove, std::ref(Game.Horizon), std::ref(Game.chessboard));
     EngineThread.detach();
     int index = 0;
     // Main menu loop

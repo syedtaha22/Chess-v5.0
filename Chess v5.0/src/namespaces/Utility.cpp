@@ -42,3 +42,6 @@ void Utility::DrawTextWithCustomFont(const char* text, float posX, float posY, f
     DrawTextEx(myFont, text, Position, fontSize, 1.0, color);
 }
 
+Vector2 Utility::TextCenter(const char* text, float fontSize) {
+    return MeasureTextEx(myFont, text, fontSize, 1.0);
+}

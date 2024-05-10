@@ -1,6 +1,4 @@
 #include "../../headers/Other/GameModes.h"
-
-
 #include "raygui.h" 
 
 GameModes::GameModes() {
@@ -64,7 +62,7 @@ void GameModes::ResetBoard(bool calculateELO) {
     Horizon.state.TerminateSearch();
 
     if (GameStats.SaveData) {
-        if (calculateELO) CalculateELO();
+        if (calculateELO) UpdateElos();
         chessboard.saveCurrentFENtofile("MatchHistory.txt");
         GameStats.SaveData = false;
     }
@@ -88,10 +86,10 @@ void GameModes::BackToMenu() {
     Flags::EndGame();
 }
 
-void GameModes::CalculateELO() {
+void GameModes::UpdateElos() {
     int oldBlackELO = Horizon.state.engineEloRating;
-    Horizon.state.engineEloRating = GameStats.updateEloRating(Horizon.state.engineEloRating, Player.ELO, (GameStats.winner == Black));
-    Player.ELO = GameStats.updateEloRating(Player.ELO, oldBlackELO, (GameStats.winner == White));
+    Horizon.state.engineEloRating = CalculateELO()(Horizon.state.engineEloRating, Player.ELO, (GameStats.winner == Black));
+    Player.ELO = CalculateELO()(Player.ELO, oldBlackELO, (GameStats.winner == White));
     Settings::save(Horizon.state.getDepth(), Player.ELO, Horizon.state.engineEloRating);
 
 }
@@ -99,18 +97,18 @@ void GameModes::CalculateELO() {
 void GameModes::InitialiseSinglePlayerMode() {
     if (DoOnce) {
         Horizon.state.setEngineColor(Black);
+        Horizon.state.terminateSearch = false;
 
         Player.setUserName("user");
         PlaySound(GameStarts);
         chessboard.InitializeDefaultBoard();
-        chessboard.ComputeOpponentMoves();
+        //chessboard.ComputeOpponentMoves();
 
 
         DoOnce = false;
     }
 
 }
-
 
 void GameModes::SinglePlayerMode() {
     
@@ -119,8 +117,6 @@ void GameModes::SinglePlayerMode() {
         if (chessboard.isCurrentPlayerWhite()) HandleMoves(White);
         else Horizon.state.StartSearch();
 
-
-        
         if (GameStats.ShowMoveHistory) GameStats.DisplayMoveHistory(chessboard.getMoveHistory());
         else GameStats.DisplayStats(chessboard, Horizon, Player);
         DisplayBoard();

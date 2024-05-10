@@ -1,10 +1,13 @@
 #include "../../headers/Engine/TranspositionTables.h"
 
 
+
+
 TranspositionTables::TranspositionTables() {
     SizeOfTranspostionTable = 0.0;
     initZobristKeys();
 }
+
 
 void TranspositionTables::initZobristKeys() {
     std::random_device rd;
@@ -18,11 +21,14 @@ void TranspositionTables::initZobristKeys() {
     }
 }
 
+
 void TranspositionTables::storeTranspositionTable(uint64_t hash, int score, int depth) {
     transpositionTable[hash] = { score, depth };
     
     ComputeSizeOfTranspositionTable();
 }
+
+
 
 void TranspositionTables::ComputeSizeOfTranspositionTable() {
 
@@ -35,6 +41,7 @@ void TranspositionTables::ComputeSizeOfTranspositionTable() {
 
 }
 
+
 bool TranspositionTables::isValuePresent(uint64_t hash) {
 
     for (const auto& key : transpositionTable) {
@@ -44,6 +51,7 @@ bool TranspositionTables::isValuePresent(uint64_t hash) {
     }
     return false;
 }
+
 
 void TranspositionTables::saveTranspositionTableToFile(std::string filename) {
     std::string folder = "Data";
@@ -70,6 +78,7 @@ void TranspositionTables::saveTranspositionTableToFile(std::string filename) {
 
 }
 
+
 uint64_t TranspositionTables::computeHash(const ChessBoard& board) const {
     uint64_t hash = 0;
     for (int i = 0; i < 64; ++i) {
@@ -84,6 +93,7 @@ uint64_t TranspositionTables::computeHash(const ChessBoard& board) const {
     }
     return hash;
 }
+
 
 std::pair<int, int> TranspositionTables::lookupTranspositionTable(uint64_t hash) const {
     auto it = transpositionTable.find(hash);

@@ -3,6 +3,7 @@
 
 #include "BoardStats.h"
 #include "Menu.h"
+#include "../Functors/CalculateELO.h"
 
 class GameModes {
 private:
@@ -60,7 +61,7 @@ public:
     void BackToMenu();
 
     //Calculate Player ELO's
-    void CalculateELO();
+    void UpdateElos();
 
     //FEN related Functions
     void setFENstring(std::string newFen);
@@ -74,7 +75,7 @@ public:
 
     void SetFENStrings(const std::string& fen);
 
-
+   
 
 
 

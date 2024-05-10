@@ -11,7 +11,7 @@ public:
         tempBoard.MakeMove(indices.first, indices.second);
 
         // Check if the move puts the opponent's king in check
-        return tempBoard.isCheck(tempBoard, (color == White ? White : Black), "Engine: Check after move");
+        return tempBoard.isCheck(tempBoard, (color == White ? White : Black));
     }
 };
 

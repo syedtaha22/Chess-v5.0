@@ -19,13 +19,13 @@ void EngineState::initPieceValues() {
     // Piece values for evaluation
     if (EngineColor == White) {
         pieceValues = {
-            {White | PAWN,  100}, {White | KNIGHT,  320}, {White | BISHOP,  330}, {White | ROOK,  500}, {White | QUEEN,  900}, {White | KING,  infinity},
-            {Black | PAWN, -100}, {Black | KNIGHT, -320}, {Black | BISHOP, -330}, {Black | ROOK, -500}, {Black | QUEEN, -900}, {Black | KING, -infinity} };
+            {White | PAWN,  10}, {White | KNIGHT,  32}, {White | BISHOP,  33}, {White | ROOK,  50}, {White | QUEEN,  90}, {White | KING,  100},
+            {Black | PAWN, -10}, {Black | KNIGHT, -32}, {Black | BISHOP, -33}, {Black | ROOK, -50}, {Black | QUEEN, -90}, {Black | KING, -100} };
     }
     else {
         pieceValues = {
-            {White | PAWN, -100}, {White | KNIGHT, -320}, {White | BISHOP, -330}, {White | ROOK, -500}, {White | QUEEN, -900}, {White | KING, -infinity},
-            {Black | PAWN,  100}, {Black | KNIGHT,  320}, {Black | BISHOP,  330}, {Black | ROOK,  500}, {Black | QUEEN,  900}, {Black | KING,  infinity} };
+            {White | PAWN, -10}, {White | KNIGHT, -32}, {White | BISHOP, -33}, {White | ROOK, -50}, {White | QUEEN, -90}, {White | KING, -100},
+            {Black | PAWN,  10}, {Black | KNIGHT,  32}, {Black | BISHOP,  33}, {Black | ROOK,  50}, {Black | QUEEN,  90}, {Black | KING,  100} };
     }
 }
 
@@ -39,7 +39,7 @@ void EngineState::StopSearching() { startSearch = false; }
 
 void EngineState::TerminateSearch() { terminateSearch = true; }
 
-bool EngineState::isSearchStarted() const { return startSearch; }
+bool EngineState::isSearchStarted() const { return startSearch && !terminateSearch; }
 
 void EngineState::SaveTranspositionTable() {
     transpostionTable.saveTranspositionTableToFile("TranspositionTables.txt");
@@ -68,4 +68,3 @@ void EngineState::reset() {
     terminateSearch = true;
     startSearch = false;
 }
-

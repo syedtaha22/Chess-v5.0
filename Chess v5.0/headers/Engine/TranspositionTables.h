@@ -16,7 +16,6 @@ private:
 
     uint64_t zobristKeys[64][12]; 
     std::unordered_map<uint64_t, std::pair<int, int>> transpositionTable;
-    const int infinity = std::numeric_limits<int>::max();
 
 public:
     double SizeOfTranspostionTable;

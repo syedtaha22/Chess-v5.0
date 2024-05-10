@@ -12,6 +12,13 @@ namespace Utility {
 
 	std::string SetPrecision(const float& number, const int& precision);
 
+	Vector2 TextCenter(const char* text, float fontSize);
+
+
+
+
+
+
 }
 
 #endif // !HELPER_FUNCTIONS_H

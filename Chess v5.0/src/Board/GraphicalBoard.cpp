@@ -64,8 +64,9 @@ void GraphicalBoard::DrawCoordinates(const ChessBoard& chessboard) const {
         if (index >= 56 && index <= 63) {
             // Y postion is Constant, the -20 is an offset from corner of tile
             Vector2 Position = { static_cast<float>(LocX + tileSize) - 20, 720 - 20 };
+            const char* coords= "a" + index % 8;
 
-            DrawTextEx(myFont, std::string(1, 'a' + index % 8).c_str(), Position, TextSize, 0.1f, TextColor);
+            DrawTextEx(myFont, coords, Position, TextSize, 0.1f, TextColor);
         }
     }
 }

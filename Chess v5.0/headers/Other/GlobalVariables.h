@@ -15,6 +15,7 @@
 #include <iomanip>
 #include <limits>
 #include <filesystem>
+#include <memory>
 #include "raylib.h"
 
 

@@ -41,7 +41,7 @@ std::vector<int> ChessBoard::FilterValidMoves(int fromIndex, std::vector<int> po
         
         ChessBoard tempBoard(*this);
         tempBoard.MakeMove(fromIndex, toTile);
-        if (!tempBoard.isCheck(tempBoard, piece->color, "Board: Filter Valid Moves")) {
+        if (!tempBoard.isCheck(tempBoard, piece->color)) {
             filteredMoves.push_back(toTile);
         }
     }
@@ -62,6 +62,8 @@ void ChessBoard::initializeBoardFromFEN(const std::string& fen, bool loadTexture
     //std::cout << "Starting Initialising...." << std::endl;
     state.moveHistory.clear();
     state.MoveIndices = { -1,-1 };
+
+
     int row = 0, col = 0;
     // Parse the FEN std::string
     for (char symbol : fen) {
@@ -102,26 +104,36 @@ void ChessBoard::initializeBoardFromFEN(const std::string& fen, bool loadTexture
     state.currentPlayerIsWhite = (fen.find("w") != std::string::npos);
 
     //SetCastlingRights
-    int WhiteKingIndex = GetKingIndex(White);
-    int BlackKingIndex = GetKingIndex(Black);
-    size_t castlingRightsPos = fen.find_last_of(" ");
-    if (castlingRightsPos != std::string::npos && castlingRightsPos + 1 < fen.length()) {
-        std::string castlingRights = fen.substr(castlingRightsPos + 1);
-        for (char c : castlingRights) {
-            if (c == 'K') {
-                board[WhiteKingIndex]->canCastleKingSide = true;
-            }
-            else if (c == 'Q') {
-                board[WhiteKingIndex]->canCastleQueenSide = true;
-            }
-            else if (c == 'k') {
-                board[BlackKingIndex]->canCastleKingSide = true;
-            }
-            else if (c == 'q') {
-                board[BlackKingIndex]->canCastleQueenSide = true;
+    try {
+        int WhiteKingIndex = GetKingIndex(White);
+        int BlackKingIndex = GetKingIndex(Black);
+
+        size_t castlingRightsPos = fen.find_last_of(" ");
+        if (castlingRightsPos != std::string::npos && castlingRightsPos + 1 < fen.length()) {
+            std::string castlingRights = fen.substr(castlingRightsPos + 1);
+            for (char c : castlingRights) {
+                if (c == 'K') {
+                    board[WhiteKingIndex]->canCastleKingSide = true;
+                }
+                else if (c == 'Q') {
+                    board[WhiteKingIndex]->canCastleQueenSide = true;
+                }
+                else if (c == 'k') {
+                    board[BlackKingIndex]->canCastleKingSide = true;
+                }
+                else if (c == 'q') {
+                    board[BlackKingIndex]->canCastleQueenSide = true;
+                }
             }
         }
+
     }
+    catch (const std::runtime_error& e) {
+        std::cerr << e.what() << std::endl;
+        return;
+    }
+
+
 
     if(loadTextures) LoadTextures();
     // Set piece positions
@@ -135,9 +147,9 @@ int ChessBoard::GetKingIndex(const int& playercolor) const {
             return index;
         }
     }
-    // Exit Game if King Cannot be found
-    std::cout << "\n\nGetKingIndex: KING(" << playercolor << ") not Found\n\n";
-    exit(404);
+
+    // Throw an exception if king is not found
+    throw std::runtime_error("GetKingIndex: KING(" + std::to_string(playercolor) + ") not found");
 
 }
 
@@ -210,8 +222,6 @@ std::string ChessBoard::GetCurrentFEN() const {
 
     return fen;
 
-
-
 }
 
 void ChessBoard::InitializeDefaultBoard() {
@@ -256,24 +266,6 @@ void ChessBoard::initializeBoard() {
     SetPiecePositions();
 }
 
-//void ChessBoard::DisplayBoard() const {
-//    //Display Board on Terminal. For Debugging Purposes
-//
-//    std::cout << "8 ";
-//    for (int i = 0; i < Total_tiles; i++) {
-//        // std::cout << (i/8) + 1  << " ";
-//        std::cout << "[" << board[i]->type << "]";
-//        if ((i + 1) % 8 == 0 && (i + 1) < Total_tiles) {
-//            std::cout << std::endl;
-//            std::cout << 8 - (i + 1) / 8 << " ";
-//        }
-//
-//        // std::cout << std::endl;
-//    }
-//    std::cout << std::endl;
-//    std::cout << "   a  b  c  d  e  f  g  h" << std::endl;
-//}
-
 void ChessBoard::SetPiecePositions() {
     //Set Piece Positions, on graphical Board everytime Board is changed
     for (int index = 0; index < Total_tiles; index++) {
@@ -283,21 +275,20 @@ void ChessBoard::SetPiecePositions() {
     }
 }
 
-int ChessBoard::getTileIndex(float x, float y, int tileSize) {
-
-    int file = static_cast<int>(x / tileSize);
-    int rank = static_cast<int>(y / tileSize);
-    int index = rank * 8 + file;
-
-    return index;
-}
-
 void ChessBoard::UpdateChessPiece(ChessPiece* piece, int InitialIndex) {
+    auto getTileIndex = [](float x, float y) -> int {
+            int file = static_cast<int>(x / tileSize);
+            int rank = static_cast<int>(y / tileSize);
+            int index = rank * 8 + file;
+
+            return index;
+        };
+
     if (piece->type != EMPTY) {
 
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && CheckCollisionPointRec(GetMousePosition(), piece->rectangle)) {
             piece->isDragged = true;
-            state.MovesForSelectedPiece = GetAllPossibleMovesForPiece(piece->type, InitialIndex);
+            state.MovesForSelectedPiece = GetAllPossibleMovesForPiece(piece->type, InitialIndex, true);
 
         }
         if (piece->isDragged) {
@@ -313,7 +304,7 @@ void ChessBoard::UpdateChessPiece(ChessPiece* piece, int InitialIndex) {
             if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
                 float tileX = round((piece->rectangle.x - BoardOffsetX) / tileSize) * tileSize;
                 float tileY = round((piece->rectangle.y - BoardOffsetY) / tileSize) * tileSize;
-                int FinalIndex = abs((state.isBoardReversed * (Total_tiles - 1)) - getTileIndex(tileX, tileY, tileSize));
+                int FinalIndex = abs((state.isBoardReversed * (Total_tiles - 1)) - getTileIndex(tileX, tileY));
                 
                 std::string Move = ConvertNotation()(InitialIndex, FinalIndex);
 
@@ -441,7 +432,7 @@ void ChessBoard::MakeCompleteMove(int fromTile, int toTile, std::string move) {
     //DebugItem()(board);
     //DisplayScores();
 
-    isCheck(*this, state.currentPlayerIsWhite ? Black : White, "ChessBoard::MakeCompleteMove");
+    isCheck(*this, state.currentPlayerIsWhite ? Black : White);
 
 
     Flags::CheckGameState();   
@@ -450,7 +441,6 @@ void ChessBoard::MakeCompleteMove(int fromTile, int toTile, std::string move) {
     PlayChessSound();
     state.MovesForSelectedPiece.clear();
 }
-
 
 void ChessBoard::ReverseBoard() {
     state.isBoardReversed = !state.isBoardReversed;
@@ -493,7 +483,9 @@ void ChessBoard::DisplayScores() const {
     std::cout << "\nWhite score: " << whiteScore << " | Black score: " << blackScore << "\n\n";
 }
 
-void ChessBoard::ComputeSlidingPieceMoves(int pieceIndex, std::vector<int>& possibleMoves) const {
+std::vector<int> ChessBoard::ComputeSlidingPieceMoves(int pieceIndex) const {
+    std::vector<int> possibleMoves;
+
     ChessPiece* piece = board[pieceIndex];
     int row = pieceIndex / 8;
     int col = pieceIndex % 8;
@@ -502,6 +494,7 @@ void ChessBoard::ComputeSlidingPieceMoves(int pieceIndex, std::vector<int>& poss
     std::vector<int> offsets = { 8, -8, 1, -1, 7, -7, 9, -9 };
 
     if (piece->type == ROOK || piece->type == QUEEN) {
+        possibleMoves.reserve(14); //Considering Best Case Scenario for a Rook
         for (int i = 0; i < 4; ++i) {
             int offset = offsets[i];
             int newIndex = pieceIndex + offset;
@@ -523,6 +516,7 @@ void ChessBoard::ComputeSlidingPieceMoves(int pieceIndex, std::vector<int>& poss
     }
 
     if (piece->type == BISHOP || piece->type == QUEEN) {
+        possibleMoves.reserve(17); //Considering Best Case Scenario for a Bishop
         for (int i = 4; i < 8; ++i) {
             int offset = offsets[i];
             int newIndex = pieceIndex + offset;
@@ -544,9 +538,13 @@ void ChessBoard::ComputeSlidingPieceMoves(int pieceIndex, std::vector<int>& poss
             }
         }
     }
+
+    return possibleMoves;
 }
 
-void ChessBoard::ComputeKnightMoves(int pieceIndex, std::vector<int>& possibleMoves) const {
+std::vector<int> ChessBoard::ComputeKnightMoves(int pieceIndex) const {
+    std::vector<int> possibleMoves;
+    possibleMoves.reserve(8); // Considering Best case scenario for a Knight
     ChessPiece* piece = board[pieceIndex];
     // Offsets for knight's moves
     std::vector<int> rowOffsets = { -2, -1, 1, 2, 2, 1, -1, -2 };
@@ -570,9 +568,12 @@ void ChessBoard::ComputeKnightMoves(int pieceIndex, std::vector<int>& possibleMo
             }
         }
     }
+    return possibleMoves;
 }
 
-void ChessBoard::ComputePawnMoves(int pieceIndex, std::vector<int>& possibleMoves) const {
+std::vector<int> ChessBoard::ComputePawnMoves(int pieceIndex) const {
+    std::vector<int> possibleMoves;
+    possibleMoves.reserve(5); // in Best case A pawn has 4 moves
     ChessPiece* piece = board[pieceIndex];
     int row = pieceIndex / 8;
     int col = pieceIndex % 8;
@@ -618,10 +619,12 @@ void ChessBoard::ComputePawnMoves(int pieceIndex, std::vector<int>& possibleMove
             }
         }
     }
+    return possibleMoves;
 }
 
-void ChessBoard::ComputeKingMoves(int KingIndex, std::vector<int>& possibleMoves) const {
-
+std::vector<int> ChessBoard::ComputeKingMoves(int KingIndex) const {
+    std::vector<int> possibleMoves;
+    possibleMoves.reserve(8); // Best Case scenario for King
     ChessPiece* King = board[KingIndex];
     int row = KingIndex / 8;
     int col = KingIndex % 8;
@@ -661,6 +664,8 @@ void ChessBoard::ComputeKingMoves(int KingIndex, std::vector<int>& possibleMoves
             }
         }
     }
+
+    return possibleMoves;
 }
 
 bool ChessBoard::IsEnPassantLegal(int pawnIndex, int targetIndex) const {
@@ -716,57 +721,43 @@ bool ChessBoard::canCastleQueenide(int KingIndex) const {
     return true;
 }
 
-bool ChessBoard::isCheck(const ChessBoard& chessboard, const int playerColor, std::string calledby) {
-    // The std::string CalledBy is important for Debugging Reasons
-    // I found that most of the errors/bugs orignated from this function, and by who or how it was being called
+bool ChessBoard::isCheck(const ChessBoard& chessboard, const int playerColor) {
+
     //chessboard.DisplayBoard();
 
     state.checkedPlayer = 0; // No Player is Checked
-    int kingIndex = -100;
-    for (int i = 0; i < Total_tiles; i++) {
-        if (chessboard.board[i]->type == KING && chessboard.board[i]->color == playerColor) {
-            kingIndex = i;
-            break;
-        }
-    }
+    try {
+        int kingIndex = GetKingIndex(playerColor);
+        // Iterate through opponent's pieces and see if any can attack the king
+        int opponentColor = (playerColor == White) ? Black : White;
 
-    //Exit the Game, If Kind is not found, and show Who called this function
-    if (kingIndex == -100) {
-        std::cout << "\nError Code 404: King not found-> \n\n";
-        std::cout << calledby << "\n\n";
-        exit(404);
-        return false;
-    }
+        for (int i = 0; i < Total_tiles; i++) {
+            if (chessboard.board[i]->color == opponentColor) {
+                std::vector<int> possibleMoves = GetAllPossibleMovesForPiece(chessboard.board[i]->type, i, false);
+                // Check if any of the possible moves include the king's position
+                for (int move : possibleMoves) {
+                    if (move == kingIndex) {
+                        state.checkedPlayer = playerColor;
 
-    // Iterate through opponent's pieces and see if any can attack the king
-    int opponentColor = (playerColor == White) ? Black : White;
-    std::vector<int> possibleMoves;
-    for (int i = 0; i < Total_tiles; i++) {
-        if (chessboard.board[i]->color == opponentColor) {
-            if (chessboard.board[i]->isSlidingPiece) ComputeSlidingPieceMoves(i, possibleMoves);
-            else if (chessboard.board[i]->type == PAWN) ComputePawnMoves(i, possibleMoves);
-            else if (chessboard.board[i]->type == KNIGHT) ComputeKnightMoves(i, possibleMoves);
-            else if (chessboard.board[i]->type == KING) ComputeKingMoves(i, possibleMoves);
-
-            // Check if any of the possible moves include the king's position
-            for (int move : possibleMoves) {
-                if (move == kingIndex) {
-                    state.checkedPlayer = playerColor;
-                    
-                    return true; // King is in check
+                        return true; // King is in check
+                    }
                 }
             }
         }
+    }
+    catch (const std::runtime_error& e) {
+        std::cerr << e.what() << std::endl;
+        return true;
     }
 
     return false; // King is not in check
 }
 
-bool ChessBoard::isCheckmate(ChessBoard& chessboard, const int playerColor) const {
+bool ChessBoard::isCheckmate() const {
     // King is not in check, so it can't be checkmate
     if (state.checkedPlayer == 0) return false; 
    
-    std::vector<int> possibleMoves = GetAllPossibleMoves(playerColor);
+    std::vector<int> possibleMoves = GetAllPossibleMoves(state.getCurrentPlayer());
     if (possibleMoves.size() > 0) return false; // King can escape from check, so it's not checkmate
 
     return true; // King is in checkmate
@@ -775,10 +766,11 @@ bool ChessBoard::isCheckmate(ChessBoard& chessboard, const int playerColor) cons
 std::vector<int> ChessBoard::GetAllPossibleMoves(int playerColor) const {
 
     std::vector<int> possibleMoves;
+    possibleMoves.reserve(20);
 
     for (int i = 0; i < Total_tiles; i++) {
         if (board[i]->color == playerColor) {
-            std::vector<int> moves = GetAllPossibleMovesForPiece(board[i]->type, i);
+            std::vector<int> moves = GetAllPossibleMovesForPiece(board[i]->type, i, true);
 
             moves = FilterValidMoves(i, moves);
             for (auto move : moves) {
@@ -792,10 +784,11 @@ std::vector<int> ChessBoard::GetAllPossibleMoves(int playerColor) const {
 
 std::vector<std::string> ChessBoard::GetAllPossibleMovesInChessNotation(int playerColor) const {
     std::vector<std::string> possibleMoves;
+    possibleMoves.reserve(20);
 
     for (int i = 0; i < Total_tiles; i++) {
         if (board[i]->color == playerColor) {
-            std::vector<int> moves = GetAllPossibleMovesForPiece(board[i]->type, i);
+            std::vector<int> moves = GetAllPossibleMovesForPiece(board[i]->type, i, true);
 
             // Check if the move is legal (does not leave the king in check)
             for (int toTile : moves) {
@@ -804,15 +797,16 @@ std::vector<std::string> ChessBoard::GetAllPossibleMovesInChessNotation(int play
                 temp.MakeMove(i, toTile);
 
                 // Check if the king is in check after the move
-                if (!temp.isCheck(temp, playerColor, "board: Get all possible moves in chess notation")) {
+                if (!temp.isCheck(temp, playerColor)) {
                     // If not in check, add the move to possible moves after converting to ChessNotation
-                    possibleMoves.push_back(ConvertNotation()(i, toTile));
+                    possibleMoves.emplace_back(ConvertNotation()(i, toTile));
                 }
             }
         }
     }
     return possibleMoves;
 }
+
 int ChessBoard::getAttacksOnSquare(int squareIndex, int opponentColor) const {
     int attacks = 0;
     std::vector<int> opponentMoves = GetAllPossibleMoves(opponentColor);
@@ -840,25 +834,26 @@ void ChessBoard::DisplayMoves() {
     }
 }
 
-std::vector<int> ChessBoard::GetAllPossibleMovesForPiece(int type, int index) const {
+std::vector<int> ChessBoard::GetAllPossibleMovesForPiece(int type, int index, bool FilterInvalidMoves) const {
     std::vector<int> moves;
+
 
     // Compute moves based on the piece type
     if (type == ROOK || type == BISHOP || type == QUEEN) {
-        ComputeSlidingPieceMoves(index, moves);
+        moves = ComputeSlidingPieceMoves(index);
     }
     else if (type == PAWN) {
-        ComputePawnMoves(index, moves);
+        moves = ComputePawnMoves(index);
     }
     else if (type == KNIGHT) {
-        ComputeKnightMoves(index, moves);
+        moves = ComputeKnightMoves(index);
     }
     else if (type == KING) {
-        ComputeKingMoves(index, moves);
+        moves = ComputeKingMoves(index);
     }
 
-    moves = FilterValidMoves(index, moves);
-    return moves;
+
+    return (FilterInvalidMoves) ? FilterValidMoves(index, moves) : std::move(moves);
 }
 
 void ChessBoard::DestroyBoard() {
@@ -870,24 +865,6 @@ void ChessBoard::DestroyBoard() {
 
 ChessPiece* ChessBoard::GetPieceAtPosition(int index) const {
     return board[index];
-}
-
-std::vector<std::string> ChessBoard::GetAllCaptureMovesInChessNotation(int color) const {
-    std::vector<std::string> captureMoves;
-
-    for (int fromTile = 0; fromTile < Total_tiles; fromTile++) {
-        ChessPiece* piece = board[fromTile];
-        if (piece->color == color) {
-            for (int toTile = 0; toTile < Total_tiles; toTile++) {
-                if (fromTile != toTile && isValidCaptureMove(fromTile, toTile)) {
-                    std::string move = ConvertNotation()(fromTile, toTile);
-                    captureMoves.push_back(move);
-                }
-            }
-        }
-    }
-
-    return captureMoves;
 }
 
 bool ChessBoard::isValidCaptureMove(int fromTile, int toTile) const {
