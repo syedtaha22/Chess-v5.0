@@ -23,14 +23,13 @@ int ReverseOffset = 7;
 int BoardOffsetX = 800;
 int BoardOffsetY = 80;
 
-
 //Variables For InfoBox
 int Segments = 20;
 float Roundedness = 0.02f;
-float InfoBoxX = 60;
-float InfoBoxY = 80;
-float InfoBoxWidth = 610;
-float InfoBoxHeight = 640;
+float InfoBoxX = 60.0f;
+float InfoBoxY = 80.0f;
+float InfoBoxWidth = 610.0f;
+float InfoBoxHeight = 640.0f;
 
 float fontSize = 50;
 
