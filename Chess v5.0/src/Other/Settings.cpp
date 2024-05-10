@@ -67,7 +67,6 @@ int Settings::get(const std::string& element) {
         return defaultVal;
     }
 
-    std::cout << "Me once more\n";
     Json::Value root;
     Json::CharReaderBuilder readerBuilder;
     std::string errors;
@@ -80,7 +79,6 @@ int Settings::get(const std::string& element) {
     // Access the "depth" element and get its value
     int value = root[element].asInt();
     std::cout << element << " read from " << filePath << ": " << value << std::endl;
-    std::cout << "And me...\n";
     return value;
 }
 
