@@ -68,7 +68,7 @@ std::string ChessEngine::GenerateMove(const ChessBoard& board) {
 int ChessEngine::Minimax(ChessBoard& board, int depth, int alpha, int beta, auto time, int currentPlayer) {
     Heuristics.NumberofMovesLookedAhead++;
     int LastPlayer = currentPlayer == White ? Black : White;
-   
+
     //board.DrawChessPiece();
 
     auto end = std::chrono::high_resolution_clock::now();
@@ -96,7 +96,7 @@ int ChessEngine::Minimax(ChessBoard& board, int depth, int alpha, int beta, auto
     if (depth == 0) {
         return Evaluate(board, LastPlayer);
 
-        }
+    }
 
     std::vector<std::string> possibleMoves = board.GetAllPossibleMovesInChessNotation(currentPlayer);
     Heuristics.totalMovesToEvaluate += possibleMoves.size();
@@ -126,8 +126,8 @@ int ChessEngine::Minimax(ChessBoard& board, int depth, int alpha, int beta, auto
                 if (beta <= alpha) {
                     Heuristics.BranchesPruned++;
                     break;
+                }
             }
-        }
         }
         possibleMoves.clear();
         return maxScore;
@@ -156,10 +156,10 @@ int ChessEngine::Minimax(ChessBoard& board, int depth, int alpha, int beta, auto
             //Alpha-beta pruning
             if (state.useAlphaBetaPruning) {
                 if (beta <= alpha) {
-                Heuristics.BranchesPruned++;
-                break;
+                    Heuristics.BranchesPruned++;
+                    break;
+                }
             }
-        }
         }
         possibleMoves.clear();
         return minScore;
