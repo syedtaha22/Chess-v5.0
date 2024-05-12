@@ -20,6 +20,7 @@
 
 #include "Flags.h"
 #include "Settings.h"
+#include "Timer.h"
  
 extern Sound ChessPiecePlaced;
 extern Sound ChessPieceCaptured;
