@@ -14,11 +14,6 @@ namespace Utility {
 
 	Vector2 TextCenter(const char* text, float fontSize);
 
-
-
-
-
-
 }
 
 #endif // !HELPER_FUNCTIONS_H
