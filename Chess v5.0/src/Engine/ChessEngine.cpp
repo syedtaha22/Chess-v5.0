@@ -13,6 +13,7 @@ void ChessEngine::shuffleMoves(std::vector<std::string>& possibleMoves) {
 }
 
 std::string ChessEngine::GenerateMove(const ChessBoard& board) {
+    std::unique_ptr<Timer> timer = std::make_unique<Timer>();
     int bestScore = -infinity;
     
     std::string bestMove;
