@@ -4,7 +4,6 @@
 
 ChessEngine::ChessEngine(int Color) {
     state.EngineColor = Color;
-    state.initPieceValues();
 }
 
 void ChessEngine::shuffleMoves(std::vector<std::string>& possibleMoves) {
