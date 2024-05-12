@@ -19,7 +19,7 @@ public:
     int Minimax(ChessBoard& board, int depth, int alpha, int beta, auto time, int currentPlayer);
 
     //Evaluation Functions
-    int Evaluate(const ChessBoard& chessboard, char currentPlayerColor) const;
+    int Evaluate(const ChessBoard& chessboard, int currentPlayerColor) const;
 
     void adjustEndgamePositionalAdvantage(const ChessBoard& chessboard, int currentPlayerColor, int& positionalAdvantage) const;
 
