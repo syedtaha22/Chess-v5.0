@@ -18,7 +18,6 @@
 #include <memory>
 #include "raylib.h"
 
-
 #include "Flags.h"
 #include "Settings.h"
  
@@ -31,29 +30,30 @@ extern Sound GameEnds;
 extern Font myFont;
 
 //Window
-extern int screenWidth;
-extern int screenHeight;
+constexpr int screenWidth = 1500;
+constexpr int screenHeight = 800;
 
-//Board Variables
-extern int boardSize;
-extern int tileSize;
-extern int Total_tiles;
-extern int MaxHistorySize;
-extern int ReverseOffset;
-extern int BoardOffsetX;
-extern int BoardOffsetY;
+//Board
+constexpr int boardSize = 8;
+constexpr int tileSize = 80;
+constexpr int Total_tiles = 64;
+constexpr int MaxHistorySize = 100;
+constexpr int ReverseOffset = 7;
 
-const int infinity = std::numeric_limits<int>::max();
+constexpr int BoardOffsetX = 800;
+constexpr int BoardOffsetY = 80;
 
-//InfoBox
-extern int Segments;
-extern float Roundedness;
-extern float InfoBoxX;
-extern float InfoBoxY;
-extern float InfoBoxWidth;
-extern float InfoBoxHeight;
+constexpr int infinity = std::numeric_limits<int>::max();
 
-extern float fontSize;
+//Variables For InfoBox
+constexpr int Segments = 20;
+constexpr float Roundedness = 0.02f;
+constexpr float InfoBoxX = 60.0f;
+constexpr float InfoBoxY = 80.0f;
+constexpr float InfoBoxWidth = 610.0f;
+constexpr float InfoBoxHeight = 640.0f;
+
+constexpr float fontSize = 50;
 
 extern Color lightSquare;
 extern Color darkSquare;
@@ -66,30 +66,4 @@ extern Color MovesForPieceHighLight;
 extern Color MoveHighlightRed;
 extern Color NextMoveHighlight;
 
-
-
-//enum class PromotionPiece;
-//extern Rectangle PawnPromotionDialogue;
-
 #endif // !GLOBALVARIABLES_H
-
-
-
-/*
-
-GlobalVariables.h ---> Flags.h, Settings.h
-ChessPiece.h ---> PieceCodes.h, GlobalVariables.h
-Pieces.h ---> ChessPiece.h
-ChessBoard.h ---> Pieces.h
-GraphicalBoard.h ---> ChessBoard.h
-TranspositionTables.h ---> GraphicalBoard.h
-ChessEngine.h ---> TranspositionTables.h, PieceSquareTables.h
-User.h ---> ChessEngine.h
-BoardStats.h ---> User.h
-GamesModes.h ---> BoardStats.h, Menu.h
-Menu.h ---> GlobalVariables.h
-Classes:
-    Settings, Flags, ChessPiece, ChessBoard, GraphicalBoard, TranspositionTables, ChessEngine, User, BoardStats, GameModes, Menu, 
-
-
-*/

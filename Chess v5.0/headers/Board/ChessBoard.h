@@ -127,7 +127,6 @@ public:
     //Functions to get a list of all Possible Moves for a Player or Piece in different Formats
     std::vector<int> GetAllPossibleMoves(int playerColor) const;
     std::vector<int> GetAllPossibleMovesForPiece(int type, int index, bool FilterInvalidMoves) const;
-    //std::vector<std::string> GetAllCaptureMovesInChessNotation(int color) const;
     std::vector<std::string> GetAllPossibleMovesInChessNotation(int playerColor) const;
 
     //Calculates and returns the Current FEN position of the Board
@@ -138,7 +137,7 @@ public:
 
     int getCurrentPlayer() const { return state.currentPlayerIsWhite ? White : Black; }
 
-    std::vector<std::string> getMoveHistory() const { return state.moveHistory; }
+    //std::vector<std::string> getMoveHistory() const { return state.moveHistory; }
 
     int getCheckedPlayer() const { return state.checkedPlayer; }
 

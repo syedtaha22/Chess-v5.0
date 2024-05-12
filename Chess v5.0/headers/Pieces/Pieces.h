@@ -2,7 +2,6 @@
 
 #include "ChessPiece.h"
 
-
 class Pawn : public ChessPiece{
 public:
 	Pawn(int pieceColor = EMPTY, bool isFirstMove = true) : ChessPiece(PAWN, pieceColor){}

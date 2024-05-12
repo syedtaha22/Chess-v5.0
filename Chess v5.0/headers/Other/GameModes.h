@@ -7,17 +7,11 @@
 
 class GameModes {
 private:
-    //Player
-
     //Things that will be done once per match
     bool DoOnce;
 
-    
     std::string FENString;
-
-
     GraphicalBoard graphics;
-
     float engine_depth;
 
 public:
@@ -72,12 +66,7 @@ public:
     void Settings();
     void Destroy();
 
-
     void SetFENStrings(const std::string& fen);
-
-   
-
-
 
 };
 

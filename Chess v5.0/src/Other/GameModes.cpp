@@ -45,7 +45,7 @@ void GameModes::MultiplayerMode() {
             HandleMoves(Black);
         }
         Options();
-        if (GameStats.ShowMoveHistory) GameStats.DisplayMoveHistory(chessboard.getMoveHistory());
+        if (GameStats.ShowMoveHistory) GameStats.DisplayMoveHistory(chessboard.state.moveHistory);
         else GameStats.DisplayStats(chessboard);
         DisplayBoard();
 
@@ -117,7 +117,7 @@ void GameModes::SinglePlayerMode() {
         if (chessboard.isCurrentPlayerWhite()) HandleMoves(White);
         else Horizon.state.StartSearch();
 
-        if (GameStats.ShowMoveHistory) GameStats.DisplayMoveHistory(chessboard.getMoveHistory());
+        if (GameStats.ShowMoveHistory) GameStats.DisplayMoveHistory(chessboard.state.moveHistory);
         else GameStats.DisplayStats(chessboard, Horizon, Player);
         DisplayBoard();
         GameStats.DrawEvaluationColumn(chessboard, Horizon);

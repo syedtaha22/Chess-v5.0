@@ -1,7 +1,9 @@
 #ifndef CONVERT_NOTATION_H
 #define CONVERT_NOTATION_H
 
+
 #include "../Other/GlobalVariables.h"
+
 
 class ConvertNotation {
 public:

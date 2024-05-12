@@ -55,7 +55,7 @@ void BoardStats::DisplayStats(ChessBoard& chessboard, ChessEngine& engine, User&
     std::string currentPlayer = (chessboard.isCurrentPlayerWhite()) ? "White" : "Black";
 
     std::vector<std::string> EngineData; getData(engine, player, chessboard, EngineData);
-    std::vector<std::string> moveHistory = chessboard.getMoveHistory();
+    std::vector<std::string> moveHistory = chessboard.state.moveHistory;
 
 
     if (moveHistory.size() != 0) LastMovePlayed = (moveHistory.back());
@@ -135,7 +135,7 @@ void BoardStats::DisplayStats(ChessBoard& chessboard) {
 
     std::string LastMovePlayed = "";
     std::string currentPlayer = (chessboard.isCurrentPlayerWhite()) ? "White" : "Black";
-    std::vector<std::string> moveHistory = chessboard.getMoveHistory();
+    std::vector<std::string> moveHistory = chessboard.state.moveHistory;
 
     if (moveHistory.size() != 0) LastMovePlayed = (moveHistory.back());
     MovesAndHistory(LastMovePlayed, moveHistory);
@@ -143,12 +143,9 @@ void BoardStats::DisplayStats(ChessBoard& chessboard) {
 }
 
 void BoardStats::MovesAndHistory(std::string LastMovePlayed, const std::vector<std::string>& moveHistory) {
-    if (ShowMoveHistory) DisplayMoveHistory(moveHistory);
-    else {
-        float X = constants.textX - (Utility::TextCenter(LastMovePlayed.c_str(), fontSize - 10).x / 2);
-        float Y = static_cast<float>(screenHeight) / 2 - 42;
-        Utility::DrawTextWithCustomFont(LastMovePlayed.c_str(), X, Y, fontSize - 10, constants.AlertColor);
-    }
+    float X = constants.textX - (Utility::TextCenter(LastMovePlayed.c_str(), fontSize - 10).x / 2);
+    float Y = static_cast<float>(screenHeight) / 2 - 42;
+    Utility::DrawTextWithCustomFont(LastMovePlayed.c_str(), X, Y, fontSize - 10, constants.AlertColor);
 }
 
 void BoardStats::DisplayMoveHistory(const std::vector<std::string>& moveHistory) const {
