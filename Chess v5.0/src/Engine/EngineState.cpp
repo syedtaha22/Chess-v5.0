@@ -40,11 +40,12 @@ int EngineState::getDepth() const { return MAX_DEPTH; }
 void EngineState::setDepth(int NewDepth) { MAX_DEPTH = NewDepth; }
 
 int EngineState::getPieceValue(int index) const {
-    auto it = pieceValues.find(index);
-    if (it != pieceValues.end()) {
-        return it->second;
-    } else {
-        std::cerr << "Unknown Piece type with code " << index << " found\n";
+    try {
+        return pieceValues.at(index);
+    }
+    catch (const std::out_of_range& e) {
+        std::cerr << e.what() << std::endl;
+        std::cerr << "Unknown Piece type: " << index << " found\n";
         return 0;
     }
 }
