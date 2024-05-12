@@ -32,15 +32,14 @@ public:
     const bool useTranspositions = true;
     const bool useAlphaBetaPruning = true;
 
-    std::unordered_map<int, int> pieceValues;
-    //std::unordered_map<int, int> pieceValues = { { PAWN, 100 }, { KNIGHT, 320 }, { BISHOP, 330 }, { ROOK, 500 }, { QUEEN, 900 }, { KING, infinity } };
+    const std::unordered_map<int, int> pieceValues = { { PAWN, 100 }, { KNIGHT, 320 }, { BISHOP, 330 }, { ROOK, 500 }, { QUEEN, 900 }, { KING, infinity } };
 
     int engineEloRating;
 
     EngineState();
 
     void setEngineColor(int color);
-    void initPieceValues();
+    
 
 
 

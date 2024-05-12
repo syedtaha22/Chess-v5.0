@@ -15,20 +15,6 @@ EngineState::EngineState() {
 
 void EngineState::setEngineColor(int color) { EngineColor = color; }
 
-void EngineState::initPieceValues() {
-    // Piece values for evaluation
-    if (EngineColor == White) {
-        pieceValues = {
-            {White | PAWN,  10}, {White | KNIGHT,  32}, {White | BISHOP,  33}, {White | ROOK,  50}, {White | QUEEN,  90}, {White | KING,  100},
-            {Black | PAWN, -10}, {Black | KNIGHT, -32}, {Black | BISHOP, -33}, {Black | ROOK, -50}, {Black | QUEEN, -90}, {Black | KING, -100} };
-    }
-    else {
-        pieceValues = {
-            {White | PAWN, -10}, {White | KNIGHT, -32}, {White | BISHOP, -33}, {White | ROOK, -50}, {White | QUEEN, -90}, {White | KING, -100},
-            {Black | PAWN,  10}, {Black | KNIGHT,  32}, {Black | BISHOP,  33}, {Black | ROOK,  50}, {Black | QUEEN,  90}, {Black | KING,  100} };
-    }
-}
-
 int EngineState::getELO() {
     return (Settings::get("engineElo") != 0) ? Settings::get("engineElo") : 500;
 }
