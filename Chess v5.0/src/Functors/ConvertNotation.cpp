@@ -33,8 +33,8 @@ std::pair<int, int> ConvertNotation::operator()(int pieceIndex) const {
         return std::make_pair(-1, -1);
     }
     int row = pieceIndex / boardSize;
-    int file = pieceIndex % boardSize;
-    return std::make_pair(rank, file);
+    int column = pieceIndex % boardSize;
+    return std::make_pair(row, column);
 }
 
 
