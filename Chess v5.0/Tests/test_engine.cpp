@@ -127,17 +127,17 @@ int main(int argc, char* argv[]) {
 
 
     ChessBoard board;
-    ChessEngine engine(Black, 1000);
-    std::cout << "Here\n";
-    engine.SetDepth(Depth);
+    ChessEngine engine(Black, false);
+
+    engine.state.setDepth(Depth);
     board.initializeBoardFromFEN(fen, false);
 
     string bestMove = engine.GenerateMove(board);
-    int depth = engine.getDepth();
-    string timeTaken = SetPrecision(engine.TimeTakenForSearch, 2);
-    int numOfMovesSeen = engine.NumberofMovesLookedAhead;
+    int depth = engine.state.getDepth();
+    string timeTaken = SetPrecision(Heuristics.TimeTaken, 2);
+    int numOfMovesSeen = Heuristics.NumberofMovesLookedAhead;
     int totalMoves = board.GetAllPossibleMoves(Black).size();
-    string speed = SetPrecision(engine.EngineSpeed / 1000, 2);
+    string speed = SetPrecision(Heuristics.Speed / 1000, 2);
 
     cout << left << setw(MaxLenght) << fen.substr(0, fen.length() - 1);
     cout << right << setw(5) << depth << "D   ";
@@ -160,4 +160,4 @@ int main(int argc, char* argv[]) {
 //Ignore errors in this file. They are because of different include path in the Bash Shell
 //Make sure you have jsoncpp and raylib installed installed
 //Assuming you have jsoncpp installed in default location for Bash
-//g++ -o test_engine.exe test_enginev2.cpp ../src/Engine/ChessEngine.cpp ../src/Board/ChessBoard.cpp ../src/Other/Flags.cpp ../src/Engine/TranspositionTables.cpp ../src/Other/GlobalVariables.cpp ../src/Other/Settings.cpp ../src/Pieces/ChessPiece.cpp -std=c++20 -ljsoncpp -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
+//g++ -o test_engine.exe test_engine.cpp ../src/Engine/EngineState.cpp ../headers/Engine/ChessEngineStatistics.h ../src/Engine/ChessEngine.cpp ../src/Board/ChessBoard.cpp ../src/GameFlow/Flags.cpp ../src/Engine/TranspositionTables.cpp ../src/Other/GlobalVariables.cpp ../src/GameFlow/Settings.cpp ../src/Pieces/ChessPiece.cpp ../src/Pieces/Pieces.cpp ../src/Functors/ConvertNotation.cpp   -std=c++20 -ljsoncpp -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
