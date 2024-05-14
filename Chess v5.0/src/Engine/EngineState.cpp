@@ -5,12 +5,20 @@
 ChessEngineStatistics Heuristics;
 
 EngineState::EngineState() {
-    engineEloRating = getELO();
-    MAX_DEPTH = Settings::get("depth");
+    engineEloRating = 500;
+    MAX_DEPTH = 2;
+
     if (MAX_DEPTH == 0) MAX_DEPTH = 2; //Default
 
     terminateSearch = false;
     startSearch = false;
+}
+
+void EngineState::LoadSavedSettings() {
+    engineEloRating = getELO();
+
+    MAX_DEPTH = Settings::get("depth");
+    if (MAX_DEPTH == 0) MAX_DEPTH = 2; //Default
 }
 
 void EngineState::setEngineColor(int color) { EngineColor = color; }
