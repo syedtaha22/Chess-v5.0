@@ -35,7 +35,7 @@ public:
     EngineState();
 
     void setEngineColor(int color);
-    
+    void LoadSavedSettings();
 
 
 
