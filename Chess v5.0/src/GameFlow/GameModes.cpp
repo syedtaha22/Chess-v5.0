@@ -1,4 +1,4 @@
-#include "../../headers/Other/GameModes.h"
+#include "../../headers/GameFlow/GameModes.h"
 #include "raygui.h" 
 
 GameModes::GameModes() {

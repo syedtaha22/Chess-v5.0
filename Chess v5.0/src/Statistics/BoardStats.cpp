@@ -1,4 +1,4 @@
-#include "../../headers/Other/BoardStats.h"
+#include "../../headers/Statistics/BoardStats.h"
 
 BoardStats::BoardStats() {
     ShowMoveHistory = false;

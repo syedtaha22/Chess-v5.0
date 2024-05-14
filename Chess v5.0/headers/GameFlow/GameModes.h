@@ -1,7 +1,7 @@
 #ifndef GAMEMODES_H
 #define GAMEMODES_H
 
-#include "BoardStats.h"
+#include "../Statistics/BoardStats.h"
 #include "Menu.h"
 #include "../Functors/CalculateELO.h"
 

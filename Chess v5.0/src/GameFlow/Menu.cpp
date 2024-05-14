@@ -1,4 +1,4 @@
-#include "../../headers/Other/Menu.h"
+#include "../../headers/GameFlow/Menu.h"
 
 #ifndef RAYGUI_IMPLEMENTATION
 #define RAYGUI_IMPLEMENTATION

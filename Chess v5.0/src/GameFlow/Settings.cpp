@@ -1,4 +1,4 @@
-#include "../../headers/Other/Settings.h"
+#include "../../headers/GameFlow/Settings.h"
 
 
 void Settings::save(int depth, int userElo, int engineElo) {

@@ -1,7 +1,7 @@
 #ifndef MENU_H
 #define MENU_H
 
-#include "GlobalVariables.h"
+#include "../Other/GlobalVariables.h"
 
 class Menu{
 

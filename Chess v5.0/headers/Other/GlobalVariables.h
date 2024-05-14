@@ -16,10 +16,11 @@
 #include <limits>
 #include <filesystem>
 #include <memory>
+#include <cstddef> // for size_t
 #include "raylib.h"
 
-#include "Flags.h"
-#include "Settings.h"
+#include "../GameFlow/Flags.h"
+#include "../GameFlow/Settings.h"
 #include "Timer.h"
  
 extern Sound ChessPiecePlaced;
