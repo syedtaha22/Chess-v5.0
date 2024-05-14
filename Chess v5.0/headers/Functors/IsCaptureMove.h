@@ -16,11 +16,4 @@ public:
 
 };
 
-
 #endif // !IS_CAPTURE_MOVE_H
-
-
-
-
-
-

@@ -39,5 +39,3 @@ public:
 };
 
 #endif // !CALCULATE_ELO_H
-
-
