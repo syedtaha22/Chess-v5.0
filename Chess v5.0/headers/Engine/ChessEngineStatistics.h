@@ -1,6 +1,8 @@
 #ifndef CHESS_ENGINE_STATISTICS_H
 #define CHESS_ENGINE_STATISTICS_H
 
+#include <cstddef>
+
 struct ChessEngineStatistics {
     int NumberofMovesLookedAhead = 0;
     int BranchesPruned = 0;
