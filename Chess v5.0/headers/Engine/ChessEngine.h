@@ -10,7 +10,7 @@ public:
     PieceSquareTables pst;
     EngineState state;
     
-    ChessEngine(int Color = EMPTY);
+    ChessEngine(int Color = EMPTY, bool loadSettings = true);
 
     //Move Searching Functions
     void shuffleMoves(std::vector<std::string>& possibleMoves);
