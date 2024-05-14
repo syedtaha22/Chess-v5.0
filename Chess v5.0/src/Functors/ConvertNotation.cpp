@@ -32,7 +32,7 @@ std::pair<int, int> ConvertNotation::operator()(int pieceIndex) const {
     if (pieceIndex < 0 || pieceIndex >= Total_tiles) {
         return std::make_pair(-1, -1);
     }
-    int rank = pieceIndex / boardSize;
+    int row = pieceIndex / boardSize;
     int file = pieceIndex % boardSize;
     return std::make_pair(rank, file);
 }
