@@ -4,10 +4,6 @@
 #include "TranspositionTables.h"
 #include "ChessEngineStatistics.h"
 
-
-
-
-
 class EngineState {
     
 
