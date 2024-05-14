@@ -134,22 +134,21 @@
     <ClCompile Include="src\Board\BoardState.cpp" />
     <ClCompile Include="src\Board\GraphicalBoard.cpp" />
     <ClCompile Include="src\main\main.cpp" />
-    <ClCompile Include="src\Other\Menu.cpp" />
+    <ClCompile Include="src\GameFlow\Menu.cpp" />
     <ClCompile Include="src\Board\ChessBoard.cpp" />
     <ClCompile Include="src\Engine\ChessEngine.cpp" />
     <ClCompile Include="src\Engine\TranspositionTables.cpp" />
-    <ClCompile Include="src\Other\BoardStats.cpp" />
-    <ClCompile Include="src\Other\Flags.cpp" />
-    <ClCompile Include="src\Other\GameModes.cpp" />
+    <ClCompile Include="src\Statistics\BoardStats.cpp" />
+    <ClCompile Include="src\GameFlow\Flags.cpp" />
+    <ClCompile Include="src\GameFlow\GameModes.cpp" />
     <ClCompile Include="src\Other\GlobalVariables.cpp" />
-    <ClCompile Include="src\Other\Settings.cpp" />
+    <ClCompile Include="src\GameFlow\Settings.cpp" />
     <ClCompile Include="src\Other\User.cpp" />
     <ClCompile Include="src\Pieces\ChessPiece.cpp" />
     <ClCompile Include="src\Pieces\Pieces.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headers\Functors\CalculateELO.h" />
-    <ClInclude Include="headers\Functors\CheckAfterMove.h" />
     <ClInclude Include="headers\Engine\EngineState.h" />
     <ClInclude Include="headers\Engine\ChessEngineStatistics.h" />
     <ClInclude Include="headers\Functors\ConvertNotation.h" />
@@ -161,20 +160,19 @@
     <ClInclude Include="headers\Engine\TranspositionTables.h" />
     <ClInclude Include="headers\Functors\DebugItem.h" />
     <ClInclude Include="headers\namespaces\Utility.h" />
-    <ClInclude Include="headers\Other\BoardStats.h" />
-    <ClInclude Include="headers\Other\Flags.h" />
-    <ClInclude Include="headers\Other\GameModes.h" />
+    <ClInclude Include="headers\Statistics\BoardStats.h" />
+    <ClInclude Include="headers\GameFlow\Flags.h" />
+    <ClInclude Include="headers\GameFlow\GameModes.h" />
     <ClInclude Include="headers\Other\GlobalVariables.h" />
-    <ClInclude Include="headers\Other\Settings.h" />
+    <ClInclude Include="headers\GameFlow\Settings.h" />
     <ClInclude Include="headers\Other\Resources.h" />
-    <ClInclude Include="headers\Other\StatisticalConstants.h" />
+    <ClInclude Include="headers\Statistics\StatisticalConstants.h" />
     <ClInclude Include="headers\Other\Timer.h" />
     <ClInclude Include="headers\Other\User.h" />
     <ClInclude Include="headers\Pieces\ChessPiece.h" />
     <ClInclude Include="headers\Pieces\PieceCodes.h" />
-    <ClInclude Include="headers\Other\Menu.h" />
+    <ClInclude Include="headers\GameFlow\Menu.h" />
     <ClInclude Include="headers\Pieces\Pieces.h" />
-    <ClInclude Include="headers\Functors\SortMoves.h" />
     <ClInclude Include="headers\Functors\IsCaptureMove.h" />
   </ItemGroup>
   <ItemGroup>
