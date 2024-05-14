@@ -1,7 +1,7 @@
 #ifndef IS_CAPTURE_MOVE_H
 #define IS_CAPTURE_MOVE_H
 
-#include "CheckAfterMove.h"
+#include "../Board/GraphicalBoard.h"
 
 class IsCaptureMove {
 public:

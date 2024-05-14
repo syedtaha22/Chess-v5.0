@@ -1,7 +1,7 @@
 #ifndef TRANSPOSITIONTABLES_H
 #define TRANSPOSITIONTABLES_H
 
-#include "../Functors/SortMoves.h"
+#include "../Functors/isCaptureMove.h"
 
 
 
