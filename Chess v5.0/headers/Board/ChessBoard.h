@@ -43,6 +43,41 @@
 
 class ChessBoard {
 
+    //Functions to Compute Moves for a Piece
+    std::vector<int> ComputeKingMoves(int KingIndex) const;
+    std::vector<int> ComputeKnightMoves(int pieceIndex) const;
+    std::vector<int> ComputePawnMoves(int pieceIndex) const;
+    std::vector<int> ComputeSlidingPieceMoves(int pieceIndex) const;
+
+    //See if a King and Castle Either side based on the Board
+    bool canCastleKingSide(int KingIndex) const;
+    bool canCastleQueenide(int KingIndex) const;
+
+    void AddMoveToHistory(std::string move);
+    
+
+    void PlayChessSound() const;
+
+    std::vector<int> FilterValidMoves(int fromIndex, std::vector<int> possibleMoves) const;
+
+    bool IsCastlingMove(std::string move, ChessPiece* pieceMoved);
+
+    bool isValidCaptureMove(int fromTile, int toTile) const;
+    bool isValidMove(int index);
+
+    void promotePawn(int toTile);
+    void ReverseBoard();
+
+    bool isCheck(const ChessBoard& chessboard, const int playerColor);
+
+    bool IsEnPassantCapture(int fromTile, int toTile) const;
+
+    //Checks if Enpassant is Legal
+    bool IsEnPassantLegal(int pawnIndex, int targetIndex) const;
+
+    //Function to get Moves for a specifice Piece Type
+    std::vector<int> GetAllPossibleMovesForPiece(int type, int index, bool FilterInvalidMoves) const;
+
 public:
     BoardState state;
 
@@ -61,22 +96,12 @@ public:
     int getAttacksOnSquare(int squareIndex, int opponentColor) const;
     int GetKingIndex(const int& playercolor) const;
 
-
-    void AddMoveToHistory(std::string move);
-
-    //Functions to Compute Moves for a Piece
-    std::vector<int> ComputeKingMoves(int KingIndex) const;
-    std::vector<int> ComputeKnightMoves(int pieceIndex) const;
-    std::vector<int> ComputePawnMoves(int pieceIndex) const;
-    std::vector<int> ComputeSlidingPieceMoves(int pieceIndex) const;
-
     //Calculates opponents Moves, and Stores in to OpponentMoves
     void ComputeOpponentMoves();
 
     void DestroyBoard();
 
     //Displays Board Elements, on Terminal(For Debugging)
-    void DisplayMoves();
     void DisplayScores() const;
 
     //Functions to Initialise a Board
@@ -88,10 +113,7 @@ public:
     void MakeMove(int fromTile, int toTile); //--> Swaps the Squares on the Board
     void MakeCompleteMove(int fromTile, int toTile, std::string move);
 
-    void PlayChessSound() const;
 
-    void promotePawn(int toTile);
-    void ReverseBoard();
     void saveCurrentFENtofile(std::string file) const;
 
     //Sets the Postion of Chess Piece on the GUI
@@ -100,13 +122,7 @@ public:
     //Enables Pieces to be Dragged and Dropped, Verifies Moves, and Makes a Complete Valid Move
     void UpdateChessPiece(ChessPiece* piece, int InitialIndex);
 
-    //See if a King and Castle Either side based on the Board
-    bool canCastleKingSide(int KingIndex) const;
-    bool canCastleQueenide(int KingIndex) const;
-
-    bool IsCastlingMove(std::string move, ChessPiece* pieceMoved);
-
-    bool isCheck(const ChessBoard& chessboard, const int playerColor);
+    
     bool isCheckmate() const;
 
     // returns currentPlayerIsWhite
@@ -114,19 +130,12 @@ public:
 
     bool IsTileUnderAttack(int squareIndex) const;
 
-    bool isValidCaptureMove(int fromTile, int toTile) const;
-    bool isValidMove(int index);
 
-    bool IsEnPassantCapture(int fromTile, int toTile) const;
 
-    //Checks if Enpassant is Legal
-    bool IsEnPassantLegal(int pawnIndex, int targetIndex) const;
-
-    std::vector<int> FilterValidMoves(int fromIndex, std::vector<int> possibleMoves) const;
+    
 
     //Functions to get a list of all Possible Moves for a Player or Piece in different Formats
     std::vector<int> GetAllPossibleMoves(int playerColor) const;
-    std::vector<int> GetAllPossibleMovesForPiece(int type, int index, bool FilterInvalidMoves) const;
     std::vector<std::string> GetAllPossibleMovesInChessNotation(int playerColor) const;
 
     //Calculates and returns the Current FEN position of the Board
@@ -135,17 +144,11 @@ public:
     //Loops over the The Board and Loads textures for each Piece
     void LoadTextures();
 
-    int getCurrentPlayer() const { return state.currentPlayerIsWhite ? White : Black; }
+    int getCurrentPlayer() const;
 
-    //std::vector<std::string> getMoveHistory() const { return state.moveHistory; }
+    int getCheckedPlayer() const;
 
-    int getCheckedPlayer() const { return state.checkedPlayer; }
-
-    ~ChessBoard(){
-        for (ChessPiece* piece : board) {
-            delete piece;
-        }
-    }
+    ~ChessBoard();
 };
 
 
