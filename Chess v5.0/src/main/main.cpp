@@ -29,7 +29,7 @@ int main() {
     //Game.Horizon.SetDepth(1);
     Game.BoardSetUp();
     
-    Settings::save(Game.Horizon.state.getDepth(), Game.Player.ELO, Game.Horizon.state.engineEloRating);
+    Settings::save(Game.Horizon.state.getDepth(), Game.Player.ELO, Game.Horizon.state.getELO());
 
     ChessPiecePlaced = LoadSound(ChessPiecePlacedFile.c_str());
     ChessPieceCaptured = LoadSound(ChessPieceCapturedFile.c_str());
@@ -47,6 +47,7 @@ int main() {
     std::thread EngineThread(CalculateAIMove, std::ref(Game.Horizon), std::ref(Game.chessboard));
     EngineThread.detach();
     int index = 0;
+
     // Main menu loop
     while (!WindowShouldClose()) {
 
