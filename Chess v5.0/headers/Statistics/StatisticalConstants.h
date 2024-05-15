@@ -8,9 +8,7 @@ struct StatisticalConstants {
     const float TextSize = 50.0f;
 
     //Set a Reference point based on the Dimensions of The information Box on GUI
-
     const float textX = (InfoBoxWidth / 2.0f) + InfoBoxX;
-
     const float textY = 100.0f;
 
     //Calulate the Height and Width of Board
