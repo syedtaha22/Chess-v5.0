@@ -1,7 +1,7 @@
 #include "../../headers/Statistics/BoardStats.h"
 
 BoardStats::BoardStats() {
-    ShowMoveHistory = false;
+    displayMoveHistory = false;
     winner = NULL;
     SaveData = true;
     EndMessage = "";
@@ -64,7 +64,7 @@ void BoardStats::DisplayStats(ChessBoard& chessboard, ChessEngine& engine, User&
 
     DisplayPlayerTitles(chessboard); //Draw Player Titles
     DrawStatistics(EngineData); //Draw engine Statistics
-    DrawPlayerElos(player.ELO, engine.state.engineEloRating); // Draw Elo's
+    DrawPlayerElos(player.ELO, engine.state.getELO()); // Draw Elo's
 }
 
 void BoardStats::DisplayPlayerTitles(const ChessBoard& chessboard) {
@@ -148,7 +148,7 @@ void BoardStats::MovesAndHistory(std::string LastMovePlayed, const std::vector<s
     Utility::DrawTextWithCustomFont(LastMovePlayed.c_str(), X, Y, fontSize - 10, constants.AlertColor);
 }
 
-void BoardStats::DisplayMoveHistory(const std::vector<std::string>& moveHistory) const {
+void BoardStats::DrawMoveHistory(const std::vector<std::string>& moveHistory) const {
 
     std::stringstream Moves;
     const size_t movesCount = moveHistory.size();
@@ -165,17 +165,17 @@ void BoardStats::DisplayMoveHistory(const std::vector<std::string>& moveHistory)
 }
 
 void BoardStats::Reset() {
-    ShowMoveHistory = false;
+    displayMoveHistory = false;
     winner = NULL;
     SaveData = true;
 }
 
-void BoardStats::DrawEvaluationColumn(ChessBoard& chessboard, ChessEngine& engine) {
+void BoardStats::DrawEvaluationColumn(ChessBoard& chessboard) {
 
     //Calculate Only When a move is made
     if (Flags::MoveIsMade()) {
-        float whiteScore = Evaluate(chessboard, White, engine);
-        float blackScore = Evaluate(chessboard, Black, engine);
+        float whiteScore = Evaluate(chessboard, White);
+        float blackScore = Evaluate(chessboard, Black);
 
         float totalScore = whiteScore + blackScore;
         whiteProportion = (totalScore != 0) ? (whiteScore / totalScore) : 0;
@@ -196,7 +196,7 @@ void BoardStats::DrawEvaluationColumn(ChessBoard& chessboard, ChessEngine& engin
     Utility::DrawTextWithCustomFont(BlackProp.c_str(), 765, 85, 15, WHITE);
 }
 
-float BoardStats::Evaluate(const ChessBoard& chessboard, int Player, ChessEngine& engine) const {
+float BoardStats::Evaluate(const ChessBoard& chessboard, int Player) const {
     std::unordered_map<int, float> pieceValues = {
         {PAWN, 1.0f}, {KNIGHT, 3.0f}, {BISHOP, 3.0f}, {ROOK, 5.0f}, {QUEEN, 9.0f}, {KING, 10.0f}
     };
@@ -212,7 +212,7 @@ float BoardStats::Evaluate(const ChessBoard& chessboard, int Player, ChessEngine
     for (int i = 0; i < Total_tiles; ++i) {
 
         if (chessboard.board[i]->type != EMPTY) {
-            int pieceValue = engine.pst.getPSTValue(chessboard.board[i], i, Player);
+            int pieceValue = PST.getPSTValue(chessboard.board[i], i, Player);
             positionalAdvantage += pieceValue;
         }
     }
@@ -244,4 +244,16 @@ void BoardStats::DisplayNewDepthMessage(const int& newdepth) {
 void BoardStats::DisplayNewFENMessage(const std::string& fen) {
     std::string message = "New FEN: " + fen;
     Utility::DrawTextWithCustomFont(message.c_str(), constants.textX - (Utility::TextCenter(message.c_str(), fontSize - 30).x / 2), constants.textY + 70, fontSize - 30, constants.messageColor);
+}
+
+void BoardStats::toggleHistory() {
+    displayMoveHistory = !displayMoveHistory;
+}
+
+int BoardStats::getWinner() const {
+    return winner;
+}
+
+bool BoardStats::ShowMoveHistory() const {
+    return displayMoveHistory;
 }
