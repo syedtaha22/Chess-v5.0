@@ -1,15 +1,7 @@
 #ifndef PIECE_SQUARE_TABLES_H
 #define PIECE_SQUARE_TABLES_H
 
-
-//const int EMPTY = 0;
-//const int KING = 1;
-//const int PAWN = 2;
-//const int KNIGHT = 3;
-//const int BISHOP = 4;
-//const int ROOK = 5;
-//const int QUEEN = 6;
-
+#include "ChessPiece.h"
 
 struct PieceSquareTables{
 
@@ -89,9 +81,8 @@ struct PieceSquareTables{
 
     int InvertedTable[7][64] = { 0 };
 
+public:
 
-
-    //int 
     PieceSquareTables() {
         for (int i = 1; i < 7; i++) {
             for (int j = 0; j < Total_tiles; j++) {
@@ -105,6 +96,5 @@ struct PieceSquareTables{
     }
 
 };
-
 
 #endif // !PIECE_SQUARE_TABLES_H
