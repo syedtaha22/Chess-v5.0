@@ -17,7 +17,7 @@ private:
 
     //Wether to Show Move History or Not
     bool displayMoveHistory;
-
+   
 
     int winner;
     //Message Regarding Who won
@@ -68,7 +68,7 @@ public:
     //Functions related to FENs and Depth
     void DisplayNewDepthMessage(const int& newdepth);
     void DisplayNewFENMessage(const std::string& fen);
-    
+
     void toggleHistory();
 
     int getWinner() const;
@@ -76,8 +76,6 @@ public:
     bool ShowMoveHistory() const;
     
 };
-
-
 
 #endif // !BOARDSTATS_H
 
