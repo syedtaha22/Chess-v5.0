@@ -171,11 +171,14 @@ int ChessEngine::Evaluate(const ChessBoard& chessboard, int currentPlayerColor) 
     if (state.terminateSearch) return 0;
 
     // Evaluate material advantage
-    int SelfMaterial = 0, OpponentMeterial = 0;
+
+    int SelfMaterial = 0;
+    int OpponentMeterial = 0;
     int positionalAdvantage = 0;
+
     for (int i = 0; i < Total_tiles; ++i) {
         ChessPiece* piece = chessboard.board[i];
-        int pieceValue = pst.getPSTValue(piece, i, currentPlayerColor);
+        int pieceValue = PST.getPSTValue(piece, i, currentPlayerColor);
         positionalAdvantage += pieceValue;
         if (piece->type != EMPTY) {
             if (piece->color == currentPlayerColor) {
@@ -187,6 +190,12 @@ int ChessEngine::Evaluate(const ChessBoard& chessboard, int currentPlayerColor) 
         }
     }
     int materialAdvantage = SelfMaterial - OpponentMeterial;
+
+    if ((SelfMaterial < 120 && OpponentMeterial < 120)) {
+        adjustEndgamePositionalAdvantage(chessboard, currentPlayerColor, positionalAdvantage);
+    }
+
+    //DebugItem()(SelfMaterial, OpponentMeterial, positionalAdvantage, materialAdvantage);
 
     // Total evaluation is a combination of material, positional, and safety advantages
     return materialAdvantage + positionalAdvantage;
