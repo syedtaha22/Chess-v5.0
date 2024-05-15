@@ -110,7 +110,7 @@
     <ClInclude Include="headers\Pieces\PieceCodes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="headers\Engine\PieceSquareTables.h">
+    <ClInclude Include="headers\Pieces\PieceSquareTables.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="headers\GameFlow\Menu.h">

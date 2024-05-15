@@ -20,7 +20,7 @@ void GameModes::InitialiseMultiplayerMode() {
 
 void GameModes::Options() {
     if (IsKeyPressed(KEY_H)) {
-        GameStats.ShowMoveHistory = !GameStats.ShowMoveHistory;
+        GameStats.toggleHistory();
     }
     if (IsKeyPressed(KEY_R)) RestartGame();
     if (IsKeyPressed(KEY_M)) BackToMenu();
@@ -45,7 +45,7 @@ void GameModes::MultiplayerMode() {
             HandleMoves(Black);
         }
         Options();
-        if (GameStats.ShowMoveHistory) GameStats.DisplayMoveHistory(chessboard.state.moveHistory);
+        if (GameStats.ShowMoveHistory()) GameStats.DrawMoveHistory(chessboard.state.moveHistory);
         else GameStats.DisplayStats(chessboard);
         DisplayBoard();
 
@@ -87,10 +87,11 @@ void GameModes::BackToMenu() {
 }
 
 void GameModes::UpdateElos() {
-    int oldBlackELO = Horizon.state.engineEloRating;
-    Horizon.state.engineEloRating = CalculateELO()(Horizon.state.engineEloRating, Player.ELO, (GameStats.winner == Black));
-    Player.ELO = CalculateELO()(Player.ELO, oldBlackELO, (GameStats.winner == White));
-    Settings::save(Horizon.state.getDepth(), Player.ELO, Horizon.state.engineEloRating);
+    int winner = GameStats.getWinner();
+    int oldBlackELO = Horizon.state.getELO();
+    Horizon.state.setElO(CalculateELO()(Horizon.state.getELO(), Player.ELO, (winner == Black)));
+    Player.ELO = CalculateELO()(Player.ELO, oldBlackELO, (winner == White));
+    Settings::save(Horizon.state.getDepth(), Player.ELO, Horizon.state.getELO());
 
 }
 
@@ -117,10 +118,10 @@ void GameModes::SinglePlayerMode() {
         if (chessboard.isCurrentPlayerWhite()) HandleMoves(White);
         else Horizon.state.StartSearch();
 
-        if (GameStats.ShowMoveHistory) GameStats.DisplayMoveHistory(chessboard.state.moveHistory);
+        if (GameStats.ShowMoveHistory()) GameStats.DrawMoveHistory(chessboard.state.moveHistory);
         else GameStats.DisplayStats(chessboard, Horizon, Player);
         DisplayBoard();
-        GameStats.DrawEvaluationColumn(chessboard, Horizon);
+        GameStats.DrawEvaluationColumn(chessboard);
         Options();
     }
     else ResetBoard(true);

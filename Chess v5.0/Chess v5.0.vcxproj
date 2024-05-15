@@ -156,7 +156,7 @@
     <ClInclude Include="headers\Board\GraphicalBoard.h" />
     <ClInclude Include="headers\Board\ChessBoard.h" />
     <ClInclude Include="headers\Engine\ChessEngine.h" />
-    <ClInclude Include="headers\Engine\PieceSquareTables.h" />
+    <ClInclude Include="headers\Pieces\PieceSquareTables.h" />
     <ClInclude Include="headers\Engine\TranspositionTables.h" />
     <ClInclude Include="headers\Functors\DebugItem.h" />
     <ClInclude Include="headers\namespaces\Utility.h" />
