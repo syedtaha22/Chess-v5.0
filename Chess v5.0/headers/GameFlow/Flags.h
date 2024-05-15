@@ -32,7 +32,6 @@ public:
     static bool isFENSettingsOpened();
     static void closeFENSettings();
 
-
 };
 
 
