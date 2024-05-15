@@ -4,7 +4,7 @@
 
 ChessEngine::ChessEngine(int Color, bool loadSettings) {
     if(loadSettings) state.LoadSavedSettings();
-    state.EngineColor = Color;
+    state.setEngineColor(Color);
 }
 
 void ChessEngine::shuffleMoves(std::vector<std::string>& possibleMoves) {
@@ -22,10 +22,10 @@ std::string ChessEngine::GenerateMove(const ChessBoard& board) {
     Heuristics.TranspositionsFound = 0;
     Heuristics.movesEvaluated = 0;
     Heuristics.totalMovesToEvaluate = 0;
-    Heuristics.maxDepth = state.MAX_DEPTH;
+    Heuristics.maxDepth = state.getDepth();
    
 
-    std::vector<std::string> possibleMoves = board.GetAllPossibleMovesInChessNotation(state.EngineColor);
+    std::vector<std::string> possibleMoves = board.GetAllPossibleMovesInChessNotation(state.GetEngineColor());
     Heuristics.totalMoves = possibleMoves.size();
     Heuristics.totalMovesToEvaluate += possibleMoves.size();
     //Shuffle Moves to add randomness
@@ -46,7 +46,7 @@ std::string ChessEngine::GenerateMove(const ChessBoard& board) {
         tempBoard.MakeMove(Indices.first, Indices.second);
 
 
-        int score = Minimax(tempBoard, state.MAX_DEPTH, -infinity, infinity, std::chrono::high_resolution_clock::now(), White);
+        int score = Minimax(tempBoard, state.getDepth(), -infinity, infinity, std::chrono::high_resolution_clock::now(), White);
 
         //DebugItem()(move, score);
         Heuristics.movesEvaluated++;
@@ -77,7 +77,7 @@ int ChessEngine::Minimax(ChessBoard& board, int depth, int alpha, int beta, auto
     auto Currenttime = static_cast<float>(duration.count()) / 1000; //Converted To seconds
 
 
-    if (Currenttime > state.timeLimit && state.timeLimit != 0) return Evaluate(board, LastPlayer);
+    if (Currenttime > state.getTimeLimit() && state.getTimeLimit() != 0) return Evaluate(board, currentPlayer);
 
     if (state.terminateSearch) return 0;
 
@@ -93,9 +93,9 @@ int ChessEngine::Minimax(ChessBoard& board, int depth, int alpha, int beta, auto
         }
     }
 
-    if (board.isCheckmate()) return (LastPlayer == state.EngineColor ? -infinity : infinity);
+    if (board.isCheckmate()) return (LastPlayer == state.GetEngineColor() ? -infinity : infinity);
     if (depth == 0) {
-        return Evaluate(board, LastPlayer);
+        return Evaluate(board, currentPlayer);
 
     }
 
@@ -104,7 +104,7 @@ int ChessEngine::Minimax(ChessBoard& board, int depth, int alpha, int beta, auto
     //Shuffle Moves to add randomness
     shuffleMoves(possibleMoves);
 
-    if (currentPlayer == state.EngineColor) {
+    if (currentPlayer == state.GetEngineColor()) {
         int maxScore = -infinity;
 
         for (const std::string& move : possibleMoves) {
@@ -194,11 +194,11 @@ int ChessEngine::Evaluate(const ChessBoard& chessboard, int currentPlayerColor) 
 
 void ChessEngine::adjustEndgamePositionalAdvantage(const ChessBoard& chessboard, int currentPlayerColor, int& positionalAdvantage) const {
 
-
     int kingSquareIndex = chessboard.GetKingIndex(currentPlayerColor);
     int opponentKingSquareIndex = chessboard.GetKingIndex((currentPlayerColor == White) ? Black : White);
 
 
+    //Not using ConvertNotation() here for simplicity
     int kingRow = kingSquareIndex / 8;
     int kingCol = kingSquareIndex % 8;
     int opponentKingRow = opponentKingSquareIndex / 8;
@@ -206,11 +206,12 @@ void ChessEngine::adjustEndgamePositionalAdvantage(const ChessBoard& chessboard,
 
     // Encourage forcing opponent's king to the corner
     int cornerDist = std::min(std::min(opponentKingRow, 7 - opponentKingRow), std::min(opponentKingCol, 7 - opponentKingCol));
-    positionalAdvantage += (currentPlayerColor == state.EngineColor ? 10 : -10) * cornerDist;
+    positionalAdvantage += (currentPlayerColor == state.GetEngineColor() ? 10 : -10) * cornerDist;
 
     // Encourage bringing own king closer to the opponent's king
     int kingDist = abs(kingRow - opponentKingRow) + abs(kingCol - opponentKingCol);
-    positionalAdvantage += (currentPlayerColor == state.EngineColor ? -5 : 5) * kingDist;
+    positionalAdvantage += (currentPlayerColor == state.GetEngineColor() ? -5 : 5) * kingDist;
+
 }
 
 void ChessEngine::PlayMove(const std::string& move, ChessBoard& board) const {
@@ -218,4 +219,3 @@ void ChessEngine::PlayMove(const std::string& move, ChessBoard& board) const {
     std::pair<int, int> Indices = ConvertNotation()(move);
     board.MakeCompleteMove(Indices.first, Indices.second, move);
 }
-
