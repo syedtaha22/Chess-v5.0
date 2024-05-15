@@ -56,7 +56,7 @@ public:
     //Unloads textures associated to the Piece
     void DestroyTextures();
 
-    virtual int getScore() const { return -10000; };
+    virtual int getScore() const { return 0; };
 
     //Not Using Destructer here as It, Unexpectedly Destroys Pieces.
     //~ChessPiece(){}
