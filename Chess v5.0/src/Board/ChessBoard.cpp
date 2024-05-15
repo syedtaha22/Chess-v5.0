@@ -52,9 +52,9 @@ int ChessBoard::calculatePlayerScore(int playerColor) const {
     int totalScore = 0;
     for (int i = 0; i < Total_tiles; i++) {
         if (board[i]->color == playerColor) {
-            totalScore += board[i]->getScore();
+                totalScore += board[i]->getScore();
+            }
         }
-    }
     return totalScore;
 }
 
@@ -378,6 +378,8 @@ void ChessBoard::MakeMove(int fromTile, int toTile) {
     state.MoveIndices = std::make_pair(fromTile, toTile);
     if (Flags::isMultiplayerGame()) ReverseBoard();
     SetPiecePositions();
+
+    isCheck(*this, state.currentPlayerIsWhite ? Black : White);
 }
 
 void ChessBoard::MakeCompleteMove(int fromTile, int toTile, std::string move) {
@@ -432,7 +434,7 @@ void ChessBoard::MakeCompleteMove(int fromTile, int toTile, std::string move) {
     //DebugItem()(board);
     //DisplayScores();
 
-    isCheck(*this, state.currentPlayerIsWhite ? Black : White);
+    
 
 
     Flags::CheckGameState();   
@@ -828,12 +830,6 @@ bool ChessBoard::IsTileUnderAttack(int squareIndex) const {
     return false;
 }
 
-void ChessBoard::DisplayMoves() {
-    for (auto move : state.OpponentMoves) {
-        std::cout << move << std::endl;
-    }
-}
-
 std::vector<int> ChessBoard::GetAllPossibleMovesForPiece(int type, int index, bool FilterInvalidMoves) const {
     std::vector<int> moves;
 
@@ -853,7 +849,7 @@ std::vector<int> ChessBoard::GetAllPossibleMovesForPiece(int type, int index, bo
     }
 
 
-    return (FilterInvalidMoves) ? FilterValidMoves(index, moves) : std::move(moves);
+    return (FilterInvalidMoves) ? FilterValidMoves(index, moves) : moves;
 }
 
 void ChessBoard::DestroyBoard() {
@@ -888,3 +884,16 @@ void ChessBoard::LoadTextures(){
     }
 }
 
+int ChessBoard::getCurrentPlayer() const { 
+    return state.currentPlayerIsWhite ? White : Black; 
+}
+
+int ChessBoard::getCheckedPlayer() const { 
+    return state.checkedPlayer; 
+}
+
+ChessBoard::~ChessBoard() {
+    for (ChessPiece* piece : board) {
+        delete piece;
+    }
+}
