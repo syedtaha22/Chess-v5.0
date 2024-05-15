@@ -10,21 +10,32 @@ EngineState::EngineState() {
 
     if (MAX_DEPTH == 0) MAX_DEPTH = 2; //Default
 
+    EngineColor = EMPTY;
+
     terminateSearch = false;
     startSearch = false;
 }
 
 void EngineState::LoadSavedSettings() {
-    engineEloRating = getELO();
+    engineEloRating = getELOFromSettings();
 
-    MAX_DEPTH = Settings::get("depth");
+    MAX_DEPTH = Settings::get(Settings::depth);
     if (MAX_DEPTH == 0) MAX_DEPTH = 2; //Default
 }
 
 void EngineState::setEngineColor(int color) { EngineColor = color; }
 
-int EngineState::getELO() {
-    return (Settings::get("engineElo") != 0) ? Settings::get("engineElo") : 500;
+int EngineState::getELOFromSettings() const {
+    return (Settings::get(Settings::engineElo) != 0) ? Settings::get(Settings::engineElo) : 500;
+}
+
+int EngineState::getELO() const {
+    return engineEloRating;
+}
+
+
+void EngineState::setElO(int newELO) {
+    engineEloRating = newELO;
 }
 
 void EngineState::StartSearch() { startSearch = true; }
@@ -49,6 +60,7 @@ void EngineState::setDepth(int NewDepth) { MAX_DEPTH = NewDepth; }
 
 int EngineState::getPieceValue(int index) const {
     try {
+        //DebugItem()(pieceValues.at(index));
         return pieceValues.at(index);
     }
     catch (const std::out_of_range& e) {
@@ -62,4 +74,12 @@ void EngineState::reset() {
     Heuristics.reset();
     terminateSearch = true;
     startSearch = false;
+}
+
+int EngineState::GetEngineColor() const {
+    return EngineColor;
+}
+
+float EngineState::getTimeLimit() const {
+    return timeLimit;
 }
