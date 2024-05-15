@@ -1,6 +1,8 @@
 #pragma once
 
-#include "ChessPiece.h"
+#include "PieceSquareTables.h"
+
+extern PieceSquareTables PST;
 
 class Pawn : public ChessPiece{
 public:
