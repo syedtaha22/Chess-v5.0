@@ -102,3 +102,7 @@ std::pair<int, int> TranspositionTables::lookupTranspositionTable(uint64_t hash)
     }
     return { -infinity, -1 }; // Not found
 }
+
+double TranspositionTables::GetSizeOfTable() const {
+    return SizeOfTranspostionTable;
+}
