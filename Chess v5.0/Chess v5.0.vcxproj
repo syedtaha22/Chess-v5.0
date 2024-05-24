@@ -128,6 +128,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Exceptions\KingNotFound.cpp" />
     <ClCompile Include="src\namespaces\Utility.cpp" />
     <ClCompile Include="src\Engine\EngineState.cpp" />
     <ClCompile Include="src\Functors\ConvertNotation.cpp" />
@@ -156,6 +157,7 @@
     <ClInclude Include="headers\Board\GraphicalBoard.h" />
     <ClInclude Include="headers\Board\ChessBoard.h" />
     <ClInclude Include="headers\Engine\ChessEngine.h" />
+    <ClInclude Include="headers\Exceptions\KingNotFound.h" />
     <ClInclude Include="headers\Pieces\PieceSquareTables.h" />
     <ClInclude Include="headers\Engine\TranspositionTables.h" />
     <ClInclude Include="headers\Functors\DebugItem.h" />

@@ -9,7 +9,7 @@ int main() {
 
     InitWindow(screenWidth, screenHeight, "Chess");
     InitAudioDevice();
-    
+
     GameModes Game;
     Game.BoardSetUp();
     

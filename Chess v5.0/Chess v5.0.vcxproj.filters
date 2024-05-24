@@ -72,6 +72,9 @@
     <ClCompile Include="src\namespaces\Utility.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Exceptions\KingNotFound.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headers\Board\ChessBoard.h">
@@ -150,6 +153,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="headers\Other\Timer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\Exceptions\KingNotFound.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
