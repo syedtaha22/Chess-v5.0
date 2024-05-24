@@ -11,13 +11,16 @@ private:
     bool DoOnce;
 
     std::string FENString;
+
     GraphicalBoard graphics;
+    BoardStats GameStats;
+    Menu GameMenu;
+
     float engine_depth;
 
 public:
     //Game Related Objects
     User Player;
-    BoardStats GameStats;
     ChessBoard chessboard;
     ChessEngine Horizon;
 
@@ -67,6 +70,8 @@ public:
     void Destroy();
 
     void SetFENStrings(const std::string& fen);
+
+    void GameLoop();
 
 };
 

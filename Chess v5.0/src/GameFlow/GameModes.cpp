@@ -184,4 +184,27 @@ void GameModes::SetFENStrings(const std::string& fen) {
     chessboard.initializeBoardFromFEN(FENString, true);
 }
 
+void GameModes::GameLoop() {
+    GameMenu.DrawMenuBox();
+
+    // Check if the game has started
+    if (Flags::isGameStarted()) {
+        if (Flags::isSinglePlayer()) SinglePlayerMode();
+        else if (Flags::isMultiplayerGame()) MultiplayerMode();
+    }
+    else if (Flags::isFENSettingsOpened()) FENSettings();
+    else if (Flags::SettingsOpened()) Settings();
+    else {
+        if (GameMenu.StartSingleplayer || GameMenu.StartMultiplayer) {
+            Flags::StartGame();
+            if (GameMenu.StartSingleplayer) Flags::SinglePlayerMode();
+            else if (GameMenu.StartMultiplayer) Flags::MultiplayerMode();
+        }
+        if (GameMenu.OpenSettings) Flags::OpenSettings();
+        if (GameMenu.LoadFromFen) Flags::OpenFENSettings();
+        DisplayBoard();
+        GameMenu.ShowMenu();
+    }
+
+}
 
