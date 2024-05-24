@@ -149,7 +149,7 @@ int ChessBoard::GetKingIndex(const int& playercolor) const {
     }
 
     // Throw an exception if king is not found
-    throw std::runtime_error("GetKingIndex: KING(" + std::to_string(playercolor) + ") not found");
+    throw KingNotFound(playercolor);
 
 }
 
@@ -368,7 +368,6 @@ void ChessBoard::MakeMove(int fromTile, int toTile) {
     }
 
     
-
     board[fromTile]->firstMove = false;
     board[toTile] = board[fromTile];
     board[fromTile] = new ChessPiece(); // Empty the source square
@@ -747,7 +746,7 @@ bool ChessBoard::isCheck(const ChessBoard& chessboard, const int playerColor) {
             }
         }
     }
-    catch (const std::runtime_error& e) {
+    catch (const KingNotFound& e) {
         std::cerr << e.what() << std::endl;
         return true;
     }
