@@ -289,6 +289,7 @@ void ChessBoard::UpdateChessPiece(ChessPiece* piece, int InitialIndex) {
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && CheckCollisionPointRec(GetMousePosition(), piece->rectangle)) {
             piece->isDragged = true;
             state.MovesForSelectedPiece = GetAllPossibleMovesForPiece(piece->type, InitialIndex, true);
+            std::sort(state.MovesForSelectedPiece.begin(), state.MovesForSelectedPiece.end());
 
         }
         if (piece->isDragged) {
