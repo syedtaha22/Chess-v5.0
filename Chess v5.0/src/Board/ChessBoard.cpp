@@ -16,7 +16,7 @@ ChessBoard::ChessBoard(const ChessBoard& other) {
     state = other.state;
 }
 
-void ChessBoard::AddMoveToHistory(std::string move) {
+void ChessBoard::AddMoveToHistory(const std::string& move) {
     state.moveHistory.push_back(move);
 }
 
@@ -32,7 +32,7 @@ void ChessBoard::promotePawn(int toTile) {
     SetPiecePositions();
 }
 
-std::vector<int> ChessBoard::FilterValidMoves(int fromIndex, std::vector<int> possibleMoves) const {
+std::vector<int> ChessBoard::FilterValidMoves(int fromIndex, const std::vector<int>& possibleMoves) const {
     //This function filters out any moves that leave the king in check
     ChessPiece* piece = board[fromIndex];
 
@@ -382,7 +382,7 @@ void ChessBoard::MakeMove(int fromTile, int toTile) {
     isCheck(*this, state.currentPlayerIsWhite ? Black : White);
 }
 
-void ChessBoard::MakeCompleteMove(int fromTile, int toTile, std::string move) {
+void ChessBoard::MakeCompleteMove(int fromTile, int toTile, const std::string& move) {
 
     //Move not Enpassant so, reset Target
     if (!IsEnPassantCapture(fromTile, toTile) && state.enPassantTarget !=-1) {
@@ -448,7 +448,7 @@ void ChessBoard::ReverseBoard() {
     state.isBoardReversed = !state.isBoardReversed;
 }
 
-bool ChessBoard::IsCastlingMove(std::string move, ChessPiece* pieceMoved) {
+bool ChessBoard::IsCastlingMove(const std::string& move, ChessPiece* pieceMoved) {
     return (pieceMoved->type == KING) && (move == "e1g1" || move == "e1c1" || move == "e8g8" || move == "e8c8");
 }
 

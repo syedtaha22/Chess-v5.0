@@ -53,14 +53,14 @@ class ChessBoard {
     bool canCastleKingSide(int KingIndex) const;
     bool canCastleQueenide(int KingIndex) const;
 
-    void AddMoveToHistory(std::string move);
+    void AddMoveToHistory(const std::string& move);
     
 
     void PlayChessSound() const;
 
-    std::vector<int> FilterValidMoves(int fromIndex, std::vector<int> possibleMoves) const;
+    std::vector<int> FilterValidMoves(int fromIndex, const std::vector<int>& possibleMoves) const;
 
-    bool IsCastlingMove(std::string move, ChessPiece* pieceMoved);
+    bool IsCastlingMove(const std::string& move, ChessPiece* pieceMoved);
 
     bool isValidCaptureMove(int fromTile, int toTile) const;
     bool isValidMove(int index);
@@ -111,7 +111,7 @@ public:
 
     //Functions To make Moves 
     void MakeMove(int fromTile, int toTile); //--> Swaps the Squares on the Board
-    void MakeCompleteMove(int fromTile, int toTile, std::string move);
+    void MakeCompleteMove(int fromTile, int toTile, const std::string& move);
 
 
     void saveCurrentFENtofile(std::string file) const;
