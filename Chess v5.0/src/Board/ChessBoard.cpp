@@ -367,8 +367,8 @@ void ChessBoard::MakeMove(int fromTile, int toTile) {
             board[rookFromTile] = new ChessPiece();
         }
     }
+  
 
-    
     board[fromTile]->firstMove = false;
     board[toTile] = board[fromTile];
     board[fromTile] = new ChessPiece(); // Empty the source square

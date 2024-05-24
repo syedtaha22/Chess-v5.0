@@ -43,12 +43,12 @@ void GraphicalBoard::DrawBoard(const ChessBoard& chessboard) const {
         // if Current Index is a Move for Selected Piece than Highlight it
         if (std::binary_search(chessboard.state.MovesForSelectedPiece.begin(), chessboard.state.MovesForSelectedPiece.end(), index)) {
                 DrawRectangle(LocationX, LocationY, tileSize, tileSize, MovesForPieceHighLight); //Displays Red Squares
-            }
         }
     }
+}
 
 void GraphicalBoard::DrawCoordinates(const ChessBoard& chessboard) const {
-
+    
     for (const auto& square : CoordinateIndexPairs) {
         std::pair<int, int> PieceCoords = ConvertNotation()(square.first);
         int LocX = BoardOffsetX + (abs((chessboard.state.isBoardReversed * ReverseOffset) - PieceCoords.second)) * tileSize;
@@ -59,10 +59,10 @@ void GraphicalBoard::DrawCoordinates(const ChessBoard& chessboard) const {
 
         Color TextColor = (ColorCondition) ? darkSquare : lightSquare;
         Vector2 Position = getPosition(square.second.second, LocX, LocY);
-
+        
         DrawTextEx(myFont, square.second.first.c_str(), Position, TextSize, 0.1f, TextColor);
 
-        }
+    }
 }
 
 Vector2 GraphicalBoard::getPosition(bool isRow, int LocX, int LocY) const {
