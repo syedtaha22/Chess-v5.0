@@ -2,6 +2,8 @@
 #define HELPER_FUNCTIONS_H
 
 #include "../Other/User.h"
+#include "../Other/Resources.h"
+
 
 namespace Utility {
 	std::string AddCommas(int number);
