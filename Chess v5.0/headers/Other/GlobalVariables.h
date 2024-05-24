@@ -22,6 +22,7 @@
 #include "../GameFlow/Flags.h"
 #include "../GameFlow/Settings.h"
 #include "Timer.h"
+#include "../Exceptions/KingNotFound.h"
  
 extern Sound ChessPiecePlaced;
 extern Sound ChessPieceCaptured;
