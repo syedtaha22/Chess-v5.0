@@ -45,3 +45,42 @@ void Utility::DrawTextWithCustomFont(const char* text, float posX, float posY, f
 Vector2 Utility::TextCenter(const char* text, float fontSize) {
     return MeasureTextEx(myFont, text, fontSize, 1.0);
 }
+
+void Utility::UnloadFontsAndSounds() {
+	UnloadSound(ChessPiecePlaced);
+	UnloadSound(ChessPieceCaptured);
+	UnloadSound(KingChecked);
+	UnloadSound(GameEnds);
+	UnloadSound(GameStarts);
+	UnloadFont(myFont);
+}
+
+void Utility::LoadFontsAndSounds() {
+	ChessPiecePlaced = LoadSound(ChessPiecePlacedFile.c_str());
+	ChessPieceCaptured = LoadSound(ChessPieceCapturedFile.c_str());
+	KingChecked = LoadSound(KingCheckedFile.c_str());
+	GameStarts = LoadSound(GameStartsFile.c_str());
+	GameEnds = LoadSound(GameEndsFile.c_str());
+	myFont = LoadFont(fontFile.c_str());
+}
+
+void Utility::SuppressRaylibLog(int msgType, const char* text, va_list args) {
+	return;
+}
+
+void Utility::Engine_Calculations(ChessEngine& engine, ChessBoard& board) {
+	while (true) {
+		if (engine.state.isSearchStarted() && !board.isCurrentPlayerWhite()) {
+
+			//string move;
+			std::string move;
+			board.ComputeOpponentMoves();
+			std::cout << "Running...\n";
+			move = engine.GenerateMove(board);
+			if (move != "") {
+				engine.PlayMove(move, board);
+			}
+			engine.state.StopSearching();
+		}
+	}
+}
