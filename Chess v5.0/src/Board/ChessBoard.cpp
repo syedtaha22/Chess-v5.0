@@ -377,6 +377,7 @@ void ChessBoard::MakeMove(int fromTile, int toTile) {
     state.MoveIndices = std::make_pair(fromTile, toTile);
     if (Flags::isMultiplayerGame()) ReverseBoard();
     SetPiecePositions();
+    isCheck(*this, state.currentPlayerIsWhite ? Black : White);
 
 }
 
