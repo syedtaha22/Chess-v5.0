@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Functors/DebugItem.h"
+#include "../Functors/ChessDebugger.h"
 
 
 
