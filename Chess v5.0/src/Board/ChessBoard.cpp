@@ -127,7 +127,7 @@ void ChessBoard::initializeBoardFromFEN(const std::string& fen, bool loadTexture
         }
 
     }
-    catch (const std::runtime_error& e) {
+    catch (const KingNotFound& e) {
         std::cerr << e.what() << std::endl;
         return;
     }
@@ -147,6 +147,7 @@ int ChessBoard::GetKingIndex(const int& playercolor) const {
         }
     }
 
+    std::cout << *this;
     // Throw an exception if king is not found
     throw KingNotFound(playercolor);
 
