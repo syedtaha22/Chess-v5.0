@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CHESS_DEBUGGER_H
+#define CHESS_DEBUGGER_H
 
 #include "../Pieces/Pieces.h"
 
@@ -31,5 +32,4 @@ public:
 
 };
 
-
-
+#endif // !CHESS_DEBUGGER_H
