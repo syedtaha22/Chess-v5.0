@@ -579,6 +579,8 @@ std::vector<int> ChessBoard::ComputePawnMoves(int pieceIndex) const {
     int row = pieceIndex / 8;
     int col = pieceIndex % 8;
 
+    if (pieceIndex < 8 || pieceIndex > 55) return possibleMoves;
+
     // Determine the direction of pawn movement based on its color
     int direction = (piece->color == White) ? -1 : 1;
 
