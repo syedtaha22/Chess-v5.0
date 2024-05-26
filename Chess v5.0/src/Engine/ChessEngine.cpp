@@ -93,7 +93,8 @@ int ChessEngine::Minimax(ChessBoard& board, int depth, int alpha, int beta, auto
         }
     }
 
-    if (board.isCheckmate()) return (LastPlayer == state.GetEngineColor() ? -infinity : infinity);
+   
+    if (board.isCheckmate(currentPlayer)) return infinity;
     if (depth == 0) {
         return Evaluate(board, currentPlayer);
 
