@@ -140,7 +140,7 @@
     <ClInclude Include="headers\Functors\IsCaptureMove.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="headers\Functors\DebugItem.h">
+    <ClInclude Include="headers\Functors\ChessDebugger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="headers\namespaces\Utility.h">

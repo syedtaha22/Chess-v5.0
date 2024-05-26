@@ -339,7 +339,7 @@ bool ChessBoard::isValidMove(int index){
 }
 
 void ChessBoard::MakeMove(int fromTile, int toTile) {
-
+    
     //EnPassant
     if (IsEnPassantCapture(fromTile, toTile)) {
         int captureIndex = (fromTile / 8) * 8 + toTile % 8;
@@ -433,7 +433,7 @@ void ChessBoard::MakeCompleteMove(int fromTile, int toTile, const std::string& m
     //Uncomment for Debugging or to Show Board on terminal
     //DebugItem()(board);
     //DisplayScores();
-
+    
     
 
 

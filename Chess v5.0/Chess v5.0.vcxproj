@@ -160,7 +160,7 @@
     <ClInclude Include="headers\Exceptions\KingNotFound.h" />
     <ClInclude Include="headers\Pieces\PieceSquareTables.h" />
     <ClInclude Include="headers\Engine\TranspositionTables.h" />
-    <ClInclude Include="headers\Functors\DebugItem.h" />
+    <ClInclude Include="headers\Functors\ChessDebugger.h" />
     <ClInclude Include="headers\namespaces\Utility.h" />
     <ClInclude Include="headers\Statistics\BoardStats.h" />
     <ClInclude Include="headers\GameFlow\Flags.h" />
