@@ -157,7 +157,6 @@ int main(int argc, char* argv[]) {
 //This program Takes every FEN string in ExtractedFENs.txt and sends it as an Argument to the Chess Engine(This Program)
 //Incase you don't have ExtractedFENs.txt in the Tests folder, Run ./FenExtracter.sh
 //Since every FEN is tested one by one, there are no unexpected exits and breaks. 
-//Ignore errors in this file. They are because of different include path in the Bash Shell
 //Make sure you have jsoncpp and raylib installed installed
 //Assuming you have jsoncpp installed in default location for Bash
-//g++ -o test_engine.exe test_engine.cpp ../src/Engine/EngineState.cpp ../headers/Engine/ChessEngineStatistics.h ../src/Engine/ChessEngine.cpp ../src/Board/ChessBoard.cpp ../src/GameFlow/Flags.cpp ../src/Engine/TranspositionTables.cpp ../src/Other/GlobalVariables.cpp ../src/GameFlow/Settings.cpp ../src/Pieces/ChessPiece.cpp ../src/Pieces/Pieces.cpp ../src/Functors/ConvertNotation.cpp   -std=c++20 -ljsoncpp -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
+//g++ -o test_engine.exe test_engine.cpp ../src/Engine/EngineState.cpp ../headers/Engine/ChessEngineStatistics.h ../src/Engine/ChessEngine.cpp ../src/Board/ChessBoard.cpp ../src/GameFlow/Flags.cpp ../src/Engine/TranspositionTables.cpp ../src/Other/GlobalVariables.cpp ../src/GameFlow/Settings.cpp ../src/Pieces/ChessPiece.cpp ../src/Pieces/Pieces.cpp ../src/Functors/ConvertNotation.cpp ../src/Exceptions/KingNotFound.cpp  -std=c++20 -ljsoncpp -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
