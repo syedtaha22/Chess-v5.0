@@ -11,7 +11,7 @@ ChessBoard::ChessBoard() {
 ChessBoard::ChessBoard(const ChessBoard& other) {
     // Allocate memory for the new board
     for (int i = 0; i < Total_tiles; ++i) {
-        board[i] = new ChessPiece(*(other.board[i]));
+        this->board[i] = other.board[i]->clone();
     }
     state = other.state;
 }
