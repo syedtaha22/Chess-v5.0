@@ -58,15 +58,6 @@ constexpr float InfoBoxHeight = 640.0f;
 
 constexpr float fontSize = 50;
 
-extern Color lightSquare;
-extern Color darkSquare;
-extern Color Transparent;
 extern Color Background;
-extern Color Translucent;
-
-extern Color MoveHighlight;
-extern Color MovesForPieceHighLight;
-extern Color MoveHighlightRed;
-extern Color NextMoveHighlight;
 
 #endif // !GLOBALVARIABLES_H
