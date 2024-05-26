@@ -11,6 +11,7 @@ int main() {
     InitAudioDevice();
 
     GameModes Game;
+
     Game.BoardSetUp();
     
     Settings::save(Game.Horizon.state.getDepth(), Game.Player.ELO, Game.Horizon.state.getELO());
