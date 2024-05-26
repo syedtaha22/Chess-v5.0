@@ -897,3 +897,18 @@ ChessBoard::~ChessBoard() {
         delete piece;
     }
 }
+
+std::ostream& operator<<(std::ostream& os, const ChessBoard& chessboard) {
+    os << "8 ";
+    for (int i = 0; i < Total_tiles; i++) {
+        os << "[" << chessboard.board[i]->type << "]";
+        if ((i + 1) % 8 == 0 && (i + 1) < Total_tiles) {
+            os << std::endl;
+            os << 8 - (i + 1) / 8 << " ";
+        }
+    }
+    os << std::endl;
+    os << "   a  b  c  d  e  f  g  h" << std::endl;
+
+    return os;
+}

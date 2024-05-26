@@ -144,6 +144,8 @@ public:
 
     int getCheckedPlayer() const;
 
+    friend std::ostream& operator<<(std::ostream& os, const ChessBoard& chessboard);
+
     ~ChessBoard();
 };
 
