@@ -25,7 +25,7 @@ public:
         std::cout << std::endl;
     }
 
- 
+
     // Wrapper function to allow usage with std::cout
     template<typename... Args>
     void operator()(Args&&... args) {
