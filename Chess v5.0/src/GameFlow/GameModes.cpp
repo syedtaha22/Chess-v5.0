@@ -103,9 +103,6 @@ void GameModes::InitialiseSinglePlayerMode() {
         Player.setUserName("user");
         PlaySound(GameStarts);
         chessboard.InitializeDefaultBoard();
-        //chessboard.ComputeOpponentMoves();
-
-
         DoOnce = false;
     }
 
