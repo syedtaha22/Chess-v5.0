@@ -21,44 +21,44 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_7B014514D8C1D904AE962F6D3358FC6E"
-        "OwnerKey" = "8:_A6745498845D460281643D01A2511C1E"
+        "MsmKey" = "8:_171D5CD4F30B4FF7B1391570892DA48F"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_80B20BB383F646A4A8A15160BF14DD74"
+        "MsmKey" = "8:_57D2435010064D4282205DBD9AF2D7E6"
         "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_7B014514D8C1D904AE962F6D3358FC6E"
+        "OwnerKey" = "8:_AF843BA9A80946D1B6ADB39FC9C85EEA"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_8EB714C594B2249F3B09E0B93793E645"
-        "OwnerKey" = "8:_A6745498845D460281643D01A2511C1E"
+        "OwnerKey" = "8:_AF843BA9A80946D1B6ADB39FC9C85EEA"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_970E94982DE14980B6F4828E56BB8B7E"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_A6745498845D460281643D01A2511C1E"
+        "MsmKey" = "8:_AF843BA9A80946D1B6ADB39FC9C85EEA"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_CA3C597DF49B20C688628D4B388B226E"
-        "OwnerKey" = "8:_A6745498845D460281643D01A2511C1E"
+        "OwnerKey" = "8:_AF843BA9A80946D1B6ADB39FC9C85EEA"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_EDFCFE438FD1C320C5CFAEAEBDDC24E2"
-        "OwnerKey" = "8:_A6745498845D460281643D01A2511C1E"
+        "OwnerKey" = "8:_AF843BA9A80946D1B6ADB39FC9C85EEA"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -79,6 +79,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
+            }
         }
         "Release"
         {
@@ -95,6 +111,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
     }
     "Deployable"
@@ -136,6 +160,46 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_171D5CD4F30B4FF7B1391570892DA48F"
+            {
+            "SourcePath" = "8:..\\x64\\Debug\\jsoncpp.dll"
+            "TargetName" = "8:jsoncpp.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_D25528BF07454135A5CCCBA92F96BA97"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_57D2435010064D4282205DBD9AF2D7E6"
+            {
+            "SourcePath" = "8:..\\x64\\Debug\\raylib.dll"
+            "TargetName" = "8:raylib.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_D25528BF07454135A5CCCBA92F96BA97"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7B014514D8C1D904AE962F6D3358FC6E"
             {
             "SourcePath" = "8:VCRUNTIME140_1D.dll"
@@ -156,26 +220,6 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_80B20BB383F646A4A8A15160BF14DD74"
-            {
-            "SourcePath" = "8:..\\x64\\Debug\\jsoncpp.dll"
-            "TargetName" = "8:jsoncpp.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_D25528BF07454135A5CCCBA92F96BA97"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_8EB714C594B2249F3B09E0B93793E645"
             {
             "SourcePath" = "8:MSVCP140D.dll"
@@ -194,26 +238,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_970E94982DE14980B6F4828E56BB8B7E"
-            {
-            "SourcePath" = "8:..\\x64\\Debug\\raylib.dll"
-            "TargetName" = "8:raylib.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_D25528BF07454135A5CCCBA92F96BA97"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_CA3C597DF49B20C688628D4B388B226E"
@@ -312,15 +336,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Chess"
-        "ProductCode" = "8:{23D86F66-AEF3-47D1-854D-D3E19F0B7336}"
-        "PackageCode" = "8:{5EA1F7F5-C2F9-45F8-8CDC-018ABBFE93E7}"
+        "ProductCode" = "8:{B9373E61-5770-4ADE-8D45-12691C136652}"
+        "PackageCode" = "8:{0CF48B6D-D6E4-479C-BCD8-AF213CB9F2D3}"
         "UpgradeCode" = "8:{9CB512C9-AC9C-47F8-851F-15928C3AC2A5}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:5.2.1"
+        "ProductVersion" = "8:5.2.2"
         "Manufacturer" = "8:Syed Taha"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -433,6 +457,20 @@
         }
         "Shortcut"
         {
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_B48A8D39FE4B4F1E8B938838A841CA76"
+            {
+            "Name" = "8:Chess"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_AF843BA9A80946D1B6ADB39FC9C85EEA"
+            "Folder" = "8:_D25528BF07454135A5CCCBA92F96BA97"
+            "WorkingFolder" = "8:_D25528BF07454135A5CCCBA92F96BA97"
+            "Icon" = "8:_0E1AE78972F4412E856C5536ED9BED8B"
+            "Feature" = "8:"
+            }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_CB939F1E5E5E45589FD318B5840CF760"
             {
             "Name" = "8:Chess"
@@ -441,7 +479,7 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_A6745498845D460281643D01A2511C1E"
+            "Target" = "8:_AF843BA9A80946D1B6ADB39FC9C85EEA"
             "Folder" = "8:_22DC0519A9D14194964DD153FEF5BD23"
             "WorkingFolder" = "8:_D25528BF07454135A5CCCBA92F96BA97"
             "Icon" = "8:_0E1AE78972F4412E856C5536ED9BED8B"
@@ -455,22 +493,8 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_A6745498845D460281643D01A2511C1E"
+            "Target" = "8:_AF843BA9A80946D1B6ADB39FC9C85EEA"
             "Folder" = "8:_EC0C241CF16D4460AFDEFE61184D20A0"
-            "WorkingFolder" = "8:_D25528BF07454135A5CCCBA92F96BA97"
-            "Icon" = "8:_0E1AE78972F4412E856C5536ED9BED8B"
-            "Feature" = "8:"
-            }
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_F3FD9ADEB80649EA956646740A3E25C7"
-            {
-            "Name" = "8:Chess"
-            "Arguments" = "8:"
-            "Description" = "8:"
-            "ShowCmd" = "3:1"
-            "IconIndex" = "3:0"
-            "Transitive" = "11:FALSE"
-            "Target" = "8:_A6745498845D460281643D01A2511C1E"
-            "Folder" = "8:_D25528BF07454135A5CCCBA92F96BA97"
             "WorkingFolder" = "8:_D25528BF07454135A5CCCBA92F96BA97"
             "Icon" = "8:_0E1AE78972F4412E856C5536ED9BED8B"
             "Feature" = "8:"
@@ -874,7 +898,7 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_15343951E909462BB80217F213801CFD"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_539664BC7BD545E984DEA86A2CB0BA48"
             {
             "SourcePath" = "8:"
             "TargetName" = "8:"
@@ -902,9 +926,9 @@
                 {
                 }
             }
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_4F2BDDBBDFA74CFFB55ABF33FBD869C0"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_AF843BA9A80946D1B6ADB39FC9C85EEA"
             {
-            "SourcePath" = "8:"
+            "SourcePath" = "8:..\\x64\\Debug\\Chess v5.0.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_D25528BF07454135A5CCCBA92F96BA97"
@@ -923,14 +947,14 @@
             "IsolateTo" = "8:"
             "ProjectOutputGroupRegister" = "3:1"
             "OutputConfiguration" = "8:"
-            "OutputGroupCanonicalName" = "8:Symbols"
+            "OutputGroupCanonicalName" = "8:Built"
             "OutputProjectGuid" = "8:{3EA11DB2-17FD-487A-98F2-14CD43D2114D}"
             "ShowKeyOutput" = "11:TRUE"
                 "ExcludeFilters"
                 {
                 }
             }
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_4FAE9DAE290043668470ACFD21043406"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_CE35D07134DA400DAEAEB463C26E6373"
             {
             "SourcePath" = "8:"
             "TargetName" = "8:"
@@ -958,7 +982,7 @@
                 {
                 }
             }
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_9404ABA0EC9749E7A3EA8A030C957071"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_DB041B4CCCD6449F92753B9A20531E98"
             {
             "SourcePath" = "8:"
             "TargetName" = "8:"
@@ -986,9 +1010,9 @@
                 {
                 }
             }
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_A6745498845D460281643D01A2511C1E"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_E4D883FD539B43D0B9FAA694862523F4"
             {
-            "SourcePath" = "8:..\\x64\\Debug\\Chess v5.0.exe"
+            "SourcePath" = "8:"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_D25528BF07454135A5CCCBA92F96BA97"
@@ -1007,7 +1031,7 @@
             "IsolateTo" = "8:"
             "ProjectOutputGroupRegister" = "3:1"
             "OutputConfiguration" = "8:"
-            "OutputGroupCanonicalName" = "8:Built"
+            "OutputGroupCanonicalName" = "8:Symbols"
             "OutputProjectGuid" = "8:{3EA11DB2-17FD-487A-98F2-14CD43D2114D}"
             "ShowKeyOutput" = "11:TRUE"
                 "ExcludeFilters"
