@@ -21,7 +21,7 @@ private:
     const float FenButtonY = 425.0f;
     const float SettingMenuY = 545.0f;
 
-
+    const Color Translucent = { 0, 0, 0, 64 };
 
     /*
         Defined in GlobalVariable.h : 
