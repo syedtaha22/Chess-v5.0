@@ -19,8 +19,6 @@ void ChessPiece::AssignTextures() {
     if (type != EMPTY) {
         std::string fileName = "Resources\\";
         fileName += (color == White) ? "WhitePieces\\" : "BlackPieces\\";
-        int temp;
-        temp = color | type;
         fileName += std::to_string(PieceCode);
         fileName += ".png";
         texture = LoadTexture(fileName.c_str());
