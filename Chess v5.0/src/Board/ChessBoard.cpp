@@ -755,11 +755,11 @@ bool ChessBoard::isCheck(const ChessBoard& chessboard, const int playerColor) {
     return false; // King is not in check
 }
 
-bool ChessBoard::isCheckmate() const {
+bool ChessBoard::isCheckmate(int player) const {
     // King is not in check, so it can't be checkmate
     if (state.checkedPlayer == 0) return false; 
    
-    std::vector<int> possibleMoves = GetAllPossibleMoves(state.getCurrentPlayer());
+    std::vector<int> possibleMoves = GetAllPossibleMoves((player == EMPTY) ? state.getCurrentPlayer() : player);
     if (possibleMoves.size() > 0) return false; // King can escape from check, so it's not checkmate
 
     return true; // King is in checkmate
