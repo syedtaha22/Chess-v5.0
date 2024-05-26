@@ -58,6 +58,10 @@ public:
 
     virtual int getScore() const { return 0; };
 
+    virtual ChessPiece* clone() {
+        return new ChessPiece(EMPTY, EMPTY);
+    }
+
     //Not Using Destructer here as It, Unexpectedly Destroys Pieces.
     //~ChessPiece(){}
 };
