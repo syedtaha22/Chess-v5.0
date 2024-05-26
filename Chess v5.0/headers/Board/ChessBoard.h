@@ -123,16 +123,12 @@ public:
     void UpdateChessPiece(ChessPiece* piece, int InitialIndex);
 
     
-    bool isCheckmate() const;
+    bool isCheckmate(int player = EMPTY) const;
 
     // returns currentPlayerIsWhite
     bool isCurrentPlayerWhite() const; 
 
     bool IsTileUnderAttack(int squareIndex) const;
-
-
-
-    
 
     //Functions to get a list of all Possible Moves for a Player or Piece in different Formats
     std::vector<int> GetAllPossibleMoves(int playerColor) const;
