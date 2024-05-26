@@ -24,7 +24,7 @@ if [ ! -f "$CPP_PROGRAM" ]; then
 fi
 
 # Set the loop limit
-if [ "$#" -eq 2 ]; then
+if [ "$#" -ge 2 ]; then
     LOOP_LIMIT=$2
 else
     LOOP_LIMIT=-1  # Default value, meaning run the loop for the complete file
