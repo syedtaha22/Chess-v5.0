@@ -23,7 +23,7 @@ void ChessBoard::AddMoveToHistory(const std::string& move) {
 void ChessBoard::promotePawn(int toTile) {
     bool PawnPromoted = false;
 
-    // Dynamic Pawn Promotion Under Development...
+    // Simple Pawn Promotion Logic
 
     //Promote Pawn to Queen
     delete board[toTile];
@@ -38,7 +38,6 @@ std::vector<int> ChessBoard::FilterValidMoves(int fromIndex, const std::vector<i
 
     std::vector<int> filteredMoves;
     for (int toTile : possibleMoves) {
-        
         ChessBoard tempBoard(*this);
         tempBoard.MakeMove(fromIndex, toTile);
         if (!tempBoard.isCheck(tempBoard, piece->color)) {
@@ -379,7 +378,6 @@ void ChessBoard::MakeMove(int fromTile, int toTile) {
     if (Flags::isMultiplayerGame()) ReverseBoard();
     SetPiecePositions();
 
-    isCheck(*this, state.currentPlayerIsWhite ? Black : White);
 }
 
 void ChessBoard::MakeCompleteMove(int fromTile, int toTile, const std::string& move) {
@@ -574,6 +572,7 @@ std::vector<int> ChessBoard::ComputeKnightMoves(int pieceIndex) const {
 }
 
 std::vector<int> ChessBoard::ComputePawnMoves(int pieceIndex) const {
+    
     std::vector<int> possibleMoves;
     possibleMoves.reserve(5); // in Best case A pawn has 4 moves
     ChessPiece* piece = board[pieceIndex];
@@ -603,6 +602,7 @@ std::vector<int> ChessBoard::ComputePawnMoves(int pieceIndex) const {
         int targetRow = targetIndex / 8;
         int targetCol = targetIndex % 8;
         int pieceCol = pieceIndex % 8;
+
         // Ensure target column is within bounds and not wrapping around the board
         if (targetCol >= 0 && targetCol < 8 && abs(targetCol - pieceCol) <= 1) {
             // Check if the target square is occupied by an opponent's piece
