@@ -1,0 +1,52 @@
+[
+    {
+        "fen": "r2qkb1r/pp1nppp1/2p2n1p/3p1b2/2PP4/BP2PN2/P4PPP/RN1QKB1R b KQkq",
+        "TotalMoves": 38,
+        "bestMove": "f5b1"
+    },
+    {
+        "fen": "r1b1kb1r/pp2q3/2n3p1/2p1P2p/8/1P2QN2/PBP3PP/2KR1B1R b kq",
+        "TotalMoves": 37,
+        "bestMove": "f8h6"
+    },
+    {
+        "fen": "3r1rk1/p1p2p2/2Q4p/2P1q1p1/3p2P1/1P2P2P/P1P2P2/2K1RR2 b",
+        "TotalMoves": 33,
+        "bestMove": "d4e3"
+    },
+    {
+        "fen": "5r1k/p1p2qpp/6b1/1P1QP3/8/4P1R1/PB4PP/3R2K1 b",
+        "TotalMoves": 31,
+        "bestMove": "f7f2"
+    },
+    {
+        "fen": "r2qk2r/p1p2ppp/2pb1n2/3p2Q1/2P3b1/1PN1P3/PB3PPP/R3KB1R b KQkq",
+        "TotalMoves": 42,
+        "bestMove": "h7h6"
+    },
+    {
+        "fen": "r2r3k/p1p2ppp/2Qb2q1/2p5/2P1p3/1P2P2P/PB3PP1/R2R2K1 b",
+        "TotalMoves": 30,
+        "bestMove": "d6h2"
+    },
+    {
+        "fen": "8/pR6/5ppk/8/2P4p/1P3P1P/P4BP1/4rn1K b",
+        "TotalMoves": 21,
+        "bestMove": "f1g3"
+    },
+    {
+        "fen": "8/5kpp/pp1Q1p2/8/P2P4/1P3P2/2r1q2N/1R2R2K b",
+        "TotalMoves": 37,
+        "bestMove": "e2g2"
+    },
+    {
+        "fen": "5rk1/2bB3p/pp4p1/2p5/2Pp4/PP1P4/6QP/2B1qRK1 b",
+        "TotalMoves": 43,
+        "bestMove": "c7h2"
+    },
+    {
+        "fen": "3r2k1/3q3p/pp3pp1/2p4P/2P3n1/1P2P1Q1/PB3PP1/1R4K1 b",
+        "TotalMoves": 39,
+        "bestMove": "d7d1"
+    }
+]
