@@ -4,107 +4,92 @@
 
 using namespace std;
 
+class JsonHandler {
+    std::string filename;
+
+    //Makes a New File, or if file already exists, initialises it for for more data
+    void initJson(string filename) {
+        string folder = "Test_Results";
+        if (!filesystem::is_directory(folder)) filesystem::create_directory(folder);
+        filename = folder + "/" + filename;
+        //Check if the file Exists, Create it if not, otherwise remove the last ']'
+        if (!filesystem::exists(filename)) {
+            cout << "Making a new .json file\n";
+            ofstream NewFile(filename, ios::out | ios::app);
+            NewFile.close();
+        }
+        else {
+            ofstream jsonFile(filename, ios::ate | ios::in);
+            long pos = jsonFile.tellp();
+            if (pos != 0) {
+                jsonFile.seekp(pos - 1);
+                jsonFile << " ";
+            }
+            jsonFile.close();
+        }
+    }
+    static void endFile(string filename) {
+        filename = "Test_Results/" + filename;
+        ofstream outFile(filename, ios::app);
+        if (!outFile.is_open()) {
+            cerr << "Error: Unable to open file for writing." << endl;
+            return;
+        }
+        outFile << "]";
+        outFile.close();
+    }
+
+public: 
+    JsonHandler(std::string filename_) : filename(filename_) {
+        initJson(filename);
+    }
+
+    void save(const string& fen, int depth, string timeTaken, string bestMove, string speed, int totalMoves, int numOfMovesSeen) {
+        filename = "Test_Results/" + filename;
+
+        Json::Value root;
+        root["fen"] = fen;
+        root["depth"] = depth;
+        root["timeTaken"] = timeTaken;
+        root["bestMove"] = bestMove;
+        root["TotalMoves"] = totalMoves;
+        root["numOfMovesSeen"] = numOfMovesSeen;
+        root["Speed"] = speed;
+
+        Json::StreamWriterBuilder builder;
+        builder["indentation"] = "";
+        const string jsonString = Json::writeString(builder, root);
+
+        ofstream outFile(filename, ios::ate | ios::in);
+        if (!outFile.is_open()) {
+            cerr << "Error: Unable to open " << filename << " for writing." << endl;
+            return;
+        }
+        // Check if file is empty
+        long pos = outFile.tellp();
+
+        // If file is empty, start with '['
+        if (pos != 0) {
+            outFile << ", " << endl;
+        }
+        else {
+            outFile << "[";
+        }
+
+
+        outFile << jsonString;
+        outFile.close();
+    }
+
+    ~JsonHandler() {
+        endFile(filename);
+    }
+};
+
 static string SetPrecision(const float& number, const int& precision) {
     ostringstream temp;
     temp << fixed << setprecision(precision) << number;
     return temp.str();
-
-}
-
-//Makes a New File, or if file already exists, initialises it for for more data
-static void initJson(string filename) {
-    string folder = "Test_Results";
-    if (!filesystem::is_directory(folder)) filesystem::create_directory(folder);
-    filename = folder + "/" + filename;
-
-
-    //Check if the file Exists, Create it if not, otherwise remove the last ']'
-    if (!filesystem::exists(filename)) {
-        cout << "Making a new .json file\n";
-        ofstream NewFile(filename, ios::out | ios::app);
-        NewFile.close();
-    }
-    else {
-        ofstream jsonFile(filename, ios::ate | ios::in);
-        long pos = jsonFile.tellp();
-        if (pos != 0) {
-            jsonFile.seekp(pos - 1);
-            jsonFile << " ";
-        }
-        jsonFile.close();
-    }
-}
-
-static void SaveToJSON(const string& fen, int depth, string timeTaken, string bestMove, string speed, int totalMoves, int numOfMovesSeen, string filename) {
-    filename = "Test_Results/" + filename;
-
-    Json::Value root;
-    root["fen"] = fen;
-    root["depth"] = depth;
-    root["timeTaken"] = timeTaken;
-    root["bestMove"] = bestMove;
-    root["TotalMoves"] = totalMoves;
-    root["numOfMovesSeen"] = numOfMovesSeen;
-    root["Speed"] = speed;
-
-    Json::StreamWriterBuilder builder;
-    builder["indentation"] = "";
-    const string jsonString = Json::writeString(builder, root);
-
-    ofstream outFile(filename, ios::ate | ios::in);
-    if (!outFile.is_open()) {
-        cerr << "Error: Unable to open " << filename << " for writing." << endl;
-        return;
-    }
-    // Check if file is empty
-    long pos = outFile.tellp();
-
-    // If file is empty, start with '['
-    if (pos != 0) {
-        outFile << ", " << endl;
-    }
-    else {
-        outFile << "[";
-    }
-
-
-    outFile << jsonString;
-    outFile.close();
-}
-
-//Get fens from specified file
-static vector<string> getFens(string filename, int numOfFENS) {
-    ifstream inputFile(filename);
-    vector<string> FENS;
-
-    if (!inputFile) {
-        cerr << "Error: Unable to open " << filename << endl;
-        return FENS;
-    }
-
-    string line;
-    int count = 0;
-    while (count < numOfFENS && getline(inputFile, line)) {
-        FENS.push_back(line);
-        count++;
-    }
-    inputFile.close();
-
-    return FENS;
-
-}
-
-static void endFile(string filename) {
-    filename = "Test_Results/" + filename;
-
-    ofstream outFile(filename, ios::app);
-    if (!outFile.is_open()) {
-        cerr << "Error: Unable to open file for writing." << endl;
-        return;
-    }
-    outFile << "]";
-    outFile.close();
-
 }
 
 int main(int argc, char* argv[]) {
@@ -122,10 +107,11 @@ int main(int argc, char* argv[]) {
     const string filename = "analysis_results.json";
     //const string fen_file = "src/main/fens.txt";
 
-    initJson(filename);
+
+    JsonHandler handler(filename);
     string fen = argv[1];
 
-
+    
     ChessBoard board;
     ChessEngine engine(Black, false);
 
@@ -146,9 +132,7 @@ int main(int argc, char* argv[]) {
     cout << totalMoves << "   ";
     cout << numOfMovesSeen << "   ";
     cout << speed << "kn/s" << endl;
-    SaveToJSON(fen, depth, timeTaken, bestMove, speed, totalMoves, numOfMovesSeen, filename);
-
-    endFile(filename);
+    handler.save(fen, depth, timeTaken, bestMove, speed, totalMoves, numOfMovesSeen);
 
     return 0;
 }
