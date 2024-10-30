@@ -5,11 +5,9 @@
 This is a chess engine developed in C++. The engine implements various chess algorithms, including minimax with alpha-beta pruning, transposition tables, and piece-square tables for evaluation.
 
 
-## Fixes - v5.2.3
-- Fixes a debug error causing an abort() call when closing the window.
-- Ensures that information related to unexpected exits is now properly saved in the appdata folder.
-- Adds functionality to create a 'setting.json' file to remember the last depth entered by the user.
-- Enhances the application to save ELO ratings to the 'setting.json' file after calculation.
+## Updates - v5.2.3
+- Addes functionality to load FEN strings, in single player mode
+- Allows copy pasting FEN strings in FEN settings menu
 
 
 ## Features
