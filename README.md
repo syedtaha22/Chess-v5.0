@@ -5,7 +5,7 @@
 This is a chess engine developed in C++. The engine implements various chess algorithms, including minimax with alpha-beta pruning, transposition tables, and piece-square tables for evaluation.
 
 
-## Fixes - v5.2.0
+## Fixes - v5.2.3
 - Fixes a debug error causing an abort() call when closing the window.
 - Ensures that information related to unexpected exits is now properly saved in the appdata folder.
 - Adds functionality to create a 'setting.json' file to remember the last depth entered by the user.
@@ -13,7 +13,7 @@ This is a chess engine developed in C++. The engine implements various chess alg
 
 
 ## Features
-The Current Release v5.2.0 Includes The Following Features
+The Current Release v5.2.3 Includes The Following Features
 
 - Singleplayer Mode(Against AI)
 - Multiplayer Mode
@@ -59,7 +59,7 @@ The Search depth Can be set inside settings. For more Control you can can naviga
 
 
 ## Concepts relevant to Project
-v5.2.0 uses polymorphism to Assign Chess Pieces to the Board. Instead of Using a single Class for Chess Pieces, I have derived Six Classes from the ChessPiece class, and then Dynamically Assigned Chess Pieces on the Board. (This is still a Very basic Implementation of Polymorphism
+v5.2.3 uses polymorphism to Assign Chess Pieces to the Board. Instead of Using a single Class for Chess Pieces, I have derived Six Classes from the ChessPiece class, and then Dynamically Assigned Chess Pieces on the Board. (This is still a Very basic Implementation of Polymorphism
 
 
 ## Incase of Unexpected Exits, Weired Behaviors
