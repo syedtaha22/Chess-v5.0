@@ -102,7 +102,9 @@ void GameModes::InitialiseSinglePlayerMode() {
 
         Player.setUserName("user");
         PlaySound(GameStarts);
-        chessboard.InitializeDefaultBoard();
+        // chessboard.InitializeDefaultBoard();
+		chessboard.initializeBoardFromFEN(FENString, true);
+
         DoOnce = false;
     }
 
@@ -162,17 +164,39 @@ void GameModes::Settings() {
     }
 }
 
+
 void GameModes::FENSettings() {
     Rectangle SetFENBox = { (InfoBoxWidth / 2.0f) - 40.0f, screenHeight / 2.0f - 20.0f, 200.0f, 40.0f };
-    GuiTextBox(SetFENBox, feninput, 76, true);
-   
-    std::string fen = feninput;
-    GameStats.DisplayNewFENMessage(fen);
-    if (IsKeyPressed(KEY_ENTER)) {
-        if(fen != "") setFENstring(fen);
-        Flags::closeFENSettings();
+    GuiTextBox(SetFENBox, feninput, sizeof(feninput) - 1, true); // Adjust size for safety
+
+    // Display the current FEN
+    GameStats.DisplayNewFENMessage(feninput);
+
+    // Handle paste operation
+    if (IsKeyPressed(KEY_V) && IsKeyDown(KEY_LEFT_CONTROL)) {
+        const char* clipboardText = GetClipboardText(); // Get text from clipboard
+        if (clipboardText != nullptr) {
+            // Get the length of the clipboard text
+            size_t clipboardLength = strlen(clipboardText);
+            // Calculate the space available in feninput
+            size_t currentLength = strlen(feninput);
+            size_t availableSpace = sizeof(feninput) - currentLength - 1; // -1 for null terminator
+
+            // Only copy as much as fits
+            if (availableSpace > 0) {
+                // Determine how much to copy
+                size_t toCopy = (clipboardLength < availableSpace) ? clipboardLength : availableSpace;
+                strncat(feninput, clipboardText, toCopy); // Append clipboard text
+            }
+        }
     }
 
+    if (IsKeyPressed(KEY_ENTER)) {
+        if (feninput[0] != '\0') { // Check if input is not empty
+            setFENstring(feninput);
+        }
+        Flags::closeFENSettings();
+    }
 }
 
 void GameModes::SetFENStrings(const std::string& fen) {
@@ -202,6 +226,4 @@ void GameModes::GameLoop() {
         DisplayBoard();
         GameMenu.ShowMenu();
     }
-
 }
-
