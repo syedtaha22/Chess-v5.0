@@ -1,4 +1,4 @@
-# Chess v5.0
+# Chess v5.2
 
 
 ## Chess Engine Overview
